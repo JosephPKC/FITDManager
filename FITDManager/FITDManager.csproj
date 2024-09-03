@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <Reference Include="ColorConsoleLogger">
+      <HintPath>..\libs\ColorConsoleLogger.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDbWrapper">
+      <HintPath>..\libs\LiteDbWrapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Managers\" />
+    <Folder Include="Data\Controllers\" />
+    <Folder Include="Data\Models\SaV\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.21" />
+    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+  </ItemGroup>
+
+</Project>

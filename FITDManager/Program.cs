@@ -3,7 +3,7 @@ using FITDManager.Components;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services.AddRazorComponents(options => options.DetailedErrors = builder.Environment.IsDevelopment())
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
