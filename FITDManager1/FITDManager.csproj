@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\StaticData\BitD\BitD_Playbooks.json" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Reference Include="ColorConsoleLogger">
+      <HintPath>..\libs\ColorConsoleLogger.dll</HintPath>
+    </Reference>
+    <Reference Include="JSONWrapper">
+      <HintPath>..\libs\JSONWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDbWrapper">
+      <HintPath>..\libs\LiteDbWrapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Managers\" />
+    <Folder Include="Components\Shared\" />
+    <Folder Include="Components\Pages\Creator\BitD\" />
+    <Folder Include="Components\Pages\Creator\SaV\" />
+    <Folder Include="Data\Controllers\" />
+    <Folder Include="Data\Models\SaV\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\StaticData\BitD\BitD_Playbooks.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.21" />
+    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+  </ItemGroup>
+
+</Project>

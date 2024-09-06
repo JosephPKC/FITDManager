@@ -1,0 +1,22 @@
+﻿@* Step Bar: Progress bar that shows the steps in the Character Creator. It should hightlight the current step. *@
+@* Default Step Order: Prefs -> Playbook -> Starting Builds/Custom -> Heritage & Background -> Action Dots -> Special Ability (or +Starting Ability) -> Contacts -> Vice -> Name/Alias/Look *@
+<div>
+	@foreach (string step in StepBars)
+	{
+		<p class=@GetStepClassName(CurrentStep == step)>@step</p>
+		<p>>></p>
+	}
+</div>
+
+@code 
+{
+	[Parameter]
+	public string[] StepBars { get; set; } = [];
+	[Parameter]
+	public string CurrentStep { get; set; } = string.Empty;
+
+	private string GetStepClassName(bool pIsCurrentStep)
+	{
+		return pIsCurrentStep ? "txt-current-step" : "txt-step";
+	}
+}

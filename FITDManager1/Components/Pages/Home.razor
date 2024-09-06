@@ -1,0 +1,92 @@
+﻿@page "/"
+
+@using Data.Models.BaseCharacter
+@using Data.Models.BitD
+@using Data.StaticData
+
+<PageTitle>Home</PageTitle>
+
+<h1>Blades in the Dark Playbooks!</h1>
+
+@foreach (BitdPlaybookModel playbook in playbooks)
+{
+	<div>
+		<h3>@playbook.Name, @playbook.SubName</h3>
+		@foreach (string descriptor in playbook.Description)
+		{
+			<p>@descriptor</p>
+		}
+		<p><b>@playbook.XpTrigger</b></p>
+		<p><i>@playbook.Notes</i></p>
+		<h4>Special Abilities:</h4>
+		@foreach (SpecialAbilityModel specialAbility in playbook.SpecialAbilities)
+		{
+			<div>
+				<p>@GetDots(@specialAbility.NbrOfDots)</p>
+				<h5>@specialAbility.Name</h5>
+				<p>@((MarkupString)specialAbility.Text)</p>
+				<p><i>@specialAbility.Notes</i></p>
+			</div>
+		}
+		<h4>Dangerous Friends:</h4>
+		@foreach (ContactModel contact in playbook.Contacts)
+		{
+			<div>
+				<h5>@contact.Name, @contact.Role</h5>
+				<p><i>@contact.Notes</i></p>
+			</div>
+		}
+		<h4>Items:</h4>
+		@foreach (ItemModel item in playbook.Items)
+		{
+			<div>
+				<h5>@item.Name</h5>
+				<p>@item.Description</p>
+				<p><i>@item.Notes</i></p>
+				<p>[@item.Loadout Loadout]</p>
+			</div>
+		}
+		<h4>Starting Actions:</h4>
+		@foreach (KeyValuePair<BitdActions, int> actionDots in playbook.StartingActionDots)
+		{
+			<div>
+				<p>@actionDots.Key: +@actionDots.Value</p>
+			</div>
+		}
+		<h4>Starting Builds:</h4>
+		@foreach (BitdStartingBuildModel startingBuild in playbook.StartingBuilds)
+		{
+			<div>
+				<h5>@startingBuild.Name</h5>
+				<p>@playbook.SpecialAbilities.ToList()[@startingBuild.StartingSpecialAbilityId].Name</p>
+				@foreach (KeyValuePair<BitdActions, int> actionDots in startingBuild.AdditionalActionDots)
+				{
+					<div>
+						<p>@actionDots.Key: +@actionDots.Value</p>
+					</div>
+				}
+			</div>
+		}
+	</div>
+}
+
+
+@code 
+{
+	private ICollection<BitdPlaybookModel> playbooks = [];
+
+	protected override async Task OnInitializedAsync()
+	{
+		IEnumerable<BitdPlaybookModel> playbooks = StaticDataManager.Instance.BitdPlaybooks;
+	}
+
+	private string GetDots(int nAmt)
+	{
+		string dots = "";
+		for (int i = 0; i < nAmt; i++)
+		{
+			dots += "O";
+		}
+		return dots;
+	}
+}

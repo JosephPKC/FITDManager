@@ -1,0 +1,5 @@
+This feature is for the Character Creator, and involves charcter and crew creation. It goes through creation process by choosing built-in options, or letting users create their own.
+- The sequence is: Intro/Prefs -> Playbook + Starting Build or Custom -> Background and Heritage -> Action Dots -> Contacts and Vice -> Finalize and Summary
+- The sequence for crew creation is: Intro/Prefs -> Crew Playbook or Custom -> Initial Reputation and Lair -> Hunting Grounds -> Special Ability and Upgrades -> Contacts -> Finalize and Summary
+- The custom makers will need to be injected on the front end, and will be considered a separate feature entirely. This includes creation of cohorts if that is chosen.
+- An additional feature is the ability to do advances. In the Intro/Prefs, you can set the number of advances or tier (default is 0)
