@@ -38,4 +38,8 @@
       <HintPath>..\..\libs\JsonParser.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataRepo\JsonData\DataParts\Actions\" />
+  </ItemGroup>
 </Project>
