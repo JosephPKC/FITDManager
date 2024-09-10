@@ -1,0 +1,61 @@
+[
+  {
+    "Id": 0,
+    "Name": "Cutter",
+    "Subname": "A Dangerous & Intimidating Fighter",
+    "Description": [
+      "In the underworld of the Dusk, there are scoundrels who take what they want at the bloody edge of a blade or with a threatening presence that can stop a man cold. They are the enforcers, the debt collectors, the killers, the leg-breakers, and the thugs, commonly known as %Name%.",
+      "Where subtlety fails, swift brutality - and the threat of worse to come - can solve the problem. Or at least turn it into a different kind of problem."
+    ],
+    "XpTrigger": "You earn xp when you address a challenge with violence or coercion.",
+    "DefaultSpecialAbilityId": 4,
+    "StartingSpecialAbilityId": null,
+    "SpecialAbilities": [ 4, 5, 18, 27, 32, 33, 40, 52, 51 ],
+    "Contacts": [ 5, 10, 17, 19, 27 ],
+    "Items": [ 18, 19, 35, 37, 38 ],
+    "StartingActionDots": {
+      "1": 1,
+      "6": 2
+    },
+    "StartingBuilds": [ 5, 13, 23, 24 ]
+  },
+  {
+    "Id": 1,
+    "Name": "Hound",
+    "Subname": "A deadly sharpshooter and tracker",
+    "Description": [
+      "There's always a need for scoundrels who can find what others want to keep hidden. Whether that's a deadbeat gambler trying to skip out on their debts, a treacherous informant or witness who's going to squeal to the Bluecoats, or the trail to a treasure squirreled away in a secret vault - it's the %Name%s that ferret them out.",
+      "Why have a fair fight, when you can stalk and ambush your prety on your terms? The underworld is your hunting ground."
+    ],
+    "XpTrigger": "You earn xp when you address a challenge with tracking or violence.",
+    "DefaultSpecialAbilityId": 43,
+    "StartingSpecialAbilityId": null,
+    "SpecialAbilities": [ 43, 13, 19, 41, 46, 48, 49, 51 ],
+    "Contacts": [ 3, 4, 18, 31, 34 ],
+    "Items": [ 13, 23, 24, 42, 46 ],
+    "StartingActionDots": {
+      "4": 2,
+      "8": 1
+    },
+    "StartingBuilds": [ 3, 12, 20, 25 ]
+  },
+  {
+    "Id": 2,
+    "Name": "Leech",
+    "Subname": "A saboteur and technician",
+    "Description": [
+      "The world is built on industry, and the underworld is no different. %Name%es are the scoundrels who distill the drugs, refine the arcane essences, build the bombs, bandage the wounds, and forge the tools of the criminal trades - and knowing how to make things also means knowing how to break them."
+    ],
+    "XpTrigger": "You earn xp when you address a challenge with technical skill or mayhem.",
+    "DefaultSpecialAbilityId": 0,
+    "StartingSpecialAbilityId": null,
+    "SpecialAbilities": [ 0, 2, 3, 15, 35, 39, 50, 51 ],
+    "Contacts": [ 7, 15, 16, 30, 33 ],
+    "Items": [ 2, 27, 28, 29, 50 ],
+    "StartingActionDots": {
+      "10": 2,
+      "11": 1
+    },
+    "StartingBuilds": [ 14, 18, 26, 27 ]
+  }
+]

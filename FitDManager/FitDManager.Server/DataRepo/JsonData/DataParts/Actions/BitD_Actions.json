@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 0,
+    "Name": "Attune"
+  },
+  {
+    "Id": 1,
+    "Name": "Command"
+  },
+  {
+    "Id": 2,
+    "Name": "Consort"
+  },
+  {
+    "Id": 3,
+    "Name": "Finesse"
+  },
+  {
+    "Id": 4,
+    "Name": "Hunt"
+  },
+  {
+    "Id": 5,
+    "Name": "Prowl"
+  },
+  {
+    "Id": 6,
+    "Name": "Skirmish"
+  },
+  {
+    "Id": 7,
+    "Name": "Study"
+  },
+  {
+    "Id": 8,
+    "Name": "Survey"
+  },
+  {
+    "Id": 9,
+    "Name": "Sway"
+  },
+  {
+    "Id": 10,
+    "Name": "Tinker"
+  },
+  {
+    "Id": 11,
+    "Name": "Wreck"
+  }
+]

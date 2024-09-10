@@ -1,8 +1,18 @@
-﻿namespace FITDManager.Server.Models
+﻿namespace FitDManager.Server.Models
 {
 	public abstract class BaseModel
 	{
-		public int Id { get; set; } = 0;
-		public string Name { get; set; } = string.Empty;
+		public required int Id { get; set; }
+		public required string Name { get; set; }
+	}
+
+	public class BaseModelJson : BaseModel
+	{
+
+	}
+
+	public abstract class BaseModelRef : BaseModel
+	{
+
 	}
 }
