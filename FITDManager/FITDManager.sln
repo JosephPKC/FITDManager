@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitDManager.Server", "FITDM
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "fitdmanager.client", "fitdmanager.client\fitdmanager.client.esproj", "{7A0EF9AD-F42E-4566-A32A-DFAB9BDB81A0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitDCharCreator", "..\FitDCharCreator\FitDCharCreator.csproj", "{B9F091BC-6FBA-4458-B7E0-9CE9EA8FBB2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FITDManagerBackEnd", "..\FITDManagerBackEnd\FITDManagerBackEnd.csproj", "{A72DE9EF-F4C4-4B96-88B3-BB7B323F56A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitDCharCreator", "..\FitDCharCreator\FitDCharCreator.csproj", "{C63B32DC-F4B3-49E4-88A0-1D7C97F1614B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonLiteDbLoader", "..\JsonLiteDbLoader\JsonLiteDbLoader.csproj", "{5EF05F11-7145-41AD-880F-A1B5E832F593}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiteDbAdapter", "..\LiteDbAdapter\LiteDbAdapter.csproj", "{B3E6572B-001D-481C-9FD7-430920183ED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +31,22 @@ Global
 		{7A0EF9AD-F42E-4566-A32A-DFAB9BDB81A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A0EF9AD-F42E-4566-A32A-DFAB9BDB81A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A0EF9AD-F42E-4566-A32A-DFAB9BDB81A0}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{B9F091BC-6FBA-4458-B7E0-9CE9EA8FBB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9F091BC-6FBA-4458-B7E0-9CE9EA8FBB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9F091BC-6FBA-4458-B7E0-9CE9EA8FBB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9F091BC-6FBA-4458-B7E0-9CE9EA8FBB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72DE9EF-F4C4-4B96-88B3-BB7B323F56A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72DE9EF-F4C4-4B96-88B3-BB7B323F56A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72DE9EF-F4C4-4B96-88B3-BB7B323F56A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72DE9EF-F4C4-4B96-88B3-BB7B323F56A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63B32DC-F4B3-49E4-88A0-1D7C97F1614B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63B32DC-F4B3-49E4-88A0-1D7C97F1614B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63B32DC-F4B3-49E4-88A0-1D7C97F1614B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63B32DC-F4B3-49E4-88A0-1D7C97F1614B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EF05F11-7145-41AD-880F-A1B5E832F593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EF05F11-7145-41AD-880F-A1B5E832F593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EF05F11-7145-41AD-880F-A1B5E832F593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EF05F11-7145-41AD-880F-A1B5E832F593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E6572B-001D-481C-9FD7-430920183ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E6572B-001D-481C-9FD7-430920183ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E6572B-001D-481C-9FD7-430920183ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E6572B-001D-481C-9FD7-430920183ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

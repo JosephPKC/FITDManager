@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LiteDbAdapter\LiteDbAdapter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FileIOWrapper">
+      <HintPath>..\libs\FileIOWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonParser">
+      <HintPath>..\libs\JsonParser.dll</HintPath>
+    </Reference>
+    <Reference Include="LogWrapper">
+      <HintPath>..\libs\LogWrapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

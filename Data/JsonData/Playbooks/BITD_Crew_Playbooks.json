@@ -1,0 +1,54 @@
+[
+  {
+    "Id": 0,
+    "Name": "",
+    "SubName": "",
+    "XpTrigger": "",
+    "StartingAbilityIndex": 0,
+    "DefaultAbilityIndex": 0,
+    "Abilities": [
+      {
+        "Name": "",
+        "Text": "",
+        "NbrOfDots": 1
+      }
+    ],
+    "Contacts": [
+      {
+        "Name": "",
+        "Role": ""
+      }
+    ],
+    "StartingUpgradeIndices": [
+      0
+    ],
+    "Upgrades": [
+      {
+        "Name": "",
+        "Desscription": ""
+      }
+    ],
+    "HuntingGrounds": [
+      {
+        "Name": "",
+        "Description": ""
+      }
+    ],
+    "StartingClaimIndex": 0,
+    "Claims": [
+      {
+        "Name": "",
+        "Description": "",
+        "Position": {
+          "X": 0,
+          "Y": 0,
+          "LinkLeft": false,
+          "LinkRight": false,
+          "LinkUp": false,
+          "LinkDown": false
+        }
+      }
+    ]
+  }
+
+]
