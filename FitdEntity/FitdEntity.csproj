@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FitdEntity\FitdEntity.csproj" />
-    <ProjectReference Include="..\FitdGateway\FitdGateway.csproj" />
+    <Reference Include="Utils">
+      <HintPath>..\libs\Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Sheets\Armor\" />
+    <Folder Include="UseRefs\" />
   </ItemGroup>
 
 </Project>

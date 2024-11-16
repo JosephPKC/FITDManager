@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FitdConfig\FitdConfig.csproj" />
+    <ProjectReference Include="..\FitdEntity\FitdEntity.csproj" />
     <ProjectReference Include="..\LiteDbAdapter\LiteDbAdapter.csproj" />
   </ItemGroup>
 

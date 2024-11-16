@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FitdEntity\FitdEntity.csproj" />
-    <ProjectReference Include="..\FitdGateway\FitdGateway.csproj" />
   </ItemGroup>
 
 </Project>

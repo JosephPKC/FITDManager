@@ -1,30 +1,22 @@
 ﻿using JsonParser.Parsers;
 using LogWrapper.Loggers;
 
-using LiteDbAdapter;
-using LiteDbAdapter.DbModels;
-using LiteDbAdapter.DbModels.Playbooks;
+using FitdConfig.Names;
+using FitdEntity;
+using LiteDbAdapter.Adapters.LoaderAdapter;
+using FitdEntity.Playbooks.CharPlaybooks;
+using FitdEntity.Playbooks.CrewPlaybooks;
 
 namespace JsonLiteDbLoader
 {
     /// <summary>
     /// Loads json data files and pushes them to a LiteDb instance.
     /// </summary>
-    public sealed class JsonLiteDbLoader(ILiteDbAdapter pDb, IFileParser pJson, ILoggerFactory pLoggerFactory)
+    public sealed class JsonLiteDbLoader(ILoaderAdapter pDb, IFileParser pJson, ILoggerFactory pLoggerFactory)
 	{
-		private readonly ILiteDbAdapter _db = pDb;
+		private readonly ILoaderAdapter _db = pDb;
 		private readonly IFileParser _json = pJson;
 		private readonly ILogger log = pLoggerFactory.CreateNewLogger(typeof(JsonLiteDbLoader));
-
-		/* File & Collection Names */
-		private static readonly string _playbookJsonPath = "Playbooks/";
-
-		private static readonly string _bitdCharPlaybooksName = "BITD_Char_Playbooks";
-		private static readonly string _bitdCrewPlaybooksName = "BITD_Crew_Playbooks";
-		private static readonly string _savCharPlaybooksName = "SAV_Char_Playbooks";
-		private static readonly string _savCrewPlaybooksName = "SAV_Crew_Playbooks";
-
-		private static readonly ICollection<string> _allNames = [_bitdCharPlaybooksName, _bitdCrewPlaybooksName, _savCharPlaybooksName, _savCrewPlaybooksName];
 
 		public void LoadAllData(string pBasePath)
 		{
@@ -35,7 +27,7 @@ namespace JsonLiteDbLoader
 		private void CleanUp()
 		{
 			log.Info("BEGIN: Cleaning up existing collections.");
-			foreach (string colName in _allNames)
+			foreach (string colName in DbNames.AllRefNames)
 			{
 				try
 				{
@@ -59,17 +51,18 @@ namespace JsonLiteDbLoader
 
 		private void LoadPlaybookData(string pBasePath)
 		{
-			string baseFilePath = $"{pBasePath}{_playbookJsonPath}";
+			string baseFilePath = $"{pBasePath}{JsonNames.PlaybookJsonPath}";
 
 			// BITD
-			// Char Playbooks
-			LoadJsonDataArray<CharPlaybookDbModel>(baseFilePath, $"{_bitdCharPlaybooksName}.json", _bitdCharPlaybooksName);
+			LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.BitD]}", DbNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.BitD]);
+			//LoadJsonDataArray<CrewPlaybookRef>(baseFilePath, $"{JsonNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.BitD]}", DbNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.BitD]);
 
-			// Crew Playbooks
-			LoadJsonDataArray<CrewPlaybookDbModel>(baseFilePath, $"{_bitdCrewPlaybooksName}.json", _bitdCrewPlaybooksName);
+			//// SAV
+			//LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.SaV]}", DbNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.SaV]);
+			//LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.SaV]}", DbNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.SaV]);
 		}
 
-		private void LoadJsonDataArray<TModel>(string pBaseFilePath, string pFileName, string pColName) where TModel : BaseDbModel
+		private void LoadJsonDataArray<TModel>(string pBaseFilePath, string pFileName, string pColName) where TModel : BaseModel
 		{
 			log.Info($"BEGIN: Load {pBaseFilePath}{pFileName} to Collection {pColName}.");
 			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{pFileName}");
