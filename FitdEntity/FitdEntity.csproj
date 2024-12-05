@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Sheets\Armor\" />
-    <Folder Include="UseRefs\" />
+    <ProjectReference Include="..\FitdConfig\FitdConfig.csproj" />
   </ItemGroup>
 
 </Project>

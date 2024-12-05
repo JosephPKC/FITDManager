@@ -1,20 +1,20 @@
 ﻿using JsonParser.Parsers;
 using LogWrapper.Loggers;
 
-using FitdConfig.Names;
+using FitdConfig;
+using FitdConfig.Configs;
 using FitdEntity;
-using LiteDbAdapter.Adapters.LoaderAdapter;
-using FitdEntity.Playbooks.CharPlaybooks;
-using FitdEntity.Playbooks.CrewPlaybooks;
+using FitdEntity.Bitd.Playbooks;
+using FitdGateway.JsonGateway;
 
 namespace JsonLiteDbLoader
 {
     /// <summary>
     /// Loads json data files and pushes them to a LiteDb instance.
     /// </summary>
-    public sealed class JsonLiteDbLoader(ILoaderAdapter pDb, IFileParser pJson, ILoggerFactory pLoggerFactory)
+    public sealed class JsonLiteDbLoader(IJsonGateway pGateway, IFileParser pJson, ILoggerFactory pLoggerFactory)
 	{
-		private readonly ILoaderAdapter _db = pDb;
+		private readonly IJsonGateway _gateway = pGateway;
 		private readonly IFileParser _json = pJson;
 		private readonly ILogger log = pLoggerFactory.CreateNewLogger(typeof(JsonLiteDbLoader));
 
@@ -26,48 +26,43 @@ namespace JsonLiteDbLoader
 
 		private void CleanUp()
 		{
-			log.Info("BEGIN: Cleaning up existing collections.");
-			foreach (string colName in DbNames.AllRefNames)
-			{
-				try
-				{
-					log.Info($"Reseting collection {colName}.");
-					_db.ResetCol(colName);
-				}
-				catch (Exception ex)
-				{
-					log.Error($"Error: {ex}.");
-					throw;
-				}
-			}
-			log.Info("END: Cleaning up existing collections.");
+			CleanUpBITD();
 		}
 
 		private void LoadJsonData(string pBasePath)
 		{
-			LoadPlaybookData(pBasePath);
-			// Other Stuff Here
+			LoadBITD(pBasePath);
 		}
 
-		private void LoadPlaybookData(string pBasePath)
+		#region "Common"
+
+		#endregion
+
+		#region "BITD"
+		private void CleanUpBITD()
 		{
-			string baseFilePath = $"{pBasePath}{JsonNames.PlaybookJsonPath}";
+			log.Info("BEGIN: Clean up BITD tables.");
 
-			// BITD
-			LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.BitD]}", DbNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.BitD]);
-			//LoadJsonDataArray<CrewPlaybookRef>(baseFilePath, $"{JsonNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.BitD]}", DbNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.BitD]);
+			_gateway.Reset<BitdCharPlaybook>(new ColType(EntityTypes.CharPlaybook, GameTypes.BitD));
 
-			//// SAV
-			//LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.SaV]}", DbNames.CharPlaybookNames[FitdConfig.GameType.GameTypes.SaV]);
-			//LoadJsonDataArray<BitdCharPlaybookRef>(baseFilePath, $"{JsonNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.SaV]}", DbNames.CrewPlaybookNames[FitdConfig.GameType.GameTypes.SaV]);
+			log.Info("END: Clean up BITD tables.");
 		}
 
-		private void LoadJsonDataArray<TModel>(string pBaseFilePath, string pFileName, string pColName) where TModel : BaseModel
+		private void LoadBITD(string pBasePath)
 		{
-			log.Info($"BEGIN: Load {pBaseFilePath}{pFileName} to Collection {pColName}.");
-			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{pFileName}");
-			_db.AddAll(pColName, jsonData);
-			log.Info($"END: Load {pBaseFilePath}{pFileName} to Collection {pColName}.");
+			log.Info("BEGIN: Load BITD data.");
+
+			LoadJsonDataArray<BitdCharPlaybook>(pBasePath, EntityTypes.CharPlaybook, GameTypes.BitD);
+
+			log.Info("END: Load BITD data.");
+		}
+		#endregion
+
+		private void LoadJsonDataArray<TModel>(string pBaseFilePath, EntityTypes pEntityType, GameTypes pGameType) where TModel : IHasId
+		{
+			ColType colType = new(pEntityType, pGameType);
+			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{Names.JsonNames[colType]}");
+			_gateway.AddAll(colType, jsonData);
 		}
 	}
 }
