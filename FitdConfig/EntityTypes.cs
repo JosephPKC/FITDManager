@@ -8,6 +8,7 @@
         CharSheet,
         CrewSheet,
         CharSpecialAbility,
-        CrewSpecialAbility
+        CrewSpecialAbility,
+        Item
     }
 }

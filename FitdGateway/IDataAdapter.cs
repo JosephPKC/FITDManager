@@ -1,5 +1,4 @@
 using FitdConfig;
-using FitdEntity;
 
 namespace FitdGateway
 {
@@ -8,20 +7,19 @@ namespace FitdGateway
 	/// </summary>
 	public interface IDataAdapter
 	{
-		void Add<TData>(ColType pColType, TData pData) where TData : IHasId;
-		void AddAll<TData>(ColType pColType, IEnumerable<TData> pEntities) where TData : IHasId;
-		void Create<TData>(ColType pColType) where TData : IHasId;
-
-		TData? Read<TData>(ColType pColType, Guid pId) where TData : IHasId;
-		ICollection<TData> ReadAll<TData>(ColType pColType) where TData : IHasId;
-
-		void Update<TData>(ColType pColType, TData pData) where TData : IHasId;
-		void UpdateAll<TData>(ColType pColType, IEnumerable<TData> pEntities) where TData : IHasId;
-
-		void Delete<TData>(ColType pColType, Guid pId) where TData: IHasId;
-		void DeleteAll<TData>(ColType pColType) where TData : IHasId;
-		void Drop<TData>(ColType pColType) where TData : IHasId;
-
-		bool Exists<TData>(ColType pColType, Guid pId) where TData : IHasId;
+		void Add<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId, TModel pModel);
+		void Add<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId, TModel pModel);
+		void Create<TModel>(GameTypes pGameType, EntityTypes pEntityType);
+		void Delete<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId);
+		void Delete<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId);
+		void DeleteAll<TModel>(GameTypes pGameType, EntityTypes pEntityType);
+		void Drop<TModel>(GameTypes pGameType, EntityTypes pEntityType);
+		bool Exists<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId);
+		bool Exists<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId);
+		TModel? Read<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId);
+		TModel? Read<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId);
+		ICollection<TModel> ReadAll<TModel>(GameTypes pGameType, EntityTypes pEntityType);
+		void Update<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId, TModel pModel);
+		void Update<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId, TModel pModel);
 	}
 }

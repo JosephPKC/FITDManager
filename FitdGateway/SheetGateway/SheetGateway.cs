@@ -6,39 +6,39 @@ namespace FitdGateway.SheetGateway
 	internal class SheetGateway(IDataAdapter pAdapter) : BaseGateway(pAdapter), ISheetGateway
 	{
 		#region "ISheetGateway"
-		public void Add<TSheet>(ColType pColType, TSheet pSheet) where TSheet : BaseSheet
+		public void Add<TSheet>(GameTypes pGameType, EntityTypes pEntityType, TSheet pSheet) where TSheet : BaseSheet
 		{
-			_adapter.Add(pColType, pSheet);
+			_adapter.Add(pGameType, pEntityType, pSheet.Id, pSheet);
 		}
 
-		public void Clear<TSheet>(ColType pColType) where TSheet : BaseSheet
+		public void Clear<TSheet>(GameTypes pGameType, EntityTypes pEntityType) where TSheet : BaseSheet
 		{
-			_adapter.DeleteAll<TSheet>(pColType);
+			_adapter.DeleteAll<TSheet>(pGameType, pEntityType);
 		}
 
-		public bool Contains<TSheet>(ColType pColType, Guid pId) where TSheet : BaseSheet
+		public bool Contains<TSheet>(GameTypes pGameType, EntityTypes pEntityType, Guid pId) where TSheet : BaseSheet
 		{
-			return _adapter.Exists<TSheet>(pColType, pId);
+			return _adapter.Exists<TSheet>(pGameType, pEntityType, pId);
 		}
 
-		public void Delete<TSheet>(ColType pColType, Guid pId) where TSheet : BaseSheet
+		public void Delete<TSheet>(GameTypes pGameType, EntityTypes pEntityType, Guid pId) where TSheet : BaseSheet
 		{
-			_adapter.Delete<TSheet>(pColType, pId);
+			_adapter.Delete<TSheet>(pGameType, pEntityType, pId);
 		}
 
-		public TSheet? Get<TSheet>(ColType pColType, Guid pId) where TSheet : BaseSheet
+		public TSheet? Get<TSheet>(GameTypes pGameType, EntityTypes pEntityType, Guid pId) where TSheet : BaseSheet
 		{
-			return _adapter.Read<TSheet>(pColType, pId);
+			return _adapter.Read<TSheet>(pGameType, pEntityType, pId);
 		}
 
-		public ICollection<TSheet> GetAll<TSheet>(ColType pColType) where TSheet : BaseSheet
+		public ICollection<TSheet> GetAll<TSheet>(GameTypes pGameType, EntityTypes pEntityType) where TSheet : BaseSheet
 		{
-			return _adapter.ReadAll<TSheet>(pColType);
+			return _adapter.ReadAll<TSheet>(pGameType, pEntityType);
 		}
 
-		public void Update<TSheet>(ColType pColType, TSheet pSheet) where TSheet : BaseSheet
+		public void Update<TSheet>(GameTypes pGameType, EntityTypes pEntityType, TSheet pSheet) where TSheet : BaseSheet
 		{
-			_adapter.Update(pColType, pSheet);
+			_adapter.Update(pGameType, pEntityType, pSheet.Id, pSheet);
 		}
 		#endregion
 	}

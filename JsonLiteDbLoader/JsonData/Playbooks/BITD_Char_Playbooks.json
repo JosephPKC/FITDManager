@@ -1,0 +1,170 @@
+[
+  {
+    "Id": 0,
+    "Name": "Cutter",
+    "SubName": "A dangerous and intimidating fighter",
+    "XpTrigger": "you address a challenge with violence or coercion",
+    "StartingSpecialAbilityId": null,
+    "DefaultSpecialAbilityId": 0,
+    "SpecialAbilities": [
+      {
+        "Id": 1,
+        "Name": "Battleborn",
+        "Text": "You may expend your special armor to reduce harm from an attack in combat or to push yourself during a fight.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 2,
+        "Name": "Bodyguard",
+        "Text": "When you protect a teammate, take +1d to your resistance roll. When you gather info to anticipate possible threats in the current situation, you get +1 effect.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 3,
+        "Name": "Ghost Fighter",
+        "Text": "You may imbue your hands, melee weapons, or tools with spirit energy. You gain potency in combat vs. the supernatural. You may grapple with spirits to restrain and capture them.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 4,
+        "Name": "Leader",
+        "Text": "When you command a cohort in combat, they continue to fight when they would otherwise break (they're not taken out when they suffer level 3 harm). They gain +1 effect and 1 armor.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 5,
+        "Name": "Mule",
+        "Text": "Your load limits are higher. Light: 5. Normal: 7. Heavy: 8.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 6,
+        "Name": "Not To Be Trifled With",
+        "Text": "You can push yourself to do one of the following: perform a feat of physical force that verges on the superhuman - engage a small gang on equal footing in close combat.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 7,
+        "Name": "Savage",
+        "Text": "When you unleash physical violence, it's especially frightening. When you command a frightened target, take +1d.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 8,
+        "Name": "Vigorous",
+        "Text": "You recover from harm faster. Permanently fill in one of your healing clock segments. Take +1d to healing treatment rolls.",
+        "NbrOfBoxes": 1
+      },
+      {
+        "Id": 0,
+        "Name": "Veteran",
+        "Text": "Choose a special ability from another source.",
+        "NbrOfBoxes": 3
+      }
+    ],
+    "Contacts": [
+      {
+        "Id": 0,
+        "Name": "Marlane",
+        "Text": "a pugilist"
+      },
+      {
+        "Id": 1,
+        "Name": "Chael",
+        "Text": "a vicious thug"
+      },
+      {
+        "Id": 2,
+        "Name": "Mercy",
+        "Text": "a cold killer"
+      },
+      {
+        "Id": 3,
+        "Name": "Grace",
+        "Text": "an extortionist"
+      },
+      {
+        "Id": 4,
+        "Name": "Sawtooth",
+        "Text": "a physicker"
+      }
+    ],
+    "Items": [
+      {
+        "Id": 0,
+        "Name": "Fine hand weapon",
+        "Text": "A finely crafted one-handed melee weapon of your choice.",
+        "Loadout": 1
+      },
+     {
+        "Id": 1,
+        "Name": "Fine heavy weapon",
+        "Text": "A finely crafted two-handed melee weapon of your choice.",
+        "Loadout": 2
+      },
+      {
+        "Id": 2,
+        "Name": "Scary weapon or tool",
+        "Text": "A scary-looking hand weapon or tool.",
+        "Loadout": 1
+      },
+      {
+        "Id": 3,
+        "Name": "Manacles & chain",
+        "Text": "A set of heavy manacles and chain, suitable for restraining a prisoner.",
+        "Loadout": 0
+      },
+      {
+        "Id": 4,
+        "Name": "Rage essence vial",
+        "Text": "A single dose, which greatly enhances the user's strength, resistance to pain, and irrational aggression for the span of several minutes.",
+        "Loadout": 0
+      }
+    ],
+    "StartingBuilds": [
+      {
+        "Id": 0,
+        "Name": "Captain",
+        "StartingSpecialAbilityId": 4,
+        "BonusActions": {
+          "Command": 1,
+          "Study": 1,
+          "Survey": 2
+        }
+      },
+      {
+        "Id": 1,
+        "Name": "Thug",
+        "StartingSpecialAbilityId": 6,
+        "BonusActions": {
+          "Command": 1,
+          "Consort": 2,
+          "Sway": 1
+        }
+      },
+      {
+        "Id": 2,
+        "Name": "Terror",
+        "StartingSpecialAbilityId": 7,
+        "BonusActions": {
+          "Prowl": 2,
+          "Wreck": 2
+        }
+      },
+      {
+        "Id": 3,
+        "Name": "Devil Hunter",
+        "StartingSpecialAbilityId": 3,
+        "BonusActions": {
+          "Attune": 2,
+          "Hunt": 1,
+          "Study": 1
+        }
+      }
+    ],
+    "StartingActions": {
+      "Command": 1,
+      "Skirmish": 2
+    }
+  }
+]

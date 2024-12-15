@@ -43,7 +43,7 @@ namespace JsonLiteDbLoader
 		{
 			log.Info("BEGIN: Clean up BITD tables.");
 
-			_gateway.Reset<BitdCharPlaybook>(new ColType(EntityTypes.CharPlaybook, GameTypes.BitD));
+			_gateway.Reset<BitdCharPlaybookRef>(GameTypes.BitD, EntityTypes.CharPlaybook);
 
 			log.Info("END: Clean up BITD tables.");
 		}
@@ -52,17 +52,16 @@ namespace JsonLiteDbLoader
 		{
 			log.Info("BEGIN: Load BITD data.");
 
-			LoadJsonDataArray<BitdCharPlaybook>(pBasePath, EntityTypes.CharPlaybook, GameTypes.BitD);
+			LoadJsonDataArray<BitdCharPlaybookRef>(pBasePath, GameTypes.BitD, EntityTypes.CharPlaybook);
 
 			log.Info("END: Load BITD data.");
 		}
 		#endregion
 
-		private void LoadJsonDataArray<TModel>(string pBaseFilePath, EntityTypes pEntityType, GameTypes pGameType) where TModel : IHasId
+		private void LoadJsonDataArray<TModel>(string pBaseFilePath, GameTypes pGameType, EntityTypes pEntityType) where TModel : BaseRef
 		{
-			ColType colType = new(pEntityType, pGameType);
-			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{Names.JsonNames[colType]}");
-			_gateway.AddAll(colType, jsonData);
+			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{Names.GetJsonName(pGameType, pEntityType)}");
+			_gateway.AddAll(pGameType, pEntityType, jsonData);
 		}
 	}
 }

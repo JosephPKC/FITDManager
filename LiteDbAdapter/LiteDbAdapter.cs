@@ -3,7 +3,6 @@ using Utils.Exceptions;
 
 using FitdConfig;
 using FitdConfig.Configs;
-using FitdEntity;
 using FitdGateway;
 
 namespace LiteDbAdapter
@@ -13,99 +12,118 @@ namespace LiteDbAdapter
 		private readonly ILiteDbWrapper _db = pDb;
 
 		#region "IDataAdapter"
-		public void Add<TData>(ColType pColType, TData pData) where TData : IHasId
+		public void Add<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId, TModel pModel)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
-			_db.Add(colName, pData.Id, pData);
+			_db.Add(colName, pId, pModel);
 		}
 
-		public void AddAll<TData>(ColType pColType, IEnumerable<TData> pEntities) where TData : IHasId
+		public void Add<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId, TModel pModel)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
-			foreach (TData entity in pEntities)
-			{
-				_db.Add(colName, entity.Id, entity);
-			}
+			_db.Add(colName, pId, pModel);
 		}
 
-		public void Create<TData>(ColType pColType) where TData : IHasId
+		public void Create<TModel>(GameTypes pGameType, EntityTypes pEntityType)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
 			_db.Create(colName);
 		}
 
-		public void Delete<TData>(ColType pColType, Guid pId) where TData : IHasId
+		public void Delete<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
 			_db.DeleteById(colName, pId);
 		}
 
-		public void DeleteAll<TData>(ColType pColType) where TData : IHasId
+		public void Delete<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			_db.DeleteById(colName, pId);
+		}
+
+		public void DeleteAll<TModel>(GameTypes pGameType, EntityTypes pEntityType)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
 			_db.DeleteAll(colName);
 		}
 
-		public TData? Read<TData>(ColType pColType, Guid pId) where TData : IHasId
+		public void Drop<TModel>(GameTypes pGameType, EntityTypes pEntityType)
 		{
-			string colName = Names.DbNames[pColType];
-			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
-
-			return _db.GetById<TData>(colName, pId);
-		}
-
-		public ICollection<TData> ReadAll<TData>(ColType pColType) where TData : IHasId
-		{
-			string colName = Names.DbNames[pColType];
-			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
-
-			return _db.GetAll<TData>(colName);
-		}
-
-		public void Update<TData>(ColType pColType, TData pData) where TData : IHasId
-		{
-			string colName = Names.DbNames[pColType];
-			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
-
-			_db.UpdateById(colName, pData.Id, pData);
-		}
-
-		public void UpdateAll<TData>(ColType pColType, IEnumerable<TData> pEntities) where TData : IHasId
-		{
-			string colName = Names.DbNames[pColType];
-			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
-
-			foreach (TData entity in pEntities)
-			{
-				_db.UpdateById(colName, entity.Id, entity);
-			}
-		}
-
-		public void Drop<TData>(ColType pColType) where TData : IHasId
-		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
 			_db.Drop(colName);
 		}
 
-		public bool Exists<TData>(ColType pColType, Guid pId) where TData : IHasId
+		public bool Exists<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId)
 		{
-			string colName = Names.DbNames[pColType];
+			string colName = Names.GetDbName(pGameType, pEntityType);
 			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
 
-			TData? data = _db.GetById<TData>(colName, pId);
-			return data is null;
+			TModel? model = _db.GetById<TModel>(colName, pId);
+			return model is not null;
+		}
+
+		public bool Exists<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			TModel? model = _db.GetById<TModel>(colName, pId);
+			return model is not null;
+		}
+
+		public TModel? Read<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			return _db.GetById<TModel>(colName, pId);
+		}
+
+		public TModel? Read<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			return _db.GetById<TModel>(colName, pId);
+		}
+
+		public ICollection<TModel> ReadAll<TModel>(GameTypes pGameType, EntityTypes pEntityType)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			return _db.GetAll<TModel>(colName);
+		}
+
+		public void Update<TModel>(GameTypes pGameType, EntityTypes pEntityType, Guid pId, TModel pModel)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			_db.UpdateById(colName, pId, pModel);
+		}
+
+		public void Update<TModel>(GameTypes pGameType, EntityTypes pEntityType, int pId, TModel pModel)
+		{
+			string colName = Names.GetDbName(pGameType, pEntityType);
+			InvalidOperationExceptionExt.ThrowIfNullOrWhiteSpace("Collection Name", colName);
+
+			_db.UpdateById(colName, pId, pModel);
 		}
 		#endregion
 	}

@@ -5,7 +5,7 @@ namespace FitdGateway.JsonGateway
 {
 	public interface IJsonGateway
 	{
-		void AddAll<TModel>(ColType pColType, IEnumerable<TModel> pData) where TModel : IHasId;
-		void Reset<TModel>(ColType pColType) where TModel : IHasId;
+		void AddAll<TRef>(GameTypes pGameType, EntityTypes pEntityType, IEnumerable<TRef> pModels) where TRef : BaseRef;
+		void Reset<TRef>(GameTypes pGameType, EntityTypes pEntityType) where TRef : BaseRef;
 	}
 }

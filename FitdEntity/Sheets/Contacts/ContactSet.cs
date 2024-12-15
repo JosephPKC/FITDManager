@@ -2,8 +2,8 @@
 {
 	public class ContactSet
 	{
-		public ICollection<SheetContact> FriendlyContactIds { get; set; } = [];
-		public ICollection<SheetContact> NeutralContactIds { get; set; } = [];
-		public ICollection<SheetContact> RivalContactIds { get; set; } = [];
+		public ISet<Guid> FriendlyContactIds { get; set; } = new HashSet<Guid>();
+		public ISet<Guid> NeutralContactIds { get; set; } = new HashSet<Guid>();
+		public ISet<Guid> RivalContactIds { get; set; } = new HashSet<Guid>();
 	}
 }

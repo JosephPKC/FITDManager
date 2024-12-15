@@ -9,24 +9,29 @@ namespace FitdGateway.JsonGateway
 		/// <summary>
 		/// Adds all of the data models to the collection.
 		/// </summary>
-		/// <typeparam name="TModel"></typeparam>
+		/// <typeparam name="TRef"></typeparam>
 		/// <param name="pGameType"></param>
-		/// <param name="pData"></param>
-		public void AddAll<TModel>(ColType pColType, IEnumerable<TModel> pData) where TModel : IHasId
+		/// <param name="pEntityType"></param>
+		/// <param name="pModels"></param>
+		public void AddAll<TRef>(GameTypes pGameType, EntityTypes pEntityType, IEnumerable<TRef> pModels) where TRef : BaseRef
 		{
-			_adapter.AddAll(pColType, pData);
+			foreach (TRef model in pModels)
+			{
+				_adapter.Add(pGameType, pEntityType, model.Id, model);
+			}
 		}
 
 		/// <summary>
 		/// Resets the collection: Deletes all items in the collection, drops the collection, and then recreates the empty collection.
 		/// </summary>
-		/// <typeparam name="TModel"></typeparam>
+		/// <typeparam name="TRef"></typeparam>
 		/// <param name="pGameType"></param>
-		public void Reset<TModel>(ColType pColType) where TModel : IHasId
+		/// <param name="pEntityType"></param>
+		public void Reset<TRef>(GameTypes pGameType, EntityTypes pEntityType) where TRef : BaseRef
 		{
-			_adapter.DeleteAll<TModel>(pColType);
-			_adapter.Drop<TModel>(pColType);
-			_adapter.Create<TModel>(pColType);
+			_adapter.DeleteAll<TRef>(pGameType, pEntityType);
+			_adapter.Drop<TRef>(pGameType, pEntityType);
+			_adapter.Create<TRef>(pGameType, pEntityType);
 		}
 		#endregion
 	}

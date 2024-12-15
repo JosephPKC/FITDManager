@@ -2,23 +2,17 @@
 using FitdEntity.Playbooks.Builds;
 using FitdEntity.Playbooks.Contacts;
 using FitdEntity.Playbooks.Items;
-using FitdEntity.Playbooks.SpecialAbilities;
 
 namespace FitdEntity.Bitd.Playbooks
 {
 	public class BitdCharPlaybook : BaseCharPlaybook
 	{
 		/* Starting Actions & Builds */
-		public IReadOnlyDictionary<BitdActions.Actions, int> StartingActions { get; set; } = new Dictionary<BitdActions.Actions, int>();
-		public IReadOnlyDictionary<Guid, Build<BitdActions.Actions>> StartingBuilds { get; set; } = new Dictionary<Guid, Build<BitdActions.Actions>>();
+		public IReadOnlyDictionary<BitdActions.Actions, int> StartingActions { get; init; } = new Dictionary<BitdActions.Actions, int>();
+		public IReadOnlyDictionary<int, PlaybookBuild<BitdActions.Actions>> StartingBuilds { get; init; } = new Dictionary<int, PlaybookBuild<BitdActions.Actions>>();
 
 		/* Contacts & Items */
-		public IReadOnlyDictionary<Guid, Contact> Contacts { get; set; } = new Dictionary<Guid, Contact>();
-		public IReadOnlyDictionary<Guid, Item> Items { get; set; } = new Dictionary<Guid, Item>();
-
-		/* Special Abilities */
-		public IReadOnlyDictionary<Guid, SpecialAbility> SpecialAbilities { get; set; } = new Dictionary<Guid, SpecialAbility>();
-		public Guid StartingSpecialAbilityId { get; set; }
-		public Guid DefaultSpecialAbilityId { get; set; }
+		public IReadOnlyDictionary<int, PlaybookContact> Contacts { get; init; } = new Dictionary<int, PlaybookContact>();
+		public IReadOnlyDictionary<int, PlaybookItem> Items { get; init; } = new Dictionary<int, PlaybookItem>();
 	}
 }

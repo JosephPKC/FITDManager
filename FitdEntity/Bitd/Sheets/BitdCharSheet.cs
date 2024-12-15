@@ -1,18 +1,13 @@
-﻿using FitdEntity.Playbooks.Contacts;
-using FitdEntity.Playbooks.Items;
-using FitdEntity.Playbooks.SpecialAbilities;
+﻿using FitdEntity.DataStructs;
 using FitdEntity.Sheets;
 using FitdEntity.Sheets.Armor;
-using FitdEntity.Sheets.Conditions;
 using FitdEntity.Sheets.Contacts;
 using FitdEntity.Sheets.Harm;
 using FitdEntity.Sheets.Items;
-using FitdEntity.Sheets.SpecialAbilities;
-using FitdEntity.Sheets.Tracks;
 
 namespace FitdEntity.Bitd.Sheets
 {
-	public class BitdCharSheet : BaseCharSheet
+    public class BitdCharSheet : BaseCharSheet
 	{
 		/* Basic Info */
 		public string CrewName { get; set; } = string.Empty;
@@ -27,7 +22,7 @@ namespace FitdEntity.Bitd.Sheets
 
 		/* Stress, Trauma, Harm, Healing, Armor */
 		public Track Stress { get; set; } = new(8, 0);
-		public ConditionList Trauma { get; set; } = new(4);
+		public LimitedCol<string> Trauma { get; set; } = new(4);
 		public HarmSet Harm { get; set; } = new(2, 2, 1);
 		public Track Healing { get; set; } = new(4, 0);
 		public ArmorSet Armor { get; set; } = new();
@@ -64,19 +59,14 @@ namespace FitdEntity.Bitd.Sheets
 			{ BitdActions.Attributes.Prowess, 0 },
 			{ BitdActions.Attributes.Resolve, 0 }
 		};
-		public int MaxRating { get; set; } = 4;
-
-		/* Special Abilities */
-		public ICollection<SheetSpecialAbility> SelectedSpecialAbilityIds { get; set; } = [];
-		public IDictionary<Guid, SpecialAbility> CustomSpecialAbilities { get; set; } = new Dictionary<Guid, SpecialAbility>();
 
 		/* Contacts */
+		public IDictionary<Guid, Contact> AvailableContacts { get; set; } = new Dictionary<Guid, Contact>();
 		public ContactSet ContactIds { get; set; } = new();
-		public IDictionary<Guid, Contact> CustomContacts { get; set; } = new Dictionary<Guid, Contact>();
 
 		/* Items */
-		public ICollection<SheetItem> SelectedItemIds { get; set; } = [];
-		public IDictionary<Guid, Item> CustomItems { get; set; } = new Dictionary<Guid, Item>();
+		public IDictionary<Guid, Item> AvailableItems { get; set; } = new Dictionary<Guid, Item>();
+		public ISet<Guid> SelectedItemIds { get; set; } = new HashSet<Guid>();
 		public LoadoutStates Loadout { get; set; } = LoadoutStates.None;
 	}
 }

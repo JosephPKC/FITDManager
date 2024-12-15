@@ -1,11 +1,8 @@
-﻿using FitdConfig;
-
-namespace FitdEntity
+﻿namespace FitdEntity
 {
-	public abstract class BaseEntity : IHasId
+	public abstract class BaseEntity
 	{
-		#region "IHasId"
-		public required Guid Id { get; set; }
-		#endregion
+		public required Guid Id { get; init; }
+		public string Name { get; set; } = string.Empty;
 	}
 }

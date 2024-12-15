@@ -3,6 +3,7 @@ using JsonParser;
 using JsonParser.Parsers;
 using LogWrapper.Loggers.Log4Net.ColorConsole;
 
+using FitdConfig.Configs;
 using FitdGateway;
 using FitdGateway.JsonGateway;
 using LiteDbAdapter;
@@ -13,8 +14,8 @@ namespace JsonLiteDbLoader
 	{
 		public static void Main()
 		{
-			string dbPath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\Data\DbData", "FitdRefDb.db");
-			string jsonBasePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\Data\JsonData\");
+			string dbPath = Path.Combine(Environment.CurrentDirectory, Names.DbBaseFilePath, Names.DbFileName);
+			string jsonBasePath = Path.Combine(Environment.CurrentDirectory, Names.JsonBaseFilePath);
 			ColorConsoleLoggerFactory logFactory = new();
 
 			IDataAdapter adapter = LiteDbAdapterFactory.CreateNewAdapter(dbPath, logFactory);

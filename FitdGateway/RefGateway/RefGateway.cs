@@ -6,19 +6,19 @@ namespace FitdGateway.RefGateway
 	internal class RefGateway(IDataAdapter pAdapter) : BaseGateway(pAdapter), IRefGateway
 	{
 		#region "IRefGateway"
-		public TRef? Get<TRef>(ColType pColType, Guid pId) where TRef : BaseRef
+		public TRef? Get<TRef>(GameTypes pGameType, EntityTypes pEntityType, Guid pId) where TRef : BaseRef
 		{
-			return _adapter.Read<TRef>(pColType, pId);
+			return _adapter.Read<TRef>(pGameType, pEntityType, pId);
 		}
 
-		public ICollection<TRef> GetAll<TRef>(ColType pColType) where TRef : BaseRef
+		public ICollection<TRef> GetAll<TRef>(GameTypes pGameType, EntityTypes pEntityType) where TRef : BaseRef
 		{
-			return _adapter.ReadAll<TRef>(pColType);
+			return _adapter.ReadAll<TRef>(pGameType, pEntityType);
 		}
 
-		public IDictionary<Guid, TRef> GetAllAsDict<TRef>(ColType pColType) where TRef : BaseRef
+		public IDictionary<int, TRef> GetAllAsDict<TRef>(GameTypes pGameType, EntityTypes pEntityType) where TRef : BaseRef
 		{
-			ICollection<TRef> allCol = GetAll<TRef>(pColType);
+			ICollection<TRef> allCol = GetAll<TRef>(pGameType, pEntityType);
 
 			return allCol.ToDictionary(x => x.Id, x => x);
 		}

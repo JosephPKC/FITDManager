@@ -1,13 +1,20 @@
-﻿namespace FitdEntity.Sheets
+﻿using FitdConfig;
+using FitdEntity.Sheets.SpecialAbilities;
+
+namespace FitdEntity.Sheets
 {
 	public abstract class BaseSheet : BaseEntity
 	{
-		public string Name { get; set; } = string.Empty;
-		public required DateTime DateCreated { get; set; }
-		public DateTime? DateLastModified { get; set; }
+		public required DateTime DateCreated { get; init; }
+		public DateTime? DateLastModified { get; set; } = null;
 		public string Notes { get; set; } = string.Empty;
+		public GameTypes GameType { get; set; } = GameTypes.None;
 
 		/* Playbooks */
-		public Guid PlaybookId { get; set; }
+		public int PlaybookId { get; set; } = 0;
+
+		/* Special Abilities */
+		public IDictionary<Guid, SpecialAbility> AvailableSpecialAbilities { get; set; } = new Dictionary<Guid, SpecialAbility>();
+		public ISet<Guid> LearnedSpecialAbilities { get; set; } = new HashSet<Guid>();
 	}
 }
