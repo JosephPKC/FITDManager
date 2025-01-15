@@ -3,9 +3,9 @@ using JsonParser;
 using JsonParser.Parsers;
 using LogWrapper.Loggers.Log4Net.ColorConsole;
 
+using DataGateway;
+using DataGateway.JsonGateway;
 using FitdConfig.Configs;
-using FitdGateway;
-using FitdGateway.JsonGateway;
 using LiteDbAdapter;
 
 namespace JsonLiteDbLoader

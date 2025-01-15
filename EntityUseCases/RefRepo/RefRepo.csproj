@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entity\FitdCoreEntity\FitdCoreEntity.csproj" />
+    <ProjectReference Include="..\..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
+    <ProjectReference Include="..\..\Gateway\DataGateway\DataGateway.csproj" />
+    <ProjectReference Include="..\EntityMapper\EntityMapper.csproj" />
+  </ItemGroup>
+
+</Project>

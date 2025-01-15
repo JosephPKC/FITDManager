@@ -1,0 +1,1 @@
+The SheetManager handles general manipulation of sheet data, including saving, loading, creating, and deleting sheets.

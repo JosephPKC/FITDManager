@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
     <ProjectReference Include="..\FitdConfig\FitdConfig.csproj" />
-    <ProjectReference Include="..\FitdEntity\FitdEntity.csproj" />
+    <ProjectReference Include="..\Gateway\DataGateway\DataGateway.csproj" />
+    <ProjectReference Include="..\Gateway\LiteDbAdapter\LiteDbAdapter.csproj" />
     <ProjectReference Include="..\LiteDbAdapter\LiteDbAdapter.csproj" />
   </ItemGroup>
 

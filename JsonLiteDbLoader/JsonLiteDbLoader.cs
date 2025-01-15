@@ -1,11 +1,11 @@
 ﻿using JsonParser.Parsers;
 using LogWrapper.Loggers;
 
+using DataGateway.JsonGateway;
 using FitdConfig;
 using FitdConfig.Configs;
-using FitdEntity;
-using FitdEntity.Bitd.Playbooks;
-using FitdGateway.JsonGateway;
+using FitdDataEntity.Bitd;
+using FitdDataEntity;
 
 namespace JsonLiteDbLoader
 {
@@ -43,7 +43,7 @@ namespace JsonLiteDbLoader
 		{
 			log.Info("BEGIN: Clean up BITD tables.");
 
-			_gateway.Reset<BitdCharPlaybookRef>(GameTypes.BitD, EntityTypes.CharPlaybook);
+			_gateway.Reset<BitdCharPlaybookData>(GameTypes.BitD, EntityTypes.CharPlaybook);
 
 			log.Info("END: Clean up BITD tables.");
 		}
@@ -52,13 +52,13 @@ namespace JsonLiteDbLoader
 		{
 			log.Info("BEGIN: Load BITD data.");
 
-			LoadJsonDataArray<BitdCharPlaybookRef>(pBasePath, GameTypes.BitD, EntityTypes.CharPlaybook);
+			LoadJsonDataArray<BitdCharPlaybookData>(pBasePath, GameTypes.BitD, EntityTypes.CharPlaybook);
 
 			log.Info("END: Load BITD data.");
 		}
 		#endregion
 
-		private void LoadJsonDataArray<TModel>(string pBaseFilePath, GameTypes pGameType, EntityTypes pEntityType) where TModel : BaseRef
+		private void LoadJsonDataArray<TModel>(string pBaseFilePath, GameTypes pGameType, EntityTypes pEntityType) where TModel : BaseRefData
 		{
 			ICollection<TModel> jsonData = _json.DeserializeArrayFromFile<TModel>($"{pBaseFilePath}{Names.GetJsonName(pGameType, pEntityType)}");
 			_gateway.AddAll(pGameType, pEntityType, jsonData);
