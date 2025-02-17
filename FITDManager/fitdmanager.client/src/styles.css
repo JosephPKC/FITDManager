@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "normalize.css";
-@import "fonts.css";
+@import url("../public/styles/normalize.css");
+@import url("../public/styles/fonts.css");
 
 /* Testing styles */
 /** {

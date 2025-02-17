@@ -4,9 +4,8 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import { smallDot } from "@app/shared/const";
-import { getIndexByValue } from "@app/shared/utils";
-import { BaseInputDirective } from "@app/sheet/inputs";
+import { getIndexByValue, smallDot } from "@shared/utils";
+import { BaseInputDirective } from "@sheet/inputs";
 
 /**
  * A selection list input.
@@ -32,11 +31,9 @@ export class SelectInputComponent extends BaseInputDirective implements ControlV
   public itemSeparator: InputSignal<string> = input<string>(smallDot);
   // #endregion
 
-  // #region Internal
+  // #region Internals
   protected selectedItem: WritableSignal<string> = signal<string>("");
-  // #endregion
 
-  // #region Computes
   protected selectedItemIndex: Signal<number | null> = computed(() => {
     return getIndexByValue(this.itemList(), this.selectedItem());
   });

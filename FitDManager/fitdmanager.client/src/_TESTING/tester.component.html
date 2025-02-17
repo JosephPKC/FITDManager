@@ -1,12 +1,11 @@
 <div>
   <h1 class="fnt-header">TESTER</h1>
-  <form [formGroup]="testForm" (ngSubmit)="saveForm()" autocomplete="off">
-    <edit-button height="25" width="25" [(isEditable)]="isEditable" (onIsEditableChange)="onSetIsEditable($event)"></edit-button>
-    <reset-button height="25" width="25" (onReset)="resetToDefault()"></reset-button>
+  <form [formGroup]="testForm()" (ngSubmit)="onClickSave()" autocomplete="off">
+    <lock-button height="25" width="25" [locked]="locked()" (onLockedChange)="onClickLock($event)"></lock-button>
+    <reset-button height="25" width="25" (onReset)="onClickReset()"></reset-button>
     <button type="submit">
-      <img class="img-icon" src="assets/icons/MaterialUI/save.svg" height="25" width="25" />
+      <img class="img-icon" src="/icons/MaterialUI/save.svg" height="25" width="25" />
     </button>
-    <bitd-char-basic-info-section sectionName="basicInfo" [formGroup]="testForm" [(sectionModel)]="basicInfoSection" [isEditable]="isEditable()"></bitd-char-basic-info-section>
-    <!--<test-section-simple sectionName="test2" label="VICE/PURVEYOR: " [formGroup]="testForm" [sectionApiModel]="testApiModel().testSection2" [resetToDefaultEvent$]="resetToDefaultEvent$" [setEditableEvent$]="setEditableEvent$"></test-section-simple>-->
+    <bitd-char-basic-info-section name="basicInfo" [formGroup]="testForm()" [sectionModel]="apiModel().basicInfo" [locked]="locked()"></bitd-char-basic-info-section>
   </form>
 </div>

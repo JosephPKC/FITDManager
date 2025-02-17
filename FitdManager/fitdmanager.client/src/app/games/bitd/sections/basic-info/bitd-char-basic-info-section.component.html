@@ -1,0 +1,8 @@
+<div [class]="sectionClass()" [formGroup]="sectionGroup()">
+  <lock-button height="20" width="20" [locked]="isSectionLocked()" (onLockedChange)="onChangeLock($event)"></lock-button>
+  <div [class]="sectionInputsClass()">
+    <text-input formControlName="name" label="NAME: " ></text-input>
+    <text-input formControlName="alias" label="ALIAS: "></text-input>
+    <text-input formControlName="look" label="LOOK: "></text-input>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1184077">
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2191419">
   <PropertyGroup>
     <StartupCommand>npm start</StartupCommand>
     <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
@@ -8,13 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\fitdmanager.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="src\v1-test\**" />
-    <TypeScriptConfiguration Remove="src\v1-test\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\app\core\" />
-    <Folder Include="src\app\sheet-viewer\bitd\fields\" />
-    <Folder Include="src\assets\fonts\Kirsty\" />
-    <Folder Include="src\assets\fonts\LinuxLibertine\" />
+    <Folder Include="public\fonts\Kirsty\" />
+    <Folder Include="src\app\sheet\models\" />
   </ItemGroup>
 </Project>

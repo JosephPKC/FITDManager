@@ -1,8 +1,6 @@
-// Core
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-// App
 import { TesterComponent } from "../_TESTING/tester.component"
 
 export const appRoutes: Routes = [

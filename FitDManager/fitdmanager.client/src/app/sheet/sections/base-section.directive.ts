@@ -1,16 +1,8 @@
 import {
-    AfterContentInit,
-    AfterViewInit,
-  Directive, InputSignal, ModelSignal, OnChanges, OnInit, Signal,
-  SimpleChange,
-  SimpleChanges,
-  WritableSignal,
-  computed, inject, input, model,
-  signal
+  Directive, InputSignal, OnChanges, OnInit, Signal, SimpleChange, SimpleChanges, WritableSignal,
+  computed, inject, input, linkedSignal, signal
 } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
-
-import { callIfChanged } from "@app/shared/utils";
+import { AbstractControl, FormBuilder, FormGroup } from "@angular/forms";
 
 /**
  * Base for custom sections, which are containerse for related inputs for forms.
@@ -20,7 +12,7 @@ import { callIfChanged } from "@app/shared/utils";
 @Directive({
   selector: "base-section"
 })
-export abstract class BaseSectionDirective implements OnChanges, OnInit {
+export abstract class BaseSectionDirective<T> implements OnChanges, OnInit {
   // #region Services
   protected formBuilder: FormBuilder = inject(FormBuilder);
   // #endregion
@@ -28,34 +20,37 @@ export abstract class BaseSectionDirective implements OnChanges, OnInit {
   // #region Params
   public formGroup: InputSignal<FormGroup> = input.required<FormGroup>();
   public name: InputSignal<string> = input.required<string>();
+  public sectionModel: InputSignal<T> = input.required<T>();
   public label: InputSignal<string> = input<string>("");
   public locked: InputSignal<boolean> = input<boolean>(true);
   // #endregion
 
-  // #region Internal
+  // #region Internals
   protected sectionGroup: WritableSignal<FormGroup>;
-  protected isSectionLocked: WritableSignal<boolean> = signal<boolean>(this.locked());
-  // #endregion
+  protected isSectionHidden: WritableSignal<boolean> = signal<boolean>(false);
 
-  // #region Computes
+  protected isSectionLocked: WritableSignal<boolean> = linkedSignal<boolean>(() => {
+    return this.locked();
+  });
+
   protected sectionClass: Signal<string> = computed<string>(() => {
-    let className: string = 'div-section';
+    let className: string = "div-section";
 
     if (this.isSectionLocked()) {
-      className += ' div-section-unlocked'
+      className += " div-section-locked"
     }
     else {
-      className += ' div-section-locked'
+      className += " div-section-unlocked"
     }
 
     return className;
   })
 
   protected sectionInputsClass: Signal<string> = computed<string>(() => {
-    let className: string = 'div-section-fields';
+    let className: string = "div-section-fields";
 
     if (!this.isSectionLocked()) {
-      className += ' div-disabled';
+      className += " div-disabled";
     }
 
     return className;
@@ -64,46 +59,27 @@ export abstract class BaseSectionDirective implements OnChanges, OnInit {
 
   // #region Abstracts
   /**
-   * Builds out the section's form group.
+   * Builds out the section"s form group.
    */
-  protected abstract buildSectionGroup(): void;
+  protected abstract buildSectionGroup(): FormGroup;
+
   /**
-   * Subscribe to the form controls' valueChanges after form group creation.
+   * Updates the form values when the model is changed.
    */
-  protected abstract subscribeToValueChanges(): void;
-  /**
-   * Processes any input changes.
-   * @param propName The name of the input property that changed.
-   * @param change The SimpleChange object.
-   */
-  protected abstract processInputChange(propName: string, change: SimpleChange): void;
+  protected abstract updateFormValues(): void;
   // #endregion
 
   public constructor() {
     this.sectionGroup = signal<FormGroup>(this.formBuilder.group({}));
   }
 
-  // #region Lifecycle
-  public ngOnInit(): void {
-    this.buildSectionGroup();
-    this.subscribeToValueChanges();
-
-    this.formGroup().addControl(this.name(), this.sectionGroup);
-
-    this.setControlLocks(this.isSectionLocked());
-
-    this.additionalOnInit();
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    for (const propName in changes) {
-      const prop: SimpleChange = changes[propName];
-      this.processInputChange(propName, prop);
-    }
-
-    this.additionalOnChanges();
-  }
-
+  // #region Overridables
+  /**
+   * Processes input changes, specifically related to the model or other parameters.
+   * @param propName The name of the input property that changed.
+   * @param change The SimpleChange object.
+   */
+  protected processInputChange(propName: string, change: SimpleChange): void { }
   /**
    * Add additional logic at the end of ngOnInit.
    */
@@ -114,7 +90,43 @@ export abstract class BaseSectionDirective implements OnChanges, OnInit {
   protected additionalOnChanges(): void { }
   // #endregion
 
-  // #region Helpers
+  // #region Lifecycle
+  public ngOnInit(): void {
+    this.sectionGroup.set(this.buildSectionGroup());
+    this.formGroup().addControl(this.name(), this.sectionGroup());
+
+    this.setControlLocks(this.isSectionLocked());
+
+    this.additionalOnInit();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    for (const propName in changes) {
+      const prop: SimpleChange = changes[propName];
+      if (propName === "locked" && prop.currentValue !== undefined) {
+        // Locked input
+        this.setControlLocks(this.isSectionLocked());
+      }
+      else if (propName === "sectionModel" && prop.currentValue !== undefined) {
+        // Model input
+        this.updateFormValues();
+      }
+      else if (prop.currentValue !== undefined) {
+        // Other inputs
+        this.processInputChange(propName, prop);
+      }
+    }
+
+    this.additionalOnChanges();
+  }
+  // #endregion
+
+  // #region Lock Controls
+  protected onChangeLock(locked: boolean): void {
+    this.isSectionLocked.set(locked);
+    this.setControlLocks(locked);
+  }
+
   protected setControlLocks(locked: boolean): void {
     for (const field in this.sectionGroup().controls) {
       const control: AbstractControl<any, any> = this.sectionGroup().get(field)!;
@@ -125,6 +137,18 @@ export abstract class BaseSectionDirective implements OnChanges, OnInit {
         control.enable({ emitEvent: false });
       }
     }
+  }
+  // #endregion
+
+  // #region Hide Controls
+  protected onChangeHide(hidden: boolean): void {
+    this.isSectionHidden.set(hidden);
+  }
+  // #endregion
+
+  // #region Helpers
+  protected subscribeToValueChanges<T>(group: FormGroup, controlName: string, onValueChanges: (x: T) => void) {
+    group.controls[controlName].valueChanges.subscribe(onValueChanges);
   }
   // #endregion
 }

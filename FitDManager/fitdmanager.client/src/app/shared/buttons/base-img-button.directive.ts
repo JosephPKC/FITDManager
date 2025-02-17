@@ -1,7 +1,10 @@
-import { Directive, InputSignal, input } from "@angular/core";
+import {
+  Directive, InputSignal,
+  input
+} from "@angular/core";
 
 @Directive({
-  selector: 'base-img-button'})
+  selector: "base-img-button"})
 export abstract class BaseImgButtonDirective {
   // #region Params
   public height: InputSignal<string> = input<string>("15");

@@ -3,12 +3,12 @@ import {
   output
 } from "@angular/core";
 
-import { BaseImgButtonDirective } from "@app/shared/buttons";
+import { BaseImgButtonDirective } from "@shared/buttons";
 
 @Component({
-  selector: 'reset-button',
-  templateUrl: './reset-button.component.html',
-  styleUrl: './reset-button.component.scss',
+  selector: "reset-button",
+  templateUrl: "reset-button.component.html",
+  styleUrl: "reset-button.component.scss",
   standalone: true
 })
 export class ResetButtonComponent extends BaseImgButtonDirective {

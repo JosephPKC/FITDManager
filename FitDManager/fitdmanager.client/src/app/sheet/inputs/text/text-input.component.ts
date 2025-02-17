@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import { BaseInputDirective } from "@app/sheet/inputs";
+import { BaseInputDirective } from "@sheet/inputs";
 
 /**
  * Simple text input.

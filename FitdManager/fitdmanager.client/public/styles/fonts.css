@@ -1,0 +1,41 @@
+/* Kirsty */
+@font-face {
+  font-family: KirstyBdIt;
+  src: url("/fonts/Kirsty/Kirsty_BdIt.otf") format("opentype");
+}
+
+@font-face {
+  font-family: KirstyBd;
+  src: url("/fonts/Kirsty/Kirsty_Bd.otf") format("opentype");
+}
+
+@font-face {
+  font-family: KirstyRgIt;
+  src: url("/fonts/Kirsty/Kirsty_RgIt.otf") format("opentype");
+}
+
+@font-face {
+  font-family: KirstyRg;
+  src: url("/fonts/Kirsty/Kirsty_Rg.otf") format("opentype");
+}
+
+/* Linux Libertine */
+@font-face {
+  font-family: LinuxLibertineBdIt;
+  src: url("/fonts/LinuxLibertine/LinLibertine_BdIt.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: LinuxLibertineBd;
+  src: url("/fonts/LinuxLibertine/LinLibertine_Bd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: LinuxLibertineRgIt;
+  src: url("/fonts/LinuxLibertine/LinLibertine_RgIt.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: LinuxLibertineRg;
+  src: url("/fonts/LinuxLibertine/LinLibertine_Rg.ttf") format("truetype");
+}
