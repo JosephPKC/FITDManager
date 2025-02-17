@@ -1,0 +1,10 @@
+<div class="div-section">
+  <form [formGroup]="sectionGroup">
+    <edit-button height="20" width="20" [(isEditable)]="isEditable" (onIsEditableChange)="onChangeEditable($event)"></edit-button>
+    <!--<reset-button height="20" width="20" (onReset)="onClickResetToDefault()"></reset-button>-->
+    <div [class]="sectionInputsClass()">
+      <!--<text-field formControlName="name" label="NAME: " [(text)]="sectionApiModel().textInput1"></text-field>-->
+      <!--<select-list-field formControlName="heritage" label="HERITAGE: " [(selectedItem)]="sectionApiModel().testSelectListValue1" [itemList]="sectionApiModel().testAllSelectListValues1"></select-list-field>-->
+    </div>
+  </form>
+</div>

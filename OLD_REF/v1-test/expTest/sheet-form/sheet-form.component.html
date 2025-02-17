@@ -1,0 +1,11 @@
+<div id="div-sheet-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    @for (element of elements; track $index) {
+      <div class="div-sheet-form-field">
+        <sheet-form-element [id]="element.elementId" [element]="element" [form]="form" />
+      </div>
+    }
+
+    <button type="submit">Save</button>
+  </form>
+</div>

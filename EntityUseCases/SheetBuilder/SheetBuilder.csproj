@@ -8,8 +8,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Entity\FitdCoreEntity\FitdCoreEntity.csproj" />
-    <ProjectReference Include="..\..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
-    <ProjectReference Include="..\..\FitdConfig\FitdConfig.csproj" />
+    <ProjectReference Include="..\GistBuilder\GistBuilder.csproj" />
+    <ProjectReference Include="..\RefRepo\RefRepo.csproj" />
+    <ProjectReference Include="..\SheetManager\SheetManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Bitd\Steps\" />
   </ItemGroup>
 
 </Project>

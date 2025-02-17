@@ -3,11 +3,11 @@ using EntityMapper;
 using FitdConfig;
 using FitdCoreEntity.Sheets;
 using FitdDataEntity.Sheets;
-using SheetMetaDataBuilder;
+using GistBuilder.SheetGists;
 
 namespace SheetManager
 {
-	internal class SheetSaveManager<TData, TEntity>(ISheetGateway pGateway, IMapper<TData, TEntity> pMapper) : ISheetSaveManager<TEntity>, ISheetDeleter<TEntity>, ISheetLoader<TEntity>, ISheetSaver<TEntity> 
+    internal class SheetSaveManager<TData, TEntity>(ISheetGateway pGateway, IMapper<TData, TEntity> pMapper) : ISheetSaveManager<TEntity>, ISheetDeleter<TEntity>, ISheetLoader<TEntity>, ISheetSaver<TEntity> 
 		where TData : BaseSheetData 
 		where TEntity : BaseSheetEntity
 	{
@@ -27,7 +27,7 @@ namespace SheetManager
 		#endregion
 
 		#region "ISheetLoader"
-		public ICollection<SheetMetaData> GetAllSheetMetaData(GameTypes pGameType, EntityTypes pEntityType)
+		public ICollection<SheetGist> GetAllSheetMetaData(GameTypes pGameType, EntityTypes pEntityType)
 		{
 			ICollection<TData> sheets = _gateway.GetAll<TData>(pGameType, pEntityType);
 
@@ -36,10 +36,10 @@ namespace SheetManager
 				return [];
 			}
 
-			List<SheetMetaData> collection = [];
+			List<SheetGist> collection = [];
 			foreach (TData sheet in sheets)
 			{
-				collection.Add(SheetMetaDataBuilder.SheetMetaDataBuilder.BuildMetaDataFromData(sheet));
+				collection.Add(SheetGistBuilder.BuildGistFromData(sheet));
 			}
 			return collection;
 		}

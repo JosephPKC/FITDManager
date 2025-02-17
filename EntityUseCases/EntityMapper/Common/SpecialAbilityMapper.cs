@@ -7,6 +7,7 @@ namespace EntityMapper.Common
 {
 	public static class SpecialAbilityMapper
 	{
+		#region "NonRef Data <-> Entity"
 		public static SpecialAbilityData MapDataFromEntity(SpecialAbilityEntity pEntity)
 		{
 			return new()
@@ -34,7 +35,9 @@ namespace EntityMapper.Common
 				IsFromVeteran = pData.IsFromVeteran
 			};
 		}
+		#endregion
 
+		#region "Ref Data <-> Entity"
 		public static SpecialAbilityRefData MapRefDataFromEntity(SpecialAbilityRefEntity pEntity)
 		{
 			return new()
@@ -56,5 +59,38 @@ namespace EntityMapper.Common
 				NbrOfBoxes = pData.NbrOfBoxes
 			};
 		}
+		#endregion
+
+		#region "Entity Ref <-> NonRef"
+		public static SpecialAbilityRefEntity? MapRefEntityFromNonRef(SpecialAbilityEntity pEntity)
+		{
+			if (pEntity.RefId is null)
+			{
+				return null;
+			}
+
+			return new()
+			{
+				Id = (int)pEntity.RefId,
+				Name = pEntity.Name,
+				Text = pEntity.Text,
+				NbrOfBoxes = pEntity.NbrOfBoxes
+			};
+		}
+
+		public static SpecialAbilityEntity MapNonRefEntityFromRef(SpecialAbilityRefEntity pEntity, Guid pId, bool pIsCustom, bool pIsFromVeteran)
+		{
+			return new()
+			{
+				Id = pId,
+				RefId = pEntity.Id,
+				Name = pEntity.Name,
+				Text = pEntity.Text,
+				NbrOfBoxes = pEntity.NbrOfBoxes,
+				IsCustom = pIsCustom,
+				IsFromVeteran = pIsFromVeteran
+			};
+		}
+		#endregion
 	}
 }

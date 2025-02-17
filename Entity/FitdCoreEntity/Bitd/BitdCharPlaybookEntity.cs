@@ -6,15 +6,15 @@ namespace FitdCoreEntity.Bitd
 	public class BitdCharPlaybookEntity : BaseCharPlaybookEntity
 	{
 		/* Special Abilities */
-		public ICollection<SpecialAbilityRefEntity> SpecialAbilities { get; init; } = [];
+		public IReadOnlyDictionary<int, SpecialAbilityRefEntity> SpecialAbilities { get; init; } = new Dictionary<int, SpecialAbilityRefEntity>();
 		public int DefaultSpecialAbilityId { get; init; } = 1;
 
 		/* Starting Actions & Builds */
-		public IDictionary<BitdActions.Actions, int> StartingActions { get; init; } = new Dictionary<BitdActions.Actions, int>();
-		public ICollection<BuildRefEntity<BitdActions.Actions>> StartingBuilds { get; init; } = [];
+		public IReadOnlyDictionary<BitdActions.Actions, int> StartingActions { get; init; } = new Dictionary<BitdActions.Actions, int>();
+		public IReadOnlyDictionary<int, BuildRefEntity<BitdActions.Actions>> StartingBuilds { get; init; } = new Dictionary<int,  BuildRefEntity<BitdActions.Actions>>();
 
 		/* Contacts & Items */
-		public ICollection<ContactRefEntity> Contacts { get; init; } = [];
-		public ICollection<ItemRefEntity> Items { get; init; } = [];
+		public IReadOnlyDictionary<int, ContactRefEntity> Contacts { get; init; } = new Dictionary<int, ContactRefEntity>();
+		public IReadOnlyDictionary<int, ItemRefEntity> Items { get; init; } = new Dictionary<int,  ItemRefEntity>();
 	}
 }

@@ -1,0 +1,8 @@
+<button type="button" (click)="onClickToggleEdit()">
+  @if (isEditable()) {
+    <img class="img-icon" src="assets/icons/MaterialUI/lock_open.svg" [height]="height()" [width]="width()" />
+  }
+  @else {
+    <img class="img-icon" src="assets/icons/MaterialUI/lock.svg" [height]="height()" [width]="width()" />
+  }
+</button>

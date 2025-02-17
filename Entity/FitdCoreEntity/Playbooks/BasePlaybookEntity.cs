@@ -1,4 +1,6 @@
-﻿namespace FitdCoreEntity.Playbooks
+﻿using FitdConfig;
+
+namespace FitdCoreEntity.Playbooks
 {
 	public abstract class BasePlaybookEntity : BaseRefEntity
 	{
@@ -6,5 +8,6 @@
 		public string SubName { get; init; } = string.Empty;
 		public string Description { get; init; } = string.Empty;
 		public string XpTrigger { get; init; } = string.Empty;
+		public GameTypes GameType { get; init; } = GameTypes.None;
 	}
 }

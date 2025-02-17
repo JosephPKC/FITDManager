@@ -11,4 +11,10 @@
     <ProjectReference Include="..\..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Utils">
+      <HintPath>..\..\libs\Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

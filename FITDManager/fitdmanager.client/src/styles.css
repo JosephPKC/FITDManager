@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import "normalize.css";
+@import "fonts.css";
+
+/* Testing styles */
+/** {
+  border: 1px dashed black;
+}
+
+div {
+    border: 1px solid black;
+}*/
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Text Styles */
+* {
+  font-family: LinuxLibertineBd;
+}
+
+.fnt-header {
+  font-family: KirstyRg;
+}

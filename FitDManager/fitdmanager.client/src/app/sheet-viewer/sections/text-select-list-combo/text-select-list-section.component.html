@@ -1,0 +1,7 @@
+<div [formGroup]="sectionGroup">
+  <label for="div-input-field">{{ label() }}</label>
+  <div id="div-input-field">
+    <text-field formControlName="text"></text-field>
+    <select-list-field formControlName="selectedIndex" [itemList]="comboModel().valueList"></select-list-field>
+  </div>
+</div>

@@ -10,11 +10,11 @@ using FitdCoreEntity.Bitd;
 using LiteDbAdapter;
 using RefRepo;
 using SheetManager;
-using SheetMetaDataBuilder;
+using GistBuilder.SheetGists;
 
 namespace FitdTester
 {
-	public class Program
+    public class Program
 	{
 		private static readonly string _dbPath = "test.db";
 		private static readonly string _dbRefPath = "FitdRefDb.db";
@@ -200,7 +200,7 @@ namespace FitdTester
 					break;
 				case "F":
 				case "FETCH":
-					ICollection<SheetMetaData> allMetaData = FetchAll();
+					ICollection<SheetGist> allMetaData = FetchAll();
 					DisplayMetaDataList(allMetaData);
 					break;
 				case "L":
@@ -288,15 +288,15 @@ namespace FitdTester
 			SheetSaveManager.Clear(FitdConfig.GameTypes.BitD, FitdConfig.EntityTypes.CharSheet);
 		}
 
-		private static ICollection<SheetMetaData> FetchAll()
+		private static ICollection<SheetGist> FetchAll()
 		{
 			return SheetSaveManager.GetAllSheetMetaData(FitdConfig.GameTypes.BitD, FitdConfig.EntityTypes.CharSheet);
 		}
 
-		private static void DisplayMetaDataList(ICollection<SheetMetaData> allMetaData)
+		private static void DisplayMetaDataList(ICollection<SheetGist> allMetaData)
 		{
 			Console.WriteLine("All Sheets: ");
-			foreach (SheetMetaData s in allMetaData)
+			foreach (SheetGist s in allMetaData)
 			{
 				Console.WriteLine($"- {s.Name}");
 				Console.WriteLine($"\tId: {s.Id}");
@@ -389,7 +389,7 @@ namespace FitdTester
 			sb.AppendLine($"Builds: ");
 			foreach (var build in pPb.StartingBuilds)
 			{
-				sb.AppendLine($"\t- {build.Id}: {build.Name} - {build.StartingSpecialAbilityId}, {string.Join(", ", build.BonusActions)}");
+				sb.AppendLine($"\t- {build.Value.Id}: {build.Value.Name} - {build.Value.StartingSpecialAbilityId}, {string.Join(", ", build.Value.BonusActions)}");
 			}
 			sb.AppendLine("----------");
 
@@ -397,21 +397,21 @@ namespace FitdTester
 			sb.AppendLine($"Default: {pPb.DefaultSpecialAbilityId}, Starting: {pPb.DefaultSpecialAbilityId}");
 			foreach (var sp in pPb.SpecialAbilities)
 			{
-				sb.AppendLine($"\t- {sp.Id}: {sp.Name} - {sp.Text} - {sp.NbrOfBoxes}");
+				sb.AppendLine($"\t- {sp.Value.Id}: {sp.Value.Name} - {sp.Value.Text} - {sp.Value.NbrOfBoxes}");
 			}
 			sb.AppendLine("----------");
 
 			sb.AppendLine($"Contacts: ");
 			foreach (var sp in pPb.Contacts)
 			{
-				sb.AppendLine($"\t- {sp.Id}: {sp.Name}, {sp.Text}");
+				sb.AppendLine($"\t- {sp.Value.Id}: {sp.Value.Name}, {sp.Value.Text}");
 			}
 			sb.AppendLine("----------");
 
 			sb.AppendLine($"Items: ");
 			foreach (var sp in pPb.Items)
 			{
-				sb.AppendLine($"\t- {sp.Id}: {sp.Name} - {sp.Text} - {sp.Loadout}");
+				sb.AppendLine($"\t- {sp.Value.Id}: {sp.Value.Name} - {sp.Value.Text} - {sp.Value.Loadout}");
 			}
 			sb.AppendLine("----------");
 

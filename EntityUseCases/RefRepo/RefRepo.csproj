@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
     <ProjectReference Include="..\..\Gateway\DataGateway\DataGateway.csproj" />
     <ProjectReference Include="..\EntityMapper\EntityMapper.csproj" />
+    <ProjectReference Include="..\GistBuilder\GistBuilder.csproj" />
   </ItemGroup>
 
 </Project>

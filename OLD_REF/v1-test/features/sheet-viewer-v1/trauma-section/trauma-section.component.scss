@@ -1,0 +1,26 @@
+#div-trauma-default-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.div-trauma-default-list-item {
+  margin: 0 5px 0 5px;
+  padding: 2px;
+  text-align: center;
+  border: 1px dotted black;
+  border-radius: 50%;
+}
+
+.div-trauma-default-list-item:hover {
+  cursor: pointer;
+}
+
+.trauma-default-selected {
+  border: 1px solid red;
+  /*-moz-border-radius: 50px;*/
+  /*-webkit-border-radius: 50px;*/
+  border-radius: 50%;
+}
+
+.div-trauma-list-item p {
+}

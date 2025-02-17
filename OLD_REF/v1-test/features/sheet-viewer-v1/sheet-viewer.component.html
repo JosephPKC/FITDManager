@@ -1,0 +1,46 @@
+<div>
+  <h1>BITD CHAR SHEET</h1>
+  
+  <div id="div-sheet-form">
+    <form [formGroup]="sheetForm" (ngSubmit)="onSubmitSaveSheet()">
+      @for (field of sheetFields; track $index) {
+      <div class="div-sheet-form-field">
+        <label for="{{ field.elementId }}">{{ field.label }}</label>
+        <input id="{{ field.elementId }}" type="text" formControlName="{{ field.name }}" />
+      </div>
+      }
+
+      <button id="btn-sheet-form-submit" type="submit">Save Sheet</button>
+
+      <!--Basic Info-->
+      <div id="div-basic-info" class="div-section">
+        <div class="div-sub-section">
+          <h1>Blades in the Dark</h1>
+          <div>
+            <label for="crew-name">Crew Name: </label>
+            <input id="crew-name" name="crew-name" type="text" [value]="sheet().crewName"  />
+          </div>
+        </div>
+
+        <!--<div>
+      <label for="purveyor">Purveyor: </label>
+      <input id="purveyor" type="text" value="{{ sheet().purveyor }}" />
+    </div>-->
+        @defer (when isSheetLoaded) {
+        <sheet-text-field fieldName="purveyor" labelText="Purveyor: " initValue="{{ sheet().purveyor }}" />
+        }
+        @placeholder {
+        <sheet-text-field fieldName="purveyor" labelText="Purveyor: " initValue="Fetching..." />
+        }
+      </div>
+
+      <!--Stress-->
+      <div id="div-stress-wrapper">
+        <label for="track-stress">Stress: </label>
+        <sheet-track id="track-stress" nbrOfBoxes="8" nbrOfMinMarks="0" />
+      </div>
+      <!--Trauma-->
+      <trauma-section [traumaDefaults]="traumaDefaults" labelText="TRAUMA" [maxTrauma]="maxTrauma" />
+    </form>
+  </div>
+</div>

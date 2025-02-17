@@ -90,23 +90,5 @@ namespace EntityMapper
 			pSrc.CopyTo(result, 0);
 			return result.ToHashSet();
 		}
-
-		public static string ToSingleWordTitleCase(string pStr)
-		{
-			if (string.IsNullOrWhiteSpace(pStr))
-			{
-				return string.Empty;
-			}
-
-			if (pStr.Length == 1)
-			{
-				return pStr.ToUpper();
-			}
-
-			string firstChar = $"{pStr[0]}".ToUpper();
-			string restChars = pStr.Substring(1).ToLower();
-
-			return $"{firstChar}{restChars}";
-		}
 	}
 }

@@ -1,0 +1,10 @@
+<div>
+  <label for="div-vice-purveyor">{{ label() }}</label>
+  <form [formGroup]="sectionGroup">
+    <div id="div-vice-purveyor">
+      <text-field formControlName="purveyor" [defaultValue]="sectionApiModel().testTextSelectListText1" [resetToDefaultEvent$]="resetToDefaultEvent$()"></text-field>
+      <text-field formControlName="vice" [defaultValue]="sectionApiModel().testTextSelectListText1" [resetToDefaultEvent$]="resetToDefaultEvent$()"></text-field>
+      <select-list-field formControlName="viceSelect" [defaultItem]="sectionApiModel().testTextSelectListValue1" [itemList]="sectionApiModel().testTextSelectListValues1" [resetToDefaultEvent$]="resetToDefaultEvent$()"></select-list-field>
+    </div>
+  </form>
+</div>

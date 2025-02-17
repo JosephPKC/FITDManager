@@ -1,0 +1,4 @@
+<div>
+  <label for="inp-text">{{ this.label() }}</label>
+  <input id="inp-text" type="text" [(ngModel)]="value" (change)="onChangeText(value)" [disabled]="isDisabled"/>
+</div>

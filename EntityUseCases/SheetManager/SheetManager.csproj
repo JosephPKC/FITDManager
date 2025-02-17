@@ -12,7 +12,7 @@
     <ProjectReference Include="..\..\FitdConfig\FitdConfig.csproj" />
     <ProjectReference Include="..\..\Gateway\DataGateway\DataGateway.csproj" />
     <ProjectReference Include="..\EntityMapper\EntityMapper.csproj" />
-    <ProjectReference Include="..\SheetMetaDataBuilder\SheetMetaDataBuilder.csproj" />
+    <ProjectReference Include="..\GistBuilder\GistBuilder.csproj" />
   </ItemGroup>
 
 </Project>

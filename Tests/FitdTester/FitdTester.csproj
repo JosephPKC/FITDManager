@@ -15,12 +15,11 @@
     <ProjectReference Include="..\..\EntityUseCases\EntityMapper\EntityMapper.csproj" />
     <ProjectReference Include="..\..\EntityUseCases\RefRepo\RefRepo.csproj" />
     <ProjectReference Include="..\..\EntityUseCases\SheetManager\SheetManager.csproj" />
-    <ProjectReference Include="..\..\EntityUseCases\SheetMetaDataBuilder\SheetMetaDataBuilder.csproj" />
+    <ProjectReference Include="..\..\EntityUseCases\GistBuilder\GistBuilder.csproj" />
     <ProjectReference Include="..\..\Entity\FitdCoreEntity\FitdCoreEntity.csproj" />
     <ProjectReference Include="..\..\Entity\FitdDataEntity\FitdDataEntity.csproj" />
     <ProjectReference Include="..\..\Gateway\DataGateway\DataGateway.csproj" />
     <ProjectReference Include="..\..\Gateway\LiteDbAdapter\LiteDbAdapter.csproj" />
-    <ProjectReference Include="..\..\LiteDbAdapter\LiteDbAdapter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

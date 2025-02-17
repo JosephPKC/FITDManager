@@ -1,0 +1,8 @@
+<div>
+  <form [formGroup]="sectionGroup">
+    <button type="button" (click)="onClickEdit()">EDIT</button>
+    <button type="button" (click)="onClickResetToDefault()">RESET</button>
+    <text-input label="text input 1: " initValue="test1" formControlName="textInput1" [resettingToDefault]="resettingToDefaultSection"></text-input>
+    <text-input label="text input 2: " initValue="test2" formControlName="textInput2" [resettingToDefault]="resettingToDefaultSection"></text-input>
+  </form>
+</div>

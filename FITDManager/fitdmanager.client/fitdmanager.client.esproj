@@ -8,6 +8,13 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\fitdmanager.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\" />
+    <None Remove="src\v1-test\**" />
+    <TypeScriptConfiguration Remove="src\v1-test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\app\core\" />
+    <Folder Include="src\app\sheet-viewer\bitd\fields\" />
+    <Folder Include="src\assets\fonts\Kirsty\" />
+    <Folder Include="src\assets\fonts\LinuxLibertine\" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,15 @@
+<div [class]="sectionClass()" [formGroup]="sectionGroup">
+  <edit-button height="20" width="20" [(isEditable)]="isEditableSection" (onIsEditableChange)="onChangeEditable($event)"></edit-button>
+  <div [class]="sectionInputsClass()">
+    <text-field formControlName="name" label="NAME: " ></text-field>
+    <text-field formControlName="alias" label="ALIAS: "></text-field>
+    <text-field formControlName="look" label="LOOK: "></text-field>
+    <!--<text-select-list-section sectionName="heritage" label="HERITAGE: " [formGroup]="sectionGroup" [comboModel]="sectionModel().heritage" [isEditable]="isEditableSection()"></text-select-list-section>-->
+    <!--<text-field formControlName="heritageText" label="HERITAGE: " [initText]="sectionModel().heritage.text"></text-field>
+    <select-list-field formControlName="heritage" [itemList]="sectionModel().heritage.valueList"></select-list-field>-->
+    <!--<text-field formControlName="backgroundText" label="BACKGROUND: " ></text-field>
+    <select-list-field formControlName="background" [itemList]="sectionModel().background().valueList()"></select-list-field>
+    <text-field formControlName="viceText" label="VICE/PURVEYOR: " ></text-field>
+    <select-list-field formControlName="vice" [itemList]="sectionModel().vice().valueList()"></select-list-field>-->
+  </div>
+</div>

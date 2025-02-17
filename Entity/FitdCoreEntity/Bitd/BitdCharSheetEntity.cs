@@ -67,17 +67,13 @@ namespace FitdCoreEntity.Bitd
 		};
 
 		/* Special Abilities */
-		public ICollection<SpecialAbilityEntity> SpecialAbilities { get; set; } = [];
-		public IDictionary<Guid, int> LearnedSpecialAbilities { get; set; } = new Dictionary<Guid, int>();
+		public IDictionary<Guid, SpecialAbilityEntity> SelectedSpecialAbilities { get; set; } = new Dictionary<Guid, SpecialAbilityEntity>();
 
 		/* Contacts */
-		public ICollection<ContactEntity> Contacts { get; set; } = [];
-		public ISet<Guid> AllyContacts { get; set; } = new HashSet<Guid>();
-		public ISet<Guid> NeutralContacts { get; set; } = new HashSet<Guid>();
-		public ISet<Guid> RivalContacts { get; set; } = new HashSet<Guid>();
+		public IDictionary<Guid, ContactEntity> Contacts { get; set; } = new Dictionary<Guid, ContactEntity>();
 
 		/* Items */
-		public ICollection<ItemEntity> Items { get; set; } = [];
+		public IDictionary<Guid, ItemEntity> AvailableItems { get; set; } = new Dictionary<Guid, ItemEntity>();
 		public ISet<Guid> SelectedItems { get; set; } = new HashSet<Guid>();
 		public LoadoutStates Loadout { get; set; } = LoadoutStates.None;
 	}

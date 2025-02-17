@@ -1,0 +1,20 @@
+.div-section {
+    border: 1px solid blue;
+}
+
+.div-sub-section {
+    border: 1px solid red;
+}
+
+.div-track {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between; 
+}
+
+.div-track-box {
+    margin: 0;
+    padding: 0;
+}
+
+

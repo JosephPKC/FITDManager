@@ -1,0 +1,11 @@
+<div [formGroup]="form">
+  <label [for]="element.name">{{ element.label }}</label>
+
+  <div>
+    @switch (element.controlType) {
+      @case ("SheetFormElementTypes.Text") {
+        <input [id]="element.name" type="text" [formControlName]="element.name" />
+      }
+    }
+  </div>
+</div>

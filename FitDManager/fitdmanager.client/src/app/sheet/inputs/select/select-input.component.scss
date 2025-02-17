@@ -1,0 +1,27 @@
+@import url("../inputs.style.scss");
+
+.div-select-list {
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+}
+
+.btn-select-item {
+  margin: 5px;
+
+  border: 1px thin black;
+  background: none;
+  border: none;
+}
+
+.btn-select-item:hover {
+  cursor: pointer;
+}
+
+.select-item-selected {
+  border-bottom: 2px ridge red;
+}
+
+.txt-separator {
+  align-content: center;
+}

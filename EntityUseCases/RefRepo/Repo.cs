@@ -6,6 +6,7 @@ using FitdCoreEntity.Playbooks;
 using FitdCoreEntity.Playbooks.Parts;
 using FitdDataEntity.Playbooks;
 using FitdDataEntity.Playbooks.Parts;
+using GistBuilder.PlaybookGists;
 using RefRepo.MasterList;
 
 namespace RefRepo
@@ -52,6 +53,46 @@ namespace RefRepo
 				}
 
 				return _crewSpecialAbilities;
+			}
+		}
+
+		private IReadOnlyCollection<PlaybookGist>? _charPlaybookGists = null;
+		public IReadOnlyCollection<PlaybookGist> CharPlaybookGists {
+			get
+			{
+				if (_charPlaybookGists is null)
+				{
+					List<PlaybookGist> gists = [];
+					foreach (TCharPlaybookEntity playbook in CharPlaybooks)
+					{
+						PlaybookGist gist = PlaybookGistBuilder.BuildGistFromEntity(playbook);
+						gists.Add(gist);
+					}
+
+					_charPlaybookGists = gists.AsReadOnly();
+				}
+
+				return _charPlaybookGists;
+			}
+		}
+
+		private IReadOnlyCollection<PlaybookGist>? _crewPlaybookGists = null;
+		public IReadOnlyCollection<PlaybookGist> CrewPlaybookGists {
+			get
+			{
+				if (_crewPlaybookGists is null)
+				{
+					List<PlaybookGist> gists = [];
+					foreach (TCrewPlaybookEntity playbook in CrewPlaybooks)
+					{
+						PlaybookGist gist = PlaybookGistBuilder.BuildGistFromEntity(playbook);
+						gists.Add(gist);
+					}
+
+					_crewPlaybookGists = gists.AsReadOnly();
+				}
+
+				return _crewPlaybookGists;
 			}
 		}
 

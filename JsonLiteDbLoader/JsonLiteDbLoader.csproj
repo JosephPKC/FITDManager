@@ -12,7 +12,6 @@
     <ProjectReference Include="..\FitdConfig\FitdConfig.csproj" />
     <ProjectReference Include="..\Gateway\DataGateway\DataGateway.csproj" />
     <ProjectReference Include="..\Gateway\LiteDbAdapter\LiteDbAdapter.csproj" />
-    <ProjectReference Include="..\LiteDbAdapter\LiteDbAdapter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

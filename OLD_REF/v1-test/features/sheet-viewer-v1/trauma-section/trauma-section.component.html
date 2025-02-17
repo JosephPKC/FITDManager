@@ -1,0 +1,32 @@
+<div id="div-trauma-section">
+  <label for="div-trauma">Trauma: </label>
+  <button type="button" (click)="onClickEdit()">Edit</button>
+  <div id="div-trauma-default-list">
+    @for (traumaDefault of traumaDefaults(); track $index) {
+    <!--Create an onclick method to circle or de-circle the item.-->
+    <div class="{{ getDefaultTraumaItemClass($index) }}" (click)="onDefaultTraumaClick($index)">
+      <p id="{{ 'txt-trauma-' + traumaDefault }}">{{ traumaDefault }}</p>
+    </div>
+    <!--Need to only put dividers in betwee. Need a way to do this.-->
+    <p>-</p>
+    }
+  </div>
+  <div id="div-trauma-list">
+    <p>{{ traumaList().length }}/{{ maxTrauma() }}</p>
+    @for (trauma of traumaList(); track $index) {
+      @if (isEditable()) {
+        <button type="button">^</button>
+        <button type="button">v</button>
+        <input type="text" [(ngModel)]="traumaList()[$index]" />
+        <button type="button" (click)="onClickUpdateTrauma(traumaList()[$index], $index)">Update</button>
+      }
+      @else {
+        <p>{{ trauma }}</p>
+      }
+    }
+  </div>
+  <div [hidden]="!isEditable()">
+    <input id="inp-custom-trauma" type="text" [(ngModel)]="customTraumaInput" />
+    <button type="button" (click)="onClickAddCustomTrauma(customTraumaInput)">Add</button>
+  </div>
+</div>

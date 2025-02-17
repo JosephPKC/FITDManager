@@ -1,6 +1,7 @@
 ﻿using FitdCoreEntity.Playbooks;
 using FitdCoreEntity.Playbooks.Parts;
 using FitdDataEntity.Playbooks;
+using GistBuilder.PlaybookGists;
 using RefRepo.MasterList;
 
 namespace RefRepo
@@ -13,6 +14,8 @@ namespace RefRepo
 	{
 		IMasterList<SpecialAbilityRefEntity> CharSpecialAbilities { get; }
 		IMasterList<SpecialAbilityRefEntity> CrewSpecialAbilities { get; }
+		IReadOnlyCollection<PlaybookGist> CharPlaybookGists { get; }
+		IReadOnlyCollection<PlaybookGist> CrewPlaybookGists { get; }
 		IMasterList<TCharPlaybookEntity> CharPlaybooks { get; }
 		IMasterList<TCrewPlaybookEntity> CrewPlaybooks { get; }
 	}
