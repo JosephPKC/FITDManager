@@ -21,4 +21,10 @@ export class ResetButtonComponent extends BaseImgButtonDirective {
     this.onReset.emit();
   }
   // #endregion
+
+  // #region Helpers
+  protected override getImgSrc(): string {
+    return "/icons/MaterialIcons/refresh.svg";
+  }
+  // #endregion
 }

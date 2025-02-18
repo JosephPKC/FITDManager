@@ -1,0 +1,6 @@
+<div class="div-sub-group" [formGroup]="inputsGroup()">
+  <div [class]="divInputsClass()">
+    <text-input formControlName="text" [label]="label()"></text-input>
+    <select-input formControlName="selectedValue" [itemList]="groupModel().valueList"></select-input>
+  </div>
+</div>

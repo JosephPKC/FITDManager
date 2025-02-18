@@ -1,12 +1,69 @@
+.div-group-inputs {
+  margin: 5px 0px 5px 0px;
+  padding: 5px;
+  border: 4px dashed black;
+}
+
+.div-section-inputs {
+  margin: 5px;
+  padding: 5px;
+  border: 1px dotted black;
+  width: fit-content;
+}
+
+.div-section-inputs * {
+
+}
+
+.div-top-area {
+    display: flex;
+    
+}
+
+.div-top-area h3 {
+    margin: 5px;
+  text-align: center;
+}
+
+.div-button-area {
+    margin: 5px;
+}
+
 .div-section {
   margin: 5px;
   padding: 5px;
+
+  border: 3px solid black;
+
+  display: flex;
+  flex-direction: column;
+
+  width: fit-content;
+}
+
+.div-sub-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.div-sub-group label {
+  /*border: 1px solid black;*/
+  text-align: center;
+}
+
+.div-section-shown {
+  
+}
+
+.div-section-hidden {
+  
 }
 
 .div-section-locked {
-  border: 1px solid black;
+  
 }
 
 .div-section-unlocked {
-  border: 2px solid red;
+  border: 3px solid red;
 }

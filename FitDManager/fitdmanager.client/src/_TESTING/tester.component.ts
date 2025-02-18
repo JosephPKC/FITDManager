@@ -1,5 +1,8 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, WritableSignal, effect, inject, signal } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+  AfterViewChecked, ChangeDetectorRef, Component, OnInit, WritableSignal,
+  effect, inject, signal
+} from "@angular/core";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
 import { BitdCharBasicInfo, BitdCharSheet } from "@games/bitd/models";
@@ -18,29 +21,27 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
   // #endregion
 
   // #region State
-  public testForm: WritableSignal<FormGroup>;
-  public apiModel: WritableSignal<BitdCharSheet>;
-  public defaultApiModel: BitdCharSheet;
+  public testForm: WritableSignal<FormGroup>; // This is the form, structured like the model. It is the current model.
+  public apiModel: WritableSignal<BitdCharSheet>; // This is the default model from the api
 
   public locked: WritableSignal<boolean> = signal<boolean>(true);
   // #endregion
 
   constructor(private cd: ChangeDetectorRef) {
     this.testForm = signal<FormGroup>(this.formBuilder.group({}));
-
+    
     // Get default api model from api service
-    this.defaultApiModel = this.getDefaultApiModelService();
-    this.apiModel = signal<BitdCharSheet>(this.copyDefaultModel());
+    this.apiModel = signal<BitdCharSheet>(this.getDefaultApiModelService());
 
     effect(() => {
       console.log(`Updated Api Model`);
       console.log(this.apiModel().basicInfo.name)
-      console.log(this.apiModel().basicInfo.heritage.text)
+      //console.log(this.apiModel().basicInfo.heritage.text)
     });
   }
 
   ngOnInit(): void {
-    this.copyDefaultModel();
+    
   }
 
 
@@ -58,13 +59,21 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
       return;
     }
     console.log(`Reseting to Default in Tester.`);
-    this.apiModel.set(this.copyDefaultModel());
+    this.apiModel.set(this.copyModel(this.apiModel()));
   }
 
   public onClickSave(): void {
     console.log(`API MODEL: ${JSON.stringify(this.apiModel())}`);
     console.log(`This is the value: ${JSON.stringify(this.testForm().value)}`);
     console.log(`This is the raw data: ${JSON.stringify(this.testForm().getRawValue())}`);
+  }
+
+  public onChangeModel(basicInfo: BitdCharBasicInfo) {
+    console.log(`NEW MODEL IN TESTER: ${JSON.stringify(basicInfo)}`);
+    //let model: BitdCharSheet = {
+    //  basicInfo: this.copyModel(basicInfo)
+    //}
+    //this.apiModel.set(model);
   }
 
   protected getDefaultApiModelService(): BitdCharSheet {
@@ -75,17 +84,17 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
         look: 'DUCK-LIKE',
         heritage: {
           text: 'AKOROSI NOBLE FAMILY',
-          selectedIndex: 0,
+          selectedValue: 'AKOROS',
           valueList: ['AKOROS', 'THE DAGGER ISLES', 'IRUVIA', 'SEVEROS', 'SKOVLAN', 'TYCHEROS']
         },
         background: {
           text: 'SALVAGING COMPANY',
-          selectedIndex: 1,
+          selectedValue: 'LABOR',
           valueList: ['ACADEMIC', 'LABOR', 'LAW', 'TRADE', 'MILITARY', 'NOBLE', 'UNDERWORLD']
         },
         vice: {
           text: '',
-          selectedIndex: null,
+          selectedValue: '',
           valueList: ['FAITH', 'GAMBLING', 'LUXURY', 'OBLIGATION', 'PLEASURE', 'STUPOR', 'WEIRD']
         }
       }
@@ -94,8 +103,8 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     return model;
   }
 
-  protected copyDefaultModel(): BitdCharSheet {
-    let model: BitdCharSheet = JSON.parse(JSON.stringify(this.defaultApiModel));
+  protected copyModel<T>(oldModel: T): T {
+    let model: T = JSON.parse(JSON.stringify(oldModel));
     return model;
   }
 }

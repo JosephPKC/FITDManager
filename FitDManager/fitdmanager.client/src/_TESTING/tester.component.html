@@ -4,8 +4,8 @@
     <lock-button height="25" width="25" [locked]="locked()" (onLockedChange)="onClickLock($event)"></lock-button>
     <reset-button height="25" width="25" (onReset)="onClickReset()"></reset-button>
     <button type="submit">
-      <img class="img-icon" src="/icons/MaterialUI/save.svg" height="25" width="25" />
+      <img class="img-icon" src="/icons/MaterialIcons/save.svg" height="25" width="25" />
     </button>
-    <bitd-char-basic-info-section name="basicInfo" [formGroup]="testForm()" [sectionModel]="apiModel().basicInfo" [locked]="locked()"></bitd-char-basic-info-section>
+    <bitd-char-basic-info-section name="basicInfo" label="BASIC INFO" [formGroup]="testForm()" [groupModel]="apiModel().basicInfo" [locked]="locked()"></bitd-char-basic-info-section>
   </form>
 </div>
