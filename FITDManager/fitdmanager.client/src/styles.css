@@ -3,13 +3,13 @@
 @import url("../public/styles/fonts.css");
 
 /* Testing styles */
-/** {
+* {
   border: 1px dashed black;
 }
 
 div {
     border: 1px solid black;
-}*/
+}
 
 /* Global Reset */
 * {

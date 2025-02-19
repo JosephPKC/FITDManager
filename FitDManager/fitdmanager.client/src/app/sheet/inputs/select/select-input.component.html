@@ -4,7 +4,7 @@
   }
   <div id="div-select-list" [class]="containerClass()">
     @for (item of itemList(); track $index) {
-      <button class="{{ 'btn-select-item' + (selectedItemIndex() === $index ? ' select-item-selected' : '') }}" type="button" (click)="onSelectItem(item)">{{ item }}</button>
+      <button [class]="itemClasses()[$index]" type="button" (click)="onSelectItem(item)">{{ item }}</button>
       @if ($index !== itemList().length - 1) {
         <p class="txt-separator">{{ itemSeparator() }}</p>
       }

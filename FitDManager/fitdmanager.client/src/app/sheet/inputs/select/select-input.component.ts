@@ -25,7 +25,7 @@ import { BaseInputDirective } from "@sheet/inputs";
   ],
   standalone: true
 })
-export class SelectInputComponent extends BaseInputDirective implements ControlValueAccessor {
+export class SelectInputComponent extends BaseInputDirective<string> implements ControlValueAccessor {
   // #region Params
   public itemList: InputSignal<string[]> = input<string[]>([]);
   public itemSeparator: InputSignal<string> = input<string>(smallDot);
@@ -33,6 +33,19 @@ export class SelectInputComponent extends BaseInputDirective implements ControlV
 
   // #region Internals
   protected selectedItem: WritableSignal<string> = signal<string>("");
+
+  protected itemClasses: Signal<string[]> = computed(() => {
+    // Prefill with the default class.
+    const classList: string[] = new Array<string>(this.itemList().length).fill("btn-select-item");
+
+    for (let i: number = 0; i < classList.length; i++) {
+      if (this.selectedItemIndex() === i) {
+        classList[i] += " select-item-selected";
+      }
+    }
+
+    return classList;
+  });
 
   protected selectedItemIndex: Signal<number | null> = computed(() => {
     return getIndexByValue(this.itemList(), this.selectedItem());

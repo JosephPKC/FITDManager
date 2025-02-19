@@ -1,6 +1,0 @@
-<div class="div-sheet-track">
-  @for (box of boxes; track $index) {
-    <div id="{{ getIdNameForBox($index) }}" class="{{ getClassNameForBox($index) }}" (click)="onBoxClick($index)"></div>
-  }
-  <input class="inp-sheet-track-control" type="number" [min]="nbrOfMinMarks()" [max]="nbrOfBoxes()" [value]="marks()" [placeholder]="marks()" (change)="onInputChange($event)" />
-</div>

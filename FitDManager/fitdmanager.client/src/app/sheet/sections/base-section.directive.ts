@@ -13,7 +13,7 @@ import { BaseInputGroupDirective } from "@sheet/sections";
 @Directive({
   selector: "base-section"
 })
-export abstract class BaseSectionDirective<T> extends BaseInputGroupDirective<T> {
+export abstract class BaseSectionDirective<TModel> extends BaseInputGroupDirective<TModel> {
   // #region Internals
   protected isSectionHidden: WritableSignal<boolean> = signal<boolean>(false);
 

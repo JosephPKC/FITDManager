@@ -1,1 +1,1 @@
-export const smallDot: string = '•';
+export const smallDot: string = "•";

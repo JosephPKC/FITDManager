@@ -22,7 +22,7 @@ import { BaseInputDirective } from "@sheet/inputs";
   ],
   standalone: true
 })
-export class TextInputComponent extends BaseInputDirective implements ControlValueAccessor {
+export class TextInputComponent extends BaseInputDirective<string> implements ControlValueAccessor {
   // #region Internals
   protected text: WritableSignal<string> = signal<string>("");
   // #endregion

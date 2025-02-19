@@ -9,9 +9,9 @@ import { BitdCharBasicInfo, BitdCharSheet } from "@games/bitd/models";
 import { BitdCharBasicInfoSectionComponent } from "@games/bitd/sections";
 
 @Component({
-  selector: 'tester',
-  templateUrl: 'tester.component.html',
-  styleUrl: 'tester.component.scss',
+  selector: "tester",
+  templateUrl: "tester.component.html",
+  styleUrl: "tester.component.scss",
   imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharBasicInfoSectionComponent],
   standalone: true
 })
@@ -55,7 +55,7 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
   }
 
   public onClickReset(): void {
-    if (!confirm('This will remove all changes to the sheet made before the last save. Are you sure?')) {
+    if (!confirm("This will remove all changes to the sheet made before the last save. Are you sure?")) {
       return;
     }
     console.log(`Reseting to Default in Tester.`);
@@ -79,24 +79,27 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
   protected getDefaultApiModelService(): BitdCharSheet {
     let model: BitdCharSheet = {
       basicInfo: {
-        name: 'STAZIA',
-        alias: 'THE DUCK',
-        look: 'DUCK-LIKE',
+        name: "STAZIA",
+        alias: "THE DUCK",
+        look: "DUCK-LIKE",
         heritage: {
-          text: 'AKOROSI NOBLE FAMILY',
-          selectedValue: 'AKOROS',
-          valueList: ['AKOROS', 'THE DAGGER ISLES', 'IRUVIA', 'SEVEROS', 'SKOVLAN', 'TYCHEROS']
+          text: "AKOROSI NOBLE FAMILY",
+          selectedValue: "AKOROS",
+          valueList: ["AKOROS", "THE DAGGER ISLES", "IRUVIA", "SEVEROS", "SKOVLAN", "TYCHEROS"]
         },
         background: {
-          text: 'SALVAGING COMPANY',
-          selectedValue: 'LABOR',
-          valueList: ['ACADEMIC', 'LABOR', 'LAW', 'TRADE', 'MILITARY', 'NOBLE', 'UNDERWORLD']
+          text: "SALVAGING COMPANY",
+          selectedValue: "LABOR",
+          valueList: ["ACADEMIC", "LABOR", "LAW", "TRADE", "MILITARY", "NOBLE", "UNDERWORLD"]
         },
         vice: {
-          text: '',
-          selectedValue: '',
-          valueList: ['FAITH', 'GAMBLING', 'LUXURY', 'OBLIGATION', 'PLEASURE', 'STUPOR', 'WEIRD']
+          text: "",
+          selectedValue: "",
+          valueList: ["FAITH", "GAMBLING", "LUXURY", "OBLIGATION", "PLEASURE", "STUPOR", "WEIRD"]
         }
+      },
+      health: {
+
       }
     };
 

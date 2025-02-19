@@ -11,7 +11,7 @@ import { noop } from "rxjs";
 @Directive({
   selector: "base-input"
 })
-export abstract class BaseInputDirective {
+export abstract class BaseInputDirective<TValue> {
   // #region Params
   public label: InputSignal<string> = input<string>("");
   public customClass: InputSignal<string> = input<string>("");
@@ -19,7 +19,7 @@ export abstract class BaseInputDirective {
 
   // #region Internal
   protected isDisabled: WritableSignal<boolean> = signal<boolean>(false);
-  protected onChange: (value: string) => void = noop;
+  protected onChange: (value: TValue) => void = noop;
   protected onTouch: () => void = noop;
 
   protected fullClass: Signal<string> = computed(() => {

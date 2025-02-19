@@ -11,7 +11,7 @@ import { AbstractControl, FormBuilder, FormGroup } from "@angular/forms";
 @Directive({
   selector: "base-input-group"
 })
-export abstract class BaseInputGroupDirective<T> implements OnChanges, OnInit {
+export abstract class BaseInputGroupDirective<TModel> implements OnChanges, OnInit {
   // #region Services
   protected formBuilder: FormBuilder = inject(FormBuilder);
   // #endregion
@@ -22,7 +22,7 @@ export abstract class BaseInputGroupDirective<T> implements OnChanges, OnInit {
 
   public formGroup: InputSignal<FormGroup> = input.required<FormGroup>();
   public name: InputSignal<string> = input.required<string>();
-  public groupModel: InputSignal<T> = input.required<T>();
+  public groupModel: InputSignal<TModel> = input.required<TModel>();
   // #endregion
 
   // #region Internals

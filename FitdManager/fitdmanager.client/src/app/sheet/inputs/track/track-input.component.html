@@ -1,0 +1,11 @@
+<div class="fullClass()">
+  @if (shouldCreateLabel()) {
+    <label for="div-track">{{ label() }}</label>
+  }
+  <div id="div-track" [class]="containerClass()">
+    @for (boxClass of boxClasses(); track $index) {
+      <button class="{{ boxClass }}" type="button" (click)="onClickBox($index)"></button>
+    }
+    <input class="inp-track-ctrl" type="number" [min]="minMarks()" [max]="boxes()" [value]="marks()" [placeholder]="marks()" (change)="onChangeMarks($event)" />
+  </div>
+</div>
