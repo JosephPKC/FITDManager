@@ -6,13 +6,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angul
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
 import { BitdCharBasicInfo, BitdCharSheet } from "@games/bitd/models";
-import { BitdCharBasicInfoSectionComponent } from "@games/bitd/sections";
+import { BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
 
 @Component({
   selector: "tester",
   templateUrl: "tester.component.html",
   styleUrl: "tester.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharBasicInfoSectionComponent],
+  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent],
   standalone: true
 })
 export class TesterComponent implements  OnInit, AfterViewChecked {

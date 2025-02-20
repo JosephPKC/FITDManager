@@ -1,8 +1,8 @@
 import {
-  Component, InputSignal, OnChanges, OutputEmitterRef, Signal, WritableSignal,
-  computed, input, output, signal
+  Component, InputSignalWithTransform, OnChanges, OutputEmitterRef, Signal, WritableSignal,
+  computed, forwardRef, input, numberAttribute, output, signal
 } from "@angular/core";
-import { ControlValueAccessor } from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseInputDirective } from "@sheet/inputs";
 
@@ -10,11 +10,18 @@ import { BaseInputDirective } from "@sheet/inputs";
   selector: "track-input",
   templateUrl: "track-input.component.html",
   styleUrl: "track-input.component.scss",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TrackInputComponent),
+      multi: true
+    }
+  ],
   standalone: true
 }) export class TrackInputComponent extends BaseInputDirective<number> implements ControlValueAccessor, OnChanges  {
   // #region Params
-  public boxes: InputSignal<number> = input.required<number>();
-  public minMarks: InputSignal<number> = input<number>(0);
+  public boxes: InputSignalWithTransform<number, unknown> = input.required<number, unknown>({ transform: numberAttribute });
+  public minMarks: InputSignalWithTransform<number, unknown> = input<number, unknown>(0, { transform: numberAttribute });
 
   public onComplete: OutputEmitterRef<boolean> = output<boolean>();
   // #endregion
@@ -35,7 +42,8 @@ import { BaseInputDirective } from "@sheet/inputs";
       if (mark <= this.minMarks()) {
         classList[i] += " track-box-min-marked";
       }
-      else if (mark < this.marks()) {
+
+      if (mark <= this.marks()) {
         classList[i] += " track-box-marked";
       }
     }
@@ -56,6 +64,10 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   // #region Lifecycle
   public ngOnChanges(): void {
+    if (this.boxes() === undefined) {
+
+    }
+
     if (this.boxes() < 0) {
       throw "Input 'boxes' is leess than 0.";
     }
