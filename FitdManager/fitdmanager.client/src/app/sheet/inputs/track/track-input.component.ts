@@ -64,16 +64,20 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   // #region Lifecycle
   public ngOnChanges(): void {
-    if (this.boxes() === undefined) {
+    if (typeof this.boxes() !== "number") {
+      throw "Input 'boxes' is not a number."
+    }
 
+    if (typeof this.minMarks() !== "number") {
+      throw "Input 'minMarks' is not a number."
     }
 
     if (this.boxes() < 0) {
-      throw "Input 'boxes' is leess than 0.";
+      throw "Input 'boxes' is less than 0.";
     }
 
     if (this.minMarks() < 0) {
-      throw "Input 'minMarks' is leess than 0.";
+      throw "Input 'minMarks' is less than 0.";
     }
   }
   // #endregion
