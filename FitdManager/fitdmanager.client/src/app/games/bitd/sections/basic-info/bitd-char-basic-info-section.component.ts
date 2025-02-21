@@ -1,20 +1,18 @@
 import { Component } from "@angular/core";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { BitdCharBasicInfo } from "@games/bitd/models";
-import { LockButtonComponent, HideButtonComponent } from "@shared/buttons";
 import { TextInputComponent } from "@sheet/inputs";
-import { BaseSectionDirective, TextSelectComboComponent } from "@sheet/sections";
+import { BaseSectionDirective, SectionShellComponent, SelectTextComponent } from "@sheet/sections";
 
 @Component({
   selector: "bitd-char-basic-info-section",
   templateUrl: "bitd-char-basic-info-section.component.html",
   styleUrl: "bitd-char-basic-info-section.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, HideButtonComponent, TextInputComponent, TextSelectComboComponent],
+  imports: [ReactiveFormsModule, SectionShellComponent, TextInputComponent, SelectTextComponent],
   standalone: true
 })
 export class BitdCharBasicInfoSectionComponent extends BaseSectionDirective<BitdCharBasicInfo> {
-  // #region Form Group
   protected override buildFormGroup(): FormGroup {
     const sectionGroup: FormGroup = this.formBuilder.group({
       name: new FormControl<string>(this.groupModel().name),
@@ -32,5 +30,4 @@ export class BitdCharBasicInfoSectionComponent extends BaseSectionDirective<Bitd
       look: this.groupModel().look
     });
   }
-  // #endregion
 }

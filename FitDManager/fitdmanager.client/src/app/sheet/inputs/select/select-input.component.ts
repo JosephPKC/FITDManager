@@ -26,6 +26,9 @@ import { BaseInputDirective } from "@sheet/inputs";
   standalone: true
 })
 export class SelectInputComponent extends BaseInputDirective<string> implements ControlValueAccessor {
+  // TODO: Likely need to split this into a single select and a multi select with a shared logical base
+  // Also needs options for displayinf vertically or horizontally
+
   // #region Params
   public itemList: InputSignal<string[]> = input<string[]>([]);
   public itemSeparator: InputSignal<string> = input<string>(smallDot);

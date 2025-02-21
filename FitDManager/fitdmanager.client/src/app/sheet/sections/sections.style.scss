@@ -1,3 +1,9 @@
+.div-disabled {
+  border: 1px solid red;
+  pointer-events: none;
+}
+
+
 /*.div-group-inputs {
   margin: 5px 0px 5px 0px;
   padding: 5px;

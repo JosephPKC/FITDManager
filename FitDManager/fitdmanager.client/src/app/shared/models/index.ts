@@ -1,2 +1,2 @@
 /* Model */
-export * from "./text-select-list-combo";
+export * from "./select-text-info.model";

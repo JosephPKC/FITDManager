@@ -1,6 +1,6 @@
 <div>
   <h1 class="fnt-header">TESTER</h1>
-  <form [formGroup]="testForm()" (ngSubmit)="onClickSave()" autocomplete="off">
+  <form [formGroup]="testForm()" (ngSubmit)="onClickSave()" autocomplete="off" autocorrect="off" spellcheck="false">
     <lock-button height="25" width="25" [locked]="locked()" (onLockedChange)="onClickLock($event)"></lock-button>
     <reset-button height="25" width="25" (onReset)="onClickReset()"></reset-button>
     <button type="submit">

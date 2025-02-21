@@ -99,7 +99,11 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
         }
       },
       health: {
-
+        stress: {
+          boxes: 8,
+          marks: 2,
+          minMarks: 0
+        }
       }
     };
 

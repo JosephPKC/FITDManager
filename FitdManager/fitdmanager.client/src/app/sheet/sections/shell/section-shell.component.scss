@@ -1,0 +1,36 @@
+// Generic Styles
+.div-disabled {
+  pointer-events: none;
+}
+
+.div-enabled {
+  
+}
+
+// Whole Section
+.div-section-locked {
+  border: 2px solid black;
+}
+
+.div-section-unlocked {
+  border: 2px solid red;
+}
+
+// Top Area
+.div-top-area {
+  display: flex;
+  flex-direction: row;
+  gap: 15%;
+}
+
+.div-top-area h3 {
+  align-content: center;
+  position: center;
+}
+
+// Button Area
+
+// Inputs Area
+.div-inputs-area {
+
+}

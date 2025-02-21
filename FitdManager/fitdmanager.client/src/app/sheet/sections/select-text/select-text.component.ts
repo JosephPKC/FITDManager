@@ -1,21 +1,22 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { TextSelectListCombo } from "@shared/models";
+import { SelectTextInfo } from "@shared/models";
 import { SelectInputComponent, TextInputComponent } from "@sheet/inputs";
 import { BaseInputGroupDirective } from "@sheet/sections";
 
 /**
  * Combination of a text and select input.
+ * Optionally, changes to the select input can affect the text input.
  */
 @Component({
-  selector: "text-select-combo",
-  templateUrl: "text-select-combo.component.html",
-  styleUrl: "text-select-combo.component.scss",
+  selector: "select-text",
+  templateUrl: "select-text.component.html",
+  styleUrl: "select-text.component.scss",
   imports: [FormsModule, ReactiveFormsModule, SelectInputComponent, TextInputComponent],
   standalone: true
 })
-export class TextSelectComboComponent extends BaseInputGroupDirective<TextSelectListCombo> {
+export class SelectTextComponent extends BaseInputGroupDirective<SelectTextInfo> {
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
     const sectionGroup: FormGroup = this.formBuilder.group({

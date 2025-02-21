@@ -4,18 +4,20 @@
 
 /* Testing styles */
 * {
-  border: 1px dashed black;
+  /*border: 1px dashed red;*/
+  margin: 1px;
+  padding: 1px;
 }
 
 div {
-    border: 1px solid black;
+  /*border: 1px dotted green;*/
 }
 
 /* Global Reset */
-* {
+/** {
   margin: 0;
   padding: 0;
-}
+}*/
 
 /* Global Text Styles */
 * {
@@ -24,4 +26,26 @@ div {
 
 .fnt-header {
   font-family: KirstyRg;
+}
+
+.inp-text {
+  height: auto;
+  width: 70%;
+
+  text-align: center;
+}
+
+text-input {
+  /*border: 5px solid black;*/
+  display: flex;
+  /*height: fit-content;*/
+}
+
+select-input {
+  display: flex;
+  /*height: fit-content;*/
+}
+
+select-text {
+  display: flex;
 }

@@ -1,12 +1,5 @@
-<div [class]="sectionClass()" [formGroup]="inputsGroup()">
-  <div class="div-top-area">
-    <div class="div-button-area">
-      <lock-button height="20" width="20" [locked]="isSectionLocked()" (onLockedChange)="onChangeLock($event)"></lock-button>
-      <hide-button height="20" width="20" [hidden]="isSectionHidden()" (onHiddenChange)="onChangeHide($event)"></hide-button>
-    </div>
-    <h3 class="fnt-header">{{ label() }}</h3>
+<section-shell [label]="label()" [locked]="locked()">
+  <div [formGroup]="inputsGroup()">
+    <track-input formControlName="stress" label="STRESS: " [boxes]="groupModel().stress.boxes" [minMarks]="groupModel().stress.minMarks"></track-input>
   </div>
-  <div [class]="divInputsClass()" [hidden]="isSectionHidden()">
-    <track-input formControlName="stress" label="STRESS: " boxes="8" minMarks="0"></track-input>
-  </div>
-</div>
+</section-shell>
