@@ -2,8 +2,15 @@
 
 .div-select-list {
   display: flex;
-  flex-direction: row;
   user-select: none;
+}
+
+.div-select-horizontal {
+  flex-direction: row;
+}
+
+.div-select-vertical {
+  flex-direction: column;
 }
 
 .btn-select-item {

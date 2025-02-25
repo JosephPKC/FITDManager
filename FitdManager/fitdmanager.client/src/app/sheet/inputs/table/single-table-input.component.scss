@@ -1,0 +1,10 @@
+@import url("../inputs.style.scss");
+
+.inp-underline-text {
+  border: 0px;
+  border-bottom: 2px double black;
+}
+
+.inp-underline-text:focus {
+  outline: 1px solid red;
+}

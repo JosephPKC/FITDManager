@@ -84,17 +84,17 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
         look: "DUCK-LIKE",
         heritage: {
           text: "AKOROSI NOBLE FAMILY",
-          selectedValue: "AKOROS",
+          selectedIndex: 0,
           valueList: ["AKOROS", "THE DAGGER ISLES", "IRUVIA", "SEVEROS", "SKOVLAN", "TYCHEROS"]
         },
         background: {
           text: "SALVAGING COMPANY",
-          selectedValue: "LABOR",
+          selectedIndex: 1,
           valueList: ["ACADEMIC", "LABOR", "LAW", "TRADE", "MILITARY", "NOBLE", "UNDERWORLD"]
         },
         vice: {
           text: "",
-          selectedValue: "",
+          selectedIndex: null,
           valueList: ["FAITH", "GAMBLING", "LUXURY", "OBLIGATION", "PLEASURE", "STUPOR", "WEIRD"]
         }
       },
@@ -103,7 +103,9 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           boxes: 8,
           marks: 2,
           minMarks: 0
-        }
+        },
+        traumaList: ["TEST1", "TEST"],
+        selectedTrauma: [0]
       }
     };
 

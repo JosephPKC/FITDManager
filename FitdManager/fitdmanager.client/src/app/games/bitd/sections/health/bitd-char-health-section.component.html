@@ -1,5 +1,6 @@
 <section-shell [label]="label()" [locked]="locked()">
   <div [formGroup]="inputsGroup()">
     <track-input formControlName="stress" label="STRESS: " [boxes]="groupModel().stress.boxes" [minMarks]="groupModel().stress.minMarks"></track-input>
+    <multi-select-input formControlName="multiStressTest" [itemList]="groupModel().traumaList" isVertical="true"></multi-select-input>
   </div>
 </section-shell>

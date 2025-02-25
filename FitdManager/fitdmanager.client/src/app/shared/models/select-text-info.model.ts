@@ -1,5 +1,5 @@
 export interface SelectTextInfo {
   text: string;
   valueList: string[];
-  selectedValue: string;
+  selectedIndex: number | null;
 }
