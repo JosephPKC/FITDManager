@@ -1,7 +1,6 @@
-import { TrackInfo } from "../../../shared/models/track-info.model";
+import { SelectTableInfo, TrackInfo } from "@shared/models";
 
 export interface BitdCharHealth {
   stress: TrackInfo;
-  traumaList: string[];
-  selectedTrauma: number[];
+  trauma: SelectTableInfo;
 }

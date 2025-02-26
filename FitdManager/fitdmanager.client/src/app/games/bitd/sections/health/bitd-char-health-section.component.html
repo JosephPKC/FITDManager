@@ -1,6 +1,9 @@
-<section-shell [label]="label()" [locked]="locked()">
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
   <div [formGroup]="inputsGroup()">
     <track-input formControlName="stress" label="STRESS: " [boxes]="groupModel().stress.boxes" [minMarks]="groupModel().stress.minMarks"></track-input>
-    <multi-select-input formControlName="multiStressTest" [itemList]="groupModel().traumaList" isVertical="true"></multi-select-input>
+    <!-- This needs to be a table-select input component, similar to how select-text is done -->
+    <!-- It needs logic on how to handle the syncing of the two -->
+    <multi-select-input formControlName="traumaList" [itemList]="groupModel().trauma.valueList" isVertical="false"></multi-select-input>
+    <single-table-input formControlName="traumaTable" header="Trauma" footer="" [maxNbrOfItems]="groupModel().trauma.maxNbrOfItems" isEnforceUnique="true" [showControls]="shouldShowControls()"></single-table-input>
   </div>
 </section-shell>

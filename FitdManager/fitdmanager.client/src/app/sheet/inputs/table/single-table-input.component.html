@@ -2,5 +2,44 @@
   @if (shouldCreateLabel()) {
     <label for="inp-text">{{ label() }}</label>
   }
-  <input id="inp-text" class="inp-text inp-underline-text" type="text" [value]="text()" [disabled]="isDisabled()" (change)="onChangeText($event)" />
+  <table>
+    @if (shouldCreateHeader()) {
+    <thead>
+      <tr>
+        <th>{{ header() }}</th>
+      </tr>
+    </thead>
+    }
+
+    <tbody>
+      @for (item of items(); track $index) {
+        <tr>
+          <td>{{ item }}</td>
+          @if (showControls()) {
+            <td><button type="button" (click)="onRemoveItem($index)">D</button></td>  
+          }
+        </tr>
+      }
+    </tbody>
+
+    @if (shouldCreateFooter()) {
+    <tfoot>
+      <tr>
+        <th>{{ footer() }}</th>
+      </tr>
+    </tfoot>
+    }
+  </table>
+  @if (showControls()) {
+    <div>
+      <input type="text" [value]="customItem()" [disabled]="isCustomTextDisabled()" (change)="onChangeCustomItem($event)"/>
+      <button type="button" [disabled]="isCustomTextDisabled()" (click)="onAddCustomItem()">Add</button>
+      @if (!canAddItem()) {
+        <p class="txt-warning">{{ maxItemWarning() }}</p>
+      }
+      @if (!isCustomItemUnique()) {
+        <p class="txt-warning">{{ nonUniqueItemWarning() }}</p>
+      }
+    </div>
+  }
 </div>

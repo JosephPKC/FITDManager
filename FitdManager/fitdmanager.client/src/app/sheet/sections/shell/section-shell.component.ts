@@ -1,6 +1,6 @@
 import {
-  Component, InputSignal, Signal, WritableSignal,
-  computed, input, linkedSignal, signal
+  Component, InputSignal, OutputEmitterRef, Signal, WritableSignal,
+  computed, input, linkedSignal, output, signal
 } from "@angular/core";
 
 import { HideButtonComponent, LockButtonComponent } from "@shared/buttons";
@@ -20,14 +20,13 @@ export class SectionShellComponent {
   public label: InputSignal<string> = input<string>("");
   public locked: InputSignal<boolean> = input<boolean>(true);
   public customInputsClass: InputSignal<string> = input<string>("");
+
+  // If the section needs to do extra processing when the section locks/unlocks, it can bind to this.
+  public onSectionLockChange: OutputEmitterRef<boolean> = output<boolean>();
   // #endregion
 
   // #region Internals
   protected isSectionHidden: WritableSignal<boolean> = signal<boolean>(false);
-
-  // TODO: Certain inputs should be editable by default.
-  // So, we'll need to have the actual section handle individual locking of its inputs rather than the section shell
-  // Or, we can add custom classes to exclude certain inputs from this.
   protected isSectionLocked: WritableSignal<boolean> = linkedSignal<boolean>(() => {
     return this.locked();
   });
@@ -66,6 +65,7 @@ export class SectionShellComponent {
   // #region Controls
   protected onChangeLock(locked: boolean): void {
     this.isSectionLocked.set(locked);
+    this.onSectionLockChange.emit(locked);
   }
 
   protected onChangeHide(hidden: boolean): void {

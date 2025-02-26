@@ -1,10 +1,21 @@
 @import url("../inputs.style.scss");
 
-.inp-underline-text {
-  border: 0px;
-  border-bottom: 2px double black;
+thead, tfoot {
+    background-color: black;
+    color: white;
 }
 
-.inp-underline-text:focus {
-  outline: 1px solid red;
+tbody {
+    background-color: white;
+    color: black;
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table {
+    border: 2px solid blue;
+    letter-spacing: 1px;
 }

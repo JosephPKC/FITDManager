@@ -104,8 +104,12 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           marks: 2,
           minMarks: 0
         },
-        traumaList: ["TEST1", "TEST"],
-        selectedTrauma: [0]
+        trauma: {
+          valueList: ["COLD", "HAUNTED", "OBSESSED", "PARANOID", "RECKLESS", "SOFT", "UNSTABLE", "VICIOUS"],
+          selectedIndices: [0, 1],
+          itemTableList: ["COLD", "HAUNTED"],
+          maxNbrOfItems: 3
+        }
       }
     };
 

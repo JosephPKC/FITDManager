@@ -1,5 +1,6 @@
 import {
   Component, InputSignal, InputSignalWithTransform, OnChanges, OnInit, Signal, WritableSignal,
+  booleanAttribute,
   computed, forwardRef, input, numberAttribute, signal
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
@@ -27,16 +28,67 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
   public header: InputSignal<string> = input<string>("");
   public footer: InputSignal<string> = input<string>("");
   public maxNbrOfItems: InputSignalWithTransform<number, unknown> = input<number, unknown>(1, { transform: numberAttribute });
+  public showControls: InputSignal<boolean> = input<boolean>(false);
+  public customMaxItemWarning: InputSignal<string> = input<string>("");
+  public customNonUniqueItemWarning: InputSignal<string> = input<string>("");
+  public isEnforceUnique: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 
   // #region Internals
-  protected tableItems: WritableSignal<string[]> = signal<string[]>([]);
+  protected items: WritableSignal<string[]> = signal<string[]>([]);
+  protected customItem: WritableSignal<string> = signal<string>("");
+
+  // #region Warning Messages
+  protected maxItemWarning: Signal<string> = computed<string>(() => {
+    if (this.customMaxItemWarning() !== "") {
+      return this.customMaxItemWarning();
+    }
+
+    // Default message
+    return "Table is full. Remove items from the table to add more.";
+  });
+
+  protected nonUniqueItemWarning: Signal<string> = computed<string>(() => {
+    if (this.customNonUniqueItemWarning() !== "") {
+      return this.customNonUniqueItemWarning();
+    }
+
+    return `Item \'${this.customItem()}\' is already in the table.`;
+  });
+  // #endregion
+
+  // #region Control Flags
+  protected isCustomTextDisabled: Signal<boolean> = computed<boolean>(() => {
+    return !this.canAddItem();
+  });
+
+  // #endregion
+
+  // #region State Flags
   protected isTableFull: Signal<boolean> = computed<boolean>(() => {
-    return this.tableItems().length >= this.maxNbrOfItems();
+    return this.items().length >= this.maxNbrOfItems();
   });
 
   protected canAddItem: Signal<boolean> = computed<boolean>(() => {
     return !(this.isDisabled() || this.isTableFull());
+  });
+
+  protected isCustomItemUnique: Signal<boolean> = computed <boolean>(() => {
+    if (!this.isEnforceUnique()) {
+      return true;
+    }
+
+    return this.isItemUnique(this.customItem());
+  })
+  // #endregion
+  // #endregion
+
+  protected shouldCreateHeader: Signal<boolean> = computed<boolean>(() => {
+    return this.header() !== "";
+  });
+
+  protected shouldCreateFooter: Signal<boolean> = computed<boolean>(() => {
+    return this.footer() !== "";
   });
   // #endregion
 
@@ -46,33 +98,49 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
       throw "maxNbrOfItems should be at least 1.";
     }
 
-    if (this.tableItems().length > this.maxNbrOfItems()) {
+    if (this.items().length > this.maxNbrOfItems()) {
       throw `The length of items exceeds the maxNbrOfItems (${this.maxNbrOfItems()})`;
     }
-
-    this.tableItems.set(new Array<string>(this.maxNbrOfItems()).fill(""));
   }
   // #endregion
 
   // #region Item Controls
-  protected onAddItem(item: string): void {
+  protected onAddCustomItem(): void {
+    console.log("onAddCustomitem");
     if (!this.canAddItem()) {
       return;
     }
 
-    let newItemList: string[] = this.tableItems().slice();
-    newItemList.push(item);
-    this.tableItems.set(newItemList);
+    if (this.isEnforceUnique() && !this.isItemUnique(this.customItem())) {
+      return;
+    }
+
+    let newItemList: string[] = this.items().slice();
+    newItemList.push(this.customItem());
+    this.items.set(newItemList);
+
+    this.customItem.set("");
   }
 
   protected onRemoveItem(index: number): void {
+    console.log("onRemoveItem");
     if (this.isDisabled()) {
       return;
     }
 
-    let newItemList: string[] = this.tableItems().slice();
+    let newItemList: string[] = this.items().slice();
     newItemList.splice(index, 1);
-    this.tableItems.set(newItemList);
+    this.items.set(newItemList);
+  }
+
+  protected onChangeCustomItem(event: Event): void {
+    const element: HTMLInputElement = event.target as HTMLInputElement;
+    this.customItem.set(element.value);
+
+  }
+
+  protected isItemUnique(item: string): boolean {
+    return this.items().find((x: string) => x === item) === undefined;
   }
   // #endregion
 
@@ -90,7 +158,7 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
   }
 
   public writeValue(val: string[]): void {
-    this.tableItems.set(val.slice());
+    this.items.set(val.slice());
   }
   // #endregion
 }
