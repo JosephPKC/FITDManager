@@ -118,6 +118,7 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
     let newItemList: string[] = this.items().slice();
     newItemList.push(this.customItem());
     this.items.set(newItemList);
+    this.onChange(this.items());
 
     this.customItem.set("");
   }
@@ -131,12 +132,12 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
     let newItemList: string[] = this.items().slice();
     newItemList.splice(index, 1);
     this.items.set(newItemList);
+    this.onChange(this.items());
   }
 
   protected onChangeCustomItem(event: Event): void {
     const element: HTMLInputElement = event.target as HTMLInputElement;
     this.customItem.set(element.value);
-
   }
 
   protected isItemUnique(item: string): boolean {

@@ -3,15 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { BitdCharHealth } from "@games/bitd/models";
 import { TrackInputComponent } from "@sheet/inputs";
-import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
-import { MultiSelectInputComponent } from "../../../../sheet/inputs/select/multi-select-input.component";
-import { SingleTableInputComponent } from "../../../../sheet/inputs/table/single-table-input.component";
+import { BaseSectionDirective, SectionShellComponent, SelectTableComponent } from "@sheet/sections";
 
 @Component({
   selector: "bitd-char-health-section",
   templateUrl: "bitd-char-health-section.component.html",
   styleUrl: "bitd-char-health-section.component.scss",
-  imports: [ReactiveFormsModule, SectionShellComponent, SingleTableInputComponent, TrackInputComponent, MultiSelectInputComponent],
+  imports: [ReactiveFormsModule, SectionShellComponent, SelectTableComponent, TrackInputComponent],
   standalone: true
 })
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealth> {
@@ -22,9 +20,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
     const sectionGroup: FormGroup = this.formBuilder.group({
-      stress: new FormControl<number>(this.groupModel().stress.marks),
-      traumaList: new FormControl<number[]>(this.groupModel().trauma.selectedIndices.slice()),
-      traumaTable: new FormControl<string[]>(this.groupModel().trauma.itemTableList.slice())
+      stress: new FormControl<number>(this.groupModel().stress.marks)
     });
 
     return sectionGroup;
@@ -32,9 +28,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
   protected override updateFormValues(): void {
     this.inputsGroup().patchValue({
-      stress: this.groupModel().stress.marks,
-      traumaList: this.groupModel().trauma.selectedIndices.slice(),
-      traumaTable: this.groupModel().trauma.itemTableList.slice()
+      stress: this.groupModel().stress.marks
     });
   }
   // #endregion

@@ -1,4 +1,7 @@
-import { Component, WritableSignal, forwardRef, signal } from "@angular/core";
+import {
+  Component, InputSignalWithTransform, OnChanges, WritableSignal,
+  forwardRef, input, numberAttribute, signal
+} from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseSelectInputComponent } from "./base-select-input.component";
@@ -19,9 +22,25 @@ import { BaseSelectInputComponent } from "./base-select-input.component";
   ],
   standalone: true
 })
-export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]> implements ControlValueAccessor {
+export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]> implements ControlValueAccessor, OnChanges {
+  // #region Params
+  public maxSelects: InputSignalWithTransform<number, unknown> = input<number, unknown>(1, { transform: numberAttribute });
+  // #endregion
+
   // #region Internals
   protected selectedIndices: WritableSignal<Set<number>> = signal<Set<number>>(new Set<number>());
+  // #endregion
+
+  // #region Lifecycle
+  public ngOnChanges(): void {
+    if (this.maxSelects() <= 0) {
+      throw `Input 'maxSelects' must be a positive integer. Currently ${this.maxSelects()}.`;
+    }
+
+    if (this.maxSelects() > this.itemList().length) {
+      throw `Input 'maxSelects' must be less than the length of input 'itemList'. Currently ${this.maxSelects()}.`;
+    }
+  }
   // #endregion
 
   // #region BaseSelectInputComponent
@@ -33,6 +52,13 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
     if (this.isDisabled()) {
       return;
     }
+
+    if (this.selectedIndices().size >= this.maxSelects() && !this.isItemSelected(index)) {
+      // Do not allow adding more if the select is full,
+      // But allow removal no matter what
+      return;
+    }
+
 
     let newSet: Set<number> = new Set<number>();
     for (let i = 0; i < this.nbrOfItems(); i++) {

@@ -1,0 +1,4 @@
+<div class="div-sub-group" [formGroup]="inputsGroup()">
+  <multi-select-input formControlName="selectedIndices" [itemList]="groupModel().valueList" [maxSelects]="groupModel().maxNbrOfItems" isVertical="false"></multi-select-input>
+  <single-table-input formControlName="itemTableList" [header]="tableHeader()" [footer]="tableFooter()" [maxNbrOfItems]="groupModel().maxNbrOfItems" [isEnforceUnique]="tableEnforceUnique()" [showControls]="showTableControls()"></single-table-input>
+</div>
