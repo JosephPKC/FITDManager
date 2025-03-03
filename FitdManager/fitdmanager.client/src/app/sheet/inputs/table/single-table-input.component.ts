@@ -1,5 +1,5 @@
 import {
-  Component, InputSignal, InputSignalWithTransform, OnChanges, OnInit, Signal, WritableSignal,
+  Component, InputSignal, InputSignalWithTransform, OnChanges, Signal, WritableSignal,
   booleanAttribute,
   computed, forwardRef, input, numberAttribute, signal
 } from "@angular/core";
@@ -93,7 +93,7 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
   // #endregion
 
   // #region Lifecycle
-  public ngOnChanges(): void {
+  public override ngOnChanges(): void {
     if (this.maxNbrOfItems() <= 0) {
       throw "maxNbrOfItems should be at least 1.";
     }

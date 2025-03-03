@@ -147,20 +147,12 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   protected override validateInputChanges(changes: SimpleChanges): void {
     if (changes["boxes"]) {
-      if (typeof this.boxes() !== "number") {
-        throw "Input 'boxes' is not a number."
-      }
-
       if (this.boxes() < 0) {
         throw "Input 'boxes' is less than 0.";
       }
     }
 
     if (changes["minMarks"]) {
-      if (typeof this.minMarks() !== "number") {
-        throw "Input 'minMarks' is not a number."
-      }
-
       if (this.minMarks() < 0) {
         throw "Input 'minMarks' is less than 0.";
       }

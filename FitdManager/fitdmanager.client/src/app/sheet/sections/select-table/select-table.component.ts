@@ -4,7 +4,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angul
 import { SelectTableInfo } from "@shared/models";
 import { MultiSelectInputComponent, SingleTableInputComponent } from "@sheet/inputs";
 import { BaseInputGroupDirective } from "@sheet/sections";
-import { getIndexByValue } from "../../../shared/utils";
 
 /**
  * Combination of a single table and a multi select input.
@@ -17,7 +16,7 @@ import { getIndexByValue } from "../../../shared/utils";
   standalone: true
 })
 export class SelectTableComponent extends BaseInputGroupDirective<SelectTableInfo> {
-  // #region Params
+  // #region Inputs
   public tableHeader: InputSignal<string> = input<string>("");
   public tableFooter: InputSignal<string> = input<string>("");
   public tableEnforceUnique: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
@@ -50,7 +49,6 @@ export class SelectTableComponent extends BaseInputGroupDirective<SelectTableInf
    * @param selectedIndices The selected indices from the select list.
    */
   protected onSelectedIndicesChange(selectedIndices: number[]): void {
-    console.log(`New indices: ${selectedIndices}`);
     const valueList: string[] = this.groupModel().valueList;
 
     // Use the selected indices to create the string list, in alphabetical order always.
@@ -58,11 +56,9 @@ export class SelectTableComponent extends BaseInputGroupDirective<SelectTableInf
       return valueList[x];
     });
 
-    console.log(`New item table: ${newItems}`);
     this.inputsGroup().patchValue({
       itemTableList: newItems
     });
-    console.log(`Table list form group: ${this.inputsGroup().controls["itemTableList"].value}`);
   }
   // #endregion
 }

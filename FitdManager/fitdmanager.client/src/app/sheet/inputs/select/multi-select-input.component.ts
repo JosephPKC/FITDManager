@@ -47,7 +47,6 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
       return;
     }
 
-
     let newSet: Set<number> = new Set<number>();
     for (let i = 0; i < this.nbrOfItems(); i++) {
       if (this.selectedIndices().has(i) && i !== index) {
@@ -76,10 +75,6 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
 
   protected override validateInputChanges(changes: SimpleChanges): void {
     if (changes["maxSelects"]) {
-      if (this.maxSelects() <= 0) {
-        throw `Input 'maxSelects' must be a positive integer. Currently ${this.maxSelects()}.`;
-      }
-
       if (this.maxSelects() > this.itemList().length) {
         throw `Input 'maxSelects' must be less than the length of input 'itemList'. Currently ${this.maxSelects()}.`;
       }

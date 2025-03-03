@@ -11,7 +11,7 @@ import { BaseInputGroupDirective } from "@sheet/sections";
   selector: "base-section"
 })
 export abstract class BaseSectionDirective<TModel> extends BaseInputGroupDirective<TModel> {
-  // #region Params
+  // #region Inputs
   public locked: InputSignal<boolean> = input<boolean>(true);
   // #endregion
 }

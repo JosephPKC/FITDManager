@@ -1,6 +1,6 @@
 import {
-  Component, InputSignal, OutputEmitterRef, Signal, WritableSignal,
-  computed, input, linkedSignal, output, signal
+  Component, InputSignal, InputSignalWithTransform, OutputEmitterRef, Signal, WritableSignal,
+  booleanAttribute, computed, input, linkedSignal, output, signal
 } from "@angular/core";
 
 import { HideButtonComponent, LockButtonComponent } from "@shared/buttons";
@@ -16,21 +16,25 @@ import { HideButtonComponent, LockButtonComponent } from "@shared/buttons";
   imports: [HideButtonComponent, LockButtonComponent]
 })
 export class SectionShellComponent {
-  // #region Params
+  // #region Inputs
   public label: InputSignal<string> = input<string>("");
-  public locked: InputSignal<boolean> = input<boolean>(true);
+  public locked: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(true, { transform: booleanAttribute });
   public customInputsClass: InputSignal<string> = input<string>("");
+  // #endregion
 
+  // #region Outputs
   // If the section needs to do extra processing when the section locks/unlocks, it can bind to this.
   public onSectionLockChange: OutputEmitterRef<boolean> = output<boolean>();
   // #endregion
 
-  // #region Internals
+  // #region State
   protected isSectionHidden: WritableSignal<boolean> = signal<boolean>(false);
   protected isSectionLocked: WritableSignal<boolean> = linkedSignal<boolean>(() => {
     return this.locked();
   });
+  // #endregion
 
+  // #region Computes
   protected sectionClass: Signal<string> = computed<string>(() => {
     let className: string = "div-section";
 

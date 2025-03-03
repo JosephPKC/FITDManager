@@ -1,6 +1,6 @@
 import {
-  Directive, InputSignal, OnChanges, OnInit, Signal, SimpleChange, SimpleChanges, WritableSignal,
-  computed, inject, input, linkedSignal, signal
+  Directive, InputSignal, OnChanges, OnInit, SimpleChanges, WritableSignal,
+  inject, input, signal
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
@@ -16,15 +16,14 @@ export abstract class BaseInputGroupDirective<TModel> implements OnChanges, OnIn
   protected formBuilder: FormBuilder = inject(FormBuilder);
   // #endregion
 
-  // #region Params
+  // #region Inputs
   public label: InputSignal<string> = input<string>("");
-
   public formGroup: InputSignal<FormGroup> = input.required<FormGroup>();
   public name: InputSignal<string> = input.required<string>();
   public groupModel: InputSignal<TModel> = input.required<TModel>();
   // #endregion
 
-  // #region Internals
+  // #region State
   protected inputsGroup: WritableSignal<FormGroup>;
   // #endregion
 

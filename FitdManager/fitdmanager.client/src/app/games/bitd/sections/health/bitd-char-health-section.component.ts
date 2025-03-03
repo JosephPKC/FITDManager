@@ -13,7 +13,7 @@ import { BaseSectionDirective, SectionShellComponent, SelectTableComponent } fro
   standalone: true
 })
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealth> {
-  // #region Internals
+  // #region State
   protected shouldShowControls: WritableSignal<boolean> = signal<boolean>(!this.locked());
   // #endregion
 
