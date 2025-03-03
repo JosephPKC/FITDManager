@@ -1,4 +1,7 @@
-import { Directive } from "@angular/core";
+import {
+  Directive, InputSignal,
+  input
+} from "@angular/core";
 
 import { BaseInputDirective } from "@sheet/inputs";
 
@@ -9,6 +12,6 @@ import { BaseInputDirective } from "@sheet/inputs";
   selector: "base-table-input",
   standalone: true
 })
-export class BaseTableInputDirective<TValue> extends BaseInputDirective<TValue> {
+export abstract class BaseTableInputDirective<TValue> extends BaseInputDirective<TValue> {
 
 }

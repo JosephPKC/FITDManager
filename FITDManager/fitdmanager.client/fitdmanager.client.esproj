@@ -9,6 +9,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="public\fonts\Kirsty\" />
-    <Folder Include="src\app\sheet\models\" />
   </ItemGroup>
 </Project>

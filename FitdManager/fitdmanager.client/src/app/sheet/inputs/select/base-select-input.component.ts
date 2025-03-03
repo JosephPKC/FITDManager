@@ -1,7 +1,6 @@
 import {
   Component, InputSignal, InputSignalWithTransform, Signal,
-  booleanAttribute,
-  computed, input
+  booleanAttribute, computed, input
 } from "@angular/core";
 
 import { smallDot } from "@shared/utils";
@@ -18,13 +17,13 @@ import { BaseInputDirective } from "@sheet/inputs";
   standalone: true
 })
 export abstract class BaseSelectInputComponent<TValue> extends BaseInputDirective<TValue> {
-  // #region Params
+  // #region Inputs
   public itemList: InputSignal<string[]> = input<string[]>([]);
   public itemSeparator: InputSignal<string> = input<string>(smallDot);
   public isVertical: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 
-  // #region Internals
+  // #region Computes
   protected itemClasses: Signal<string[]> = computed<string[]>(() => {
     // Prefill with the default class.
     const classList: string[] = new Array<string>(this.nbrOfItems()).fill("btn-select-item");

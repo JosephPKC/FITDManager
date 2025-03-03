@@ -1,5 +1,5 @@
 import { Component, WritableSignal, forwardRef, signal } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseSelectInputComponent } from "./base-select-input.component";
 
@@ -19,8 +19,8 @@ import { BaseSelectInputComponent } from "./base-select-input.component";
   ],
   standalone: true
 })
-export class SingleSelectInputComponent extends BaseSelectInputComponent<number | null> implements ControlValueAccessor {
-  // #region Internals
+export class SingleSelectInputComponent extends BaseSelectInputComponent<number | null> {
+  // #region State
   protected selectedIndex: WritableSignal<number | null> = signal<number | null>(null);
   // #endregion
 
@@ -45,19 +45,7 @@ export class SingleSelectInputComponent extends BaseSelectInputComponent<number 
   }
   // #endregion
 
-  // #region ControlValueAccessor
-  public registerOnChange(onChange: (value: number | null) => void): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouch: () => void): void {
-    this.onTouch = onTouch;
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
-  }
-
+  // #region BaseInputDirective
   public writeValue(val: number | null): void {
     this.selectedIndex.set(val);
   }

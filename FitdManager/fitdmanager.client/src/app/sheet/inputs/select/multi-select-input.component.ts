@@ -1,8 +1,8 @@
 import {
-  Component, InputSignalWithTransform, OnChanges, WritableSignal,
+  Component, InputSignalWithTransform, SimpleChanges, WritableSignal,
   forwardRef, input, numberAttribute, signal
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseSelectInputComponent } from "./base-select-input.component";
 
@@ -22,25 +22,13 @@ import { BaseSelectInputComponent } from "./base-select-input.component";
   ],
   standalone: true
 })
-export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]> implements ControlValueAccessor, OnChanges {
-  // #region Params
+export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]> {
+  // #region Inputs
   public maxSelects: InputSignalWithTransform<number, unknown> = input<number, unknown>(1, { transform: numberAttribute });
   // #endregion
 
-  // #region Internals
+  // #region State
   protected selectedIndices: WritableSignal<Set<number>> = signal<Set<number>>(new Set<number>());
-  // #endregion
-
-  // #region Lifecycle
-  public ngOnChanges(): void {
-    if (this.maxSelects() <= 0) {
-      throw `Input 'maxSelects' must be a positive integer. Currently ${this.maxSelects()}.`;
-    }
-
-    if (this.maxSelects() > this.itemList().length) {
-      throw `Input 'maxSelects' must be less than the length of input 'itemList'. Currently ${this.maxSelects()}.`;
-    }
-  }
   // #endregion
 
   // #region BaseSelectInputComponent
@@ -81,21 +69,21 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
   }
   // #endregion
 
-  // #region ControlValueAccessor
-  public registerOnChange(onChange: (value: number[]) => void): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouch: () => void): void {
-    this.onTouch = onTouch;
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
-  }
-
+  // #region BaseInputDirective
   public writeValue(val: number[]): void {
     this.selectedIndices.set(new Set<number>(val));
+  }
+
+  protected override validateInputChanges(changes: SimpleChanges): void {
+    if (changes["maxSelects"]) {
+      if (this.maxSelects() <= 0) {
+        throw `Input 'maxSelects' must be a positive integer. Currently ${this.maxSelects()}.`;
+      }
+
+      if (this.maxSelects() > this.itemList().length) {
+        throw `Input 'maxSelects' must be less than the length of input 'itemList'. Currently ${this.maxSelects()}.`;
+      }
+    }
   }
   // #endregion
 }

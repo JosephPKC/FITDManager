@@ -1,8 +1,5 @@
-import {
-  Component, WritableSignal,
-  forwardRef, signal
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, WritableSignal, forwardRef, signal } from "@angular/core";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseInputDirective } from "@sheet/inputs";
 
@@ -22,8 +19,8 @@ import { BaseInputDirective } from "@sheet/inputs";
   ],
   standalone: true
 })
-export class TextInputComponent extends BaseInputDirective<string> implements ControlValueAccessor {
-  // #region Internals
+export class TextInputComponent extends BaseInputDirective<string> {
+  // #region State
   protected text: WritableSignal<string> = signal<string>("");
   // #endregion
 
@@ -36,19 +33,7 @@ export class TextInputComponent extends BaseInputDirective<string> implements Co
   }
   // #endregion
 
-  // #region ControlValueAccessor
-  public registerOnChange(onChange: (value: string) => void): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouch: () => void): void {
-    this.onTouch = onTouch;
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
-  }
-
+  // #region BaseInputDirective
   public writeValue(val: string): void {
     this.text.set(val);
   }

@@ -1,7 +1,8 @@
 import {
-  Directive, InputSignal, Signal, WritableSignal,
+  Directive, InputSignal, OnChanges, Signal, SimpleChanges, WritableSignal,
   computed, input, signal
 } from "@angular/core";
+import { ControlValueAccessor } from "@angular/forms";
 
 import { noop } from "rxjs";
 
@@ -11,17 +12,19 @@ import { noop } from "rxjs";
 @Directive({
   selector: "base-input"
 })
-export abstract class BaseInputDirective<TValue> {
-  // #region Params
+export abstract class BaseInputDirective<TValue> implements ControlValueAccessor, OnChanges {
+  // #region Inputs
   public label: InputSignal<string> = input<string>("");
   public customClass: InputSignal<string> = input<string>("");
   // #endregion
 
-  // #region Internal
+  // #region State
   protected isDisabled: WritableSignal<boolean> = signal<boolean>(false);
   protected onChange: (value: TValue) => void = noop;
   protected onTouch: () => void = noop;
+  // #endregion
 
+  // #region Computes
   protected fullClass: Signal<string> = computed(() => {
     return "div-input " + this.customClass();
   });
@@ -29,5 +32,31 @@ export abstract class BaseInputDirective<TValue> {
   protected shouldCreateLabel: Signal<boolean> = computed<boolean>(() => {
     return this.label() !== null || this.label() !== undefined || this.label() !== "";
   });
+  // #endregion
+
+  // #region Lifecycle
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.validateInputChanges(changes);
+  }
+  // #endregion
+
+  protected validateInputChanges(changes: SimpleChanges): void {
+
+  }
+
+  // #region ControlValueAccessor
+  public registerOnChange(onChange: (value: TValue) => void): void {
+    this.onChange = onChange;
+  }
+
+  public registerOnTouched(onTouch: () => void): void {
+    this.onTouch = onTouch;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.isDisabled.set(isDisabled);
+  }
+
+  public abstract writeValue(val: TValue): void;
   // #endregion
 }

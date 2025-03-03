@@ -146,18 +146,6 @@ export class SingleTableInputComponent extends BaseTableInputDirective<string[]>
   // #endregion
 
   // #region ControlValueAccessor
-  public registerOnChange(onChange: (value: string[]) => void): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouch: () => void): void {
-    this.onTouch = onTouch;
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
-  }
-
   public writeValue(val: string[]): void {
     this.items.set(val.slice());
   }

@@ -1,8 +1,8 @@
 import {
-  Component, InputSignalWithTransform, OnChanges, OutputEmitterRef, Signal, WritableSignal,
+  Component, InputSignalWithTransform, OutputEmitterRef, Signal, SimpleChanges, WritableSignal,
   computed, forwardRef, input, numberAttribute, output, signal
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { BaseInputDirective } from "@sheet/inputs";
 
@@ -18,17 +18,21 @@ import { BaseInputDirective } from "@sheet/inputs";
     }
   ],
   standalone: true
-}) export class TrackInputComponent extends BaseInputDirective<number> implements ControlValueAccessor, OnChanges  {
-  // #region Params
+}) export class TrackInputComponent extends BaseInputDirective<number> {
+  // #region Inputs
   public boxes: InputSignalWithTransform<number, unknown> = input.required<number, unknown>({ transform: numberAttribute });
   public minMarks: InputSignalWithTransform<number, unknown> = input<number, unknown>(0, { transform: numberAttribute });
+  // #endregion
 
+  // #region Outputs
   public onComplete: OutputEmitterRef<boolean> = output<boolean>();
   // #endregion
 
-  // #region Internals
+  // #region State
   protected marks: WritableSignal<number> = signal<number>(this.minMarks());
+  // #endregion
 
+  // #region Computes
   protected isComplete: Signal<boolean> = computed<boolean>(() => {
     return this.boxes() === this.marks();
   });
@@ -60,26 +64,6 @@ import { BaseInputDirective } from "@sheet/inputs";
 
     return className;
   });
-  // #endregion
-
-  // #region Lifecycle
-  public ngOnChanges(): void {
-    if (typeof this.boxes() !== "number") {
-      throw "Input 'boxes' is not a number."
-    }
-
-    if (typeof this.minMarks() !== "number") {
-      throw "Input 'minMarks' is not a number."
-    }
-
-    if (this.boxes() < 0) {
-      throw "Input 'boxes' is less than 0.";
-    }
-
-    if (this.minMarks() < 0) {
-      throw "Input 'minMarks' is less than 0.";
-    }
-  }
   // #endregion
 
   // #region Mark Controls
@@ -156,21 +140,31 @@ import { BaseInputDirective } from "@sheet/inputs";
   }
   // #endregion
 
-  // #region ControlValueAccessor
-  public registerOnChange(onChange: (value: number) => void): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouch: () => void): void {
-    this.onTouch = onTouch;
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
-  }
-
+  // #region BaseInputDirective
   public writeValue(val: number): void {
     this.marks.set(this.sanitizeMarks(val));
+  }
+
+  protected override validateInputChanges(changes: SimpleChanges): void {
+    if (changes["boxes"]) {
+      if (typeof this.boxes() !== "number") {
+        throw "Input 'boxes' is not a number."
+      }
+
+      if (this.boxes() < 0) {
+        throw "Input 'boxes' is less than 0.";
+      }
+    }
+
+    if (changes["minMarks"]) {
+      if (typeof this.minMarks() !== "number") {
+        throw "Input 'minMarks' is not a number."
+      }
+
+      if (this.minMarks() < 0) {
+        throw "Input 'minMarks' is less than 0.";
+      }
+    }
   }
   // #endregion
 }
