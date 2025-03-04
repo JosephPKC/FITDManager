@@ -2,7 +2,7 @@ import { Component, InputSignal, InputSignalWithTransform, booleanAttribute, inp
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { SelectTableInfo } from "@shared/models";
-import { MultiSelectInputComponent, SingleTableInputComponent } from "@sheet/inputs";
+import { MultiSelectInputComponent, ViewTableInputComponent } from "@sheet/inputs";
 import { BaseInputGroupDirective } from "@sheet/sections";
 
 /**
@@ -12,7 +12,7 @@ import { BaseInputGroupDirective } from "@sheet/sections";
   selector: "select-table",
   templateUrl: "select-table.component.html",
   styleUrl: "select-table.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, MultiSelectInputComponent, SingleTableInputComponent],
+  imports: [FormsModule, ReactiveFormsModule, MultiSelectInputComponent, ViewTableInputComponent],
   standalone: true
 })
 export class SelectTableComponent extends BaseInputGroupDirective<SelectTableInfo> {
@@ -20,7 +20,6 @@ export class SelectTableComponent extends BaseInputGroupDirective<SelectTableInf
   public tableHeader: InputSignal<string> = input<string>("");
   public tableFooter: InputSignal<string> = input<string>("");
   public tableEnforceUnique: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
-  public showTableControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 
   // #region Form Group

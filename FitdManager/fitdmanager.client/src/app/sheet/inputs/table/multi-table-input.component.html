@@ -1,0 +1,48 @@
+<div [class]="fullClass()">
+  @if (shouldCreateLabel()) {
+    <label for="inp-text">{{ label() }}</label>
+  }
+  @for (table of tables(); track $index; let tableIndex = $index) {
+    <table>
+      <tr>
+        @if (headerCreationArray()[$index]) {
+          <th>{{ tableParams()[$index].header }}</th>
+        }
+
+        @for (item of table; track $index) {
+          <td>{{ item }}</td>
+          @if (showControls()) {
+            <td><button type="button" (click)="onRemoveItem(tableIndex, $index)">D</button></td>
+          }
+        }
+
+        @if (footerCreationArray()[$index]) {
+          <th>{{ tableParams()[$index].footer }}</th>
+        }
+      </tr>
+    </table>
+  }
+  
+  @if (showControls()) {
+  <div>
+    <select (change)="onChangeCustomItemTable($event)">
+      @for (table of tables(); track $index) {
+        @if ($index === customItemTableIndex()) {
+          <option value="{{ $index }}" selected>{{ $index }}</option>
+        }
+        @else {
+          <option value="{{ $index }}">{{ $index }}</option>
+        }
+      }
+    </select>
+    <input type="text" [value]="customItem()" [disabled]="isCustomTextDisabled()" (change)="onChangeCustomItem($event)" />
+    <button type="button" [disabled]="isCustomTextDisabled()" (click)="onAddCustomItem()">Add</button>
+    @if (!doesTableHaveSpaceForCustomItem()) {
+      <p class="txt-warning">"Table is full. Remove items from the table to add more."</p>
+    }
+    @if (!isCustomItemUnique()) {
+      <p class="txt-warning">Item is not unique</p>
+    }
+  </div>
+  }
+</div>

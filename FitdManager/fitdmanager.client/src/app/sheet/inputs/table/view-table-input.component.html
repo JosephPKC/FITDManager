@@ -1,0 +1,30 @@
+<div [class]="fullClass()">
+  @if (shouldCreateLabel()) {
+    <label for="inp-text">{{ label() }}</label>
+  }
+  <table>
+    @if (shouldCreateHeader()) {
+      <thead>
+        <tr>
+          <th>{{ header() }}</th>
+        </tr>
+      </thead>
+    }
+
+    <tbody>
+      @for (item of items(); track $index) {
+        <tr>
+          <td>{{ item }}</td>
+        </tr>
+      }
+    </tbody>
+
+    @if (shouldCreateFooter()) {
+      <tfoot>
+        <tr>
+          <th>{{ footer() }}</th>
+        </tr>
+      </tfoot>
+    }
+  </table>
+</div>

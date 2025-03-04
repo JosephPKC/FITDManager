@@ -1,184 +1,185 @@
-//import {
-//  Component, InputSignal, InputSignalWithTransform, OnChanges, OnInit, Signal, WritableSignal,
-//  booleanAttribute,
-//  computed, forwardRef, input, numberAttribute, signal
-//} from "@angular/core";
-//import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import {
+  Component, InputSignal, InputSignalWithTransform, Signal, SimpleChanges, WritableSignal,
+  booleanAttribute, computed, forwardRef, input, numberAttribute, signal
+} from "@angular/core";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
-//import { BaseTableInputDirective } from "./base-table-input.directive";
+import { BaseTableInputDirective } from "./base-table-input.directive";
 
-//export interface TableParams {
-//  header: string;
-//  footer: string;
-//  maxNbrOfItems: number;
-//}
-///**
-// * Table input that has multiple columns/rows.
-// * Think of it like a table of tables, or a jagged matrix.
-// * The outer layer is the nbr of tables/columns, and the inner layer is the number of items. Each table/column has its own set of items and size, making it jagged.
-// */
-//@Component({
-//  selector: "multi-table-input",
-//  templateUrl: "multi-table-input.component.html",
-//  styleUrl: "multi-table-input.component.scss",
-//  providers: [
-//    {
-//      provide: NG_VALUE_ACCESSOR,
-//      useExisting: forwardRef(() => MultiTableInputComponent),
-//      multi: true
-//    }
-//  ],
-//  standalone: true
-//})
-//export class MultiTableInputComponent extends BaseTableInputDirective<string[]> implements ControlValueAccessor, OnChanges {
-//  // #region Params
-//  public nbrOfTables: InputSignalWithTransform<number, unknown> = input<number, unknown>(1, { transform: numberAttribute });
-//  public tableParams: InputSignal<TableParams[]> = input.required<TableParams[]>();
 
-//  public showControls: InputSignal<boolean> = input<boolean>(false);
-//  public customMaxItemWarning: InputSignal<string> = input<string>("");
-//  public customNonUniqueItemWarning: InputSignal<string> = input<string>("");
-//  public isEnforceUnique: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
-//  // #endregion
 
-//  // #region Internals
-//  // Outer is the table nbr/level; Inner is the item nbr.
-//  protected items: WritableSignal<string[][]> = signal<string[][]>([]);
-//  protected customItem: WritableSignal<string> = signal<string>("");
-//  protected customItemLevel: WritableSignal<number> = signal<number>(0);
+export interface TableParams {
+  header: string;
+  footer: string;
+  maxNbrOfItems: number;
+  enforceUnique: boolean;
+}
 
-//  // #region Warning Messages
-//  protected maxItemWarning: Signal<string> = computed<string>(() => {
-//    if (this.customMaxItemWarning() !== "") {
-//      return this.customMaxItemWarning();
-//    }
+export interface Table {
+  items: string[];
+}
 
-//    // Default message
-//    return `Table ${this.customItemLevel} is full. Remove items from the table to add more.`;
-//  });
+interface CustomItem {
+  item: string;
+  tableNbr: number;
+}
 
-//  protected nonUniqueItemWarning: Signal<string> = computed<string>(() => {
-//    if (this.customNonUniqueItemWarning() !== "") {
-//      return this.customNonUniqueItemWarning();
-//    }
+/**
+ * Custom table input that allows the user to add custom items to the table.
+ * It can have multiple different 'tables', each with their own header/footer and size.
+ */
+@Component({
+  selector: "multi-table-input",
+  templateUrl: "multi-table-input.component.html",
+  styleUrl: "multi-table-input.component.scss",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MultiTableInputComponent),
+      multi: true
+    }
+  ],
+  standalone: true
+})
+export class MultiTableInputComponent extends BaseTableInputDirective<string[][]> {
+  // #region Inputs
+  public tableParams: InputSignal<TableParams[]> = input.required<TableParams[]>();
+  public showControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
+  // #endregion
 
-//    return `Item \'${this.customItem()}\' is already in the table ${this.customItemLevel}.`;
-//  });
-//  // #endregion
+  // #region State
+  protected tables: WritableSignal<string[][]> = signal<string[][]>([]);
+  // Maybe do self validation for these signals
+  protected customItem: WritableSignal<string> = signal<string>("");
+  protected customItemTableIndex: WritableSignal<number> = signal<number>(0);
+  // #endregion
 
-//  // #region Control Flags
-//  protected isCustomTextDisabled: Signal<boolean> = computed<boolean>(() => {
-//    // Disable custom text, if the input is disabled OR if every table is full
-//    return this.isDisabled() || this.isTableFull().every((v: boolean, i: number, arr: boolean[]) => v);
-//  });
+  // #region Computes
+  protected nbrOfTables: Signal<number> = computed<number>(() => {
+    console.log(`nbr of tables: ${this.tableParams().length}`);
+    return this.tableParams().length;
+  })
 
-//  // #endregion
+  protected headerCreationArray: Signal<boolean[]> = computed<boolean[]>(() => {
+    let headerArr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
-//  // #region State Flags
-//  protected isTableFull: Signal<boolean[]> = computed<boolean[]>(() => {
-//    let fullArr: boolean[] = new Array<boolean>(this.nbrOfTables());
-//    for (let i = 0; i < fullArr.length; i++) {
-//      fullArr[i] = this.items()[i].length >= this.tableParams()[i].maxNbrOfItems;
-//    }
+    for (let i = 0; i < this.nbrOfTables(); i++) {
+      headerArr[i] = this.tableParams()[i].header !== "";
+    }
 
-//    return fullArr;
-//  });
+    return headerArr;
+  });
 
-//  protected canAddItem: Signal<boolean[]> = computed<boolean[]>(() => {
-//    if (this.isDisabled()) {
-//      return new Array<;
-//    }
+  protected footerCreationArray: Signal<boolean[]> = computed<boolean[]>(() => {
+    let footerArr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
-//    return !(this.isDisabled() || this.isTableFull());
-//  });
+    for (let i = 0; i < this.nbrOfTables(); i++) {
+      footerArr[i] = this.tableParams()[i].footer !== "";
+    }
 
-//  protected isCustomItemUnique: Signal<boolean> = computed<boolean>(() => {
-//    if (!this.isEnforceUnique()) {
-//      return true;
-//    }
+    return footerArr;
+  });
 
-//    return this.isItemUnique(this.customItem());
-//  })
-//  // #endregion
-//  // #endregion
+  protected isCustomTextDisabled: Signal<boolean> = computed<boolean>(() => {
+    return false;
+  });
 
-//  protected shouldCreateHeader: Signal<boolean> = computed<boolean>(() => {
-//    return this.header() !== "";
-//  });
+  protected doesTableHaveSpaceForCustomItem: Signal<boolean> = computed<boolean>(() => {
+    const params: TableParams = this.tableParams()[this.customItemTableIndex()];
+    const table: string[] = this.tables()[this.customItemTableIndex()];
 
-//  protected shouldCreateFooter: Signal<boolean> = computed<boolean>(() => {
-//    return this.footer() !== "";
-//  });
-//  // #endregion
+    console.log(`${table.length} vs ${params.maxNbrOfItems}`);
+    return table.length < params.maxNbrOfItems;
+  })
 
-//  // #region Lifecycle
-//  public ngOnChanges(): void {
-//    if (this.maxNbrOfItems() <= 0) {
-//      throw "maxNbrOfItems should be at least 1.";
-//    }
+  protected isCustomItemUnique: Signal<boolean> = computed<boolean>(() => {
+    return this.isItemUnique(this.customItemTableIndex(), this.customItem());
+  });
+  // #endregion
 
-//    if (this.items().length > this.maxNbrOfItems()) {
-//      throw `The length of items exceeds the maxNbrOfItems (${this.maxNbrOfItems()})`;
-//    }
-//  }
-//  // #endregion
+  // #region Flags
 
-//  // #region Item Controls
-//  protected onAddCustomItem(): void {
-//    console.log("onAddCustomitem");
-//    if (!this.canAddItem()) {
-//      return;
-//    }
+  // #endregion
 
-//    if (this.isEnforceUnique() && !this.isItemUnique(this.customItem())) {
-//      return;
-//    }
+  // #region Lifecycle
+  protected override validateInputChanges(changes: SimpleChanges): void {
+    if (this.nbrOfTables() <= 0) {
+      throw "Input 'tableParams' has incorrect length.";
+    }
 
-//    let newItemList: string[] = this.items().slice();
-//    newItemList.push(this.customItem());
-//    this.items.set(newItemList);
-//    this.onChange(this.items());
+    if (this.tables().length !== this.nbrOfTables()) {
+      throw "'tables has incorrect length.";
+    }
 
-//    this.customItem.set("");
-//  }
+    for (let i = 0; i < this.nbrOfTables(); i++) {
+      if (this.tables()[i].length > this.tableParams()[i].maxNbrOfItems) {
+        throw `The length of items exceeds the maxNbrOfItems (${this.tableParams()[i].maxNbrOfItems})`;
+      }
+    }
+  }
+  // #endregion
 
-//  protected onRemoveItem(index: number): void {
-//    console.log("onRemoveItem");
-//    if (this.isDisabled()) {
-//      return;
-//    }
+  // #region Item Controls
+  protected onAddCustomItem(): void {
+    console.log(`onAddCustomItem: ${this.customItem()} @ ${this.customItemTableIndex()}`);
+    if (this.isDisabled()) {
+      return;
+    }
 
-//    let newItemList: string[] = this.items().slice();
-//    newItemList.splice(index, 1);
-//    this.items.set(newItemList);
-//    this.onChange(this.items());
-//  }
+    const params: TableParams = this.tableParams()[this.customItemTableIndex()];
+    const table: string[] = this.tables()[this.customItemTableIndex()];
 
-//  protected onChangeCustomItem(event: Event): void {
-//    const element: HTMLInputElement = event.target as HTMLInputElement;
-//    this.customItem.set(element.value);
-//  }
+    // Check if table is full
+    if (table.length >= params.maxNbrOfItems) {
+      return;
+    }
 
-//  protected isItemUnique(item: string): boolean {
-//    return this.items().find((x: string) => x === item) === undefined;
-//  }
-//  // #endregion
+    // Check if item is unique
+    if (params.enforceUnique && !this.isItemUnique(this.customItemTableIndex(), this.customItem())) {
+      return;
+    }
 
-//  // #region ControlValueAccessor
-//  public registerOnChange(onChange: (value: string[]) => void): void {
-//    this.onChange = onChange;
-//  }
+    // Copy the existing table, then add the custom item to it.
+    let newTableList: string[][] = this.tables().map((arr: string[]) => arr.slice());
+    newTableList[this.customItemTableIndex()].push(this.customItem());
+    this.tables.set(newTableList);
+    this.onChange(this.tables());
 
-//  public registerOnTouched(onTouch: () => void): void {
-//    this.onTouch = onTouch;
-//  }
+    this.customItem.set("");
+    this.customItemTableIndex.set(0);
+  }
 
-//  public setDisabledState(isDisabled: boolean): void {
-//    this.isDisabled.set(isDisabled);
-//  }
+  protected onRemoveItem(tableIndex: number, itemIndex: number): void {
+    console.log(`OnRemoveItem: ${tableIndex}, ${itemIndex}`);
+    if (this.isDisabled()) {
+      return;
+    }
 
-//  public writeValue(val: string[]): void {
-//    this.items.set(val.slice());
-//  }
-//  // #endregion
-//}
+    let newTableList: string[][] = this.tables().map((arr: string[]) => arr.slice());
+    newTableList[tableIndex].splice(itemIndex, 1);
+    this.tables.set(newTableList);
+    this.onChange(this.tables());
+  }
+
+  protected onChangeCustomItem(event: Event): void {
+    const element: HTMLInputElement = event.target as HTMLInputElement;
+    this.customItem.set(element.value);
+  }
+
+  protected onChangeCustomItemTable(event: Event): void {
+    const element: HTMLInputElement = event.target as HTMLInputElement;
+    this.customItemTableIndex.set(Number.parseInt(element.value));
+  }
+
+  protected isItemUnique(tableIndex: number, item: string): boolean {
+    const items: string[] = this.tables()[tableIndex];
+    return items.find((x: string) => x === item) === undefined;
+  }
+  // #endregion
+
+  // #region BaseInpurDirective
+  public writeValue(val: string[][]): void {
+    this.tables.set(val.map((arr: string[]) => arr.slice()));
+  }
+  // #endregion
+}
