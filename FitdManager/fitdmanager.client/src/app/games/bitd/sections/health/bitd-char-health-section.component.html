@@ -2,6 +2,6 @@
   <div [formGroup]="inputsGroup()">
     <track-input formControlName="stress" label="STRESS: " [boxes]="groupModel().stress.boxes" [minMarks]="groupModel().stress.minMarks"></track-input>
     <select-table name="trauma" label="TRAUMA: " [formGroup]="inputsGroup()" [groupModel]="groupModel().trauma" tableEnforceUnique="true"></select-table>
-    <multi-table-input formControlName="multiTableTest" [tableParams]="tableParams" [showControls]="shouldShowControls()"></multi-table-input>
+    <multi-table-input formControlName="harm" [placeholder]="groupModel().harm.examples" [tableParams]="harmTableParams()" [showControls]="shouldShowControls()"></multi-table-input>
   </div>
 </section-shell>

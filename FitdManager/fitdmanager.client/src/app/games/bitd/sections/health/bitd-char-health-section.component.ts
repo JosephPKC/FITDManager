@@ -1,7 +1,7 @@
-import { Component, signal, WritableSignal } from "@angular/core";
+import { Component, computed, signal, Signal, WritableSignal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
-import { BitdCharHealth } from "@games/bitd/models";
+import { BitdCharHealth, CharHarm } from "@games/bitd/models";
 import { TrackInputComponent } from "@sheet/inputs";
 import { Table, TableParams, MultiTableInputComponent } from "@sheet/inputs";
 import { BaseSectionDirective, SectionShellComponent, SelectTableComponent } from "@sheet/sections";
@@ -16,37 +16,60 @@ import { BaseSectionDirective, SectionShellComponent, SelectTableComponent } fro
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealth> {
   // #region State
   protected shouldShowControls: WritableSignal<boolean> = signal<boolean>(!this.locked());
+  // #endregion
 
-  protected tableParams: TableParams[] = [
-    {
-      header: "Table1",
-      footer: "",
-      enforceUnique: true,
-      maxNbrOfItems: 3
-    },
-    {
-      header: "Table2",
-      footer: "",
-      enforceUnique: true,
-      maxNbrOfItems: 2
-    }
-  ];
+  // #region Computes
+  protected harmTableParams: Signal<TableParams[]> = computed<TableParams[]>(() => {
+    const harm: CharHarm = this.groupModel().harm;
+    let params: TableParams[] = new Array<TableParams>(3);
+
+    // MINOR
+    params[0] = ({
+      header: harm.minorHeader,
+      footer: harm.minorFooter,
+      maxNbrOfItems: harm.minorHarm.maxNbrOfItems,
+      enforceUnique: true
+    });
+
+    // MODERATE
+    params[1] = ({
+      header: harm.moderateHeader,
+      footer: harm.moderateFooter,
+      maxNbrOfItems: harm.moderateHarm.maxNbrOfItems,
+      enforceUnique: true
+    });
+
+    // MAJOR
+    params[2] = ({
+      header: harm.majorHeader,
+      footer: harm.majorFooter,
+      maxNbrOfItems: harm.majorHarm.maxNbrOfItems,
+      enforceUnique: true
+    });
+
+    console.log(`PARAMS: ${params}.`);
+    return params;
+  });
   // #endregion
 
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
+    const harm: CharHarm = this.groupModel().harm;
+
     const sectionGroup: FormGroup = this.formBuilder.group({
       stress: new FormControl<number>(this.groupModel().stress.marks),
-      multiTableTest: new FormControl<string[][]>([[], []])
+      harm: new FormControl<string[][]>([harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()])
     });
 
     return sectionGroup;
   }
 
   protected override updateFormValues(): void {
+    const harm: CharHarm = this.groupModel().harm;
+
     this.inputsGroup().patchValue({
       stress: this.groupModel().stress.marks,
-      multiTableTest: [[], []]
+      harm: [harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()]
     });
   }
   // #endregion

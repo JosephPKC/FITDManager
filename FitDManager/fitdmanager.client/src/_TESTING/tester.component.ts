@@ -109,6 +109,27 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           selectedIndices: [0, 1],
           itemTableList: ["COLD", "HAUNTED"],
           maxNbrOfItems: 3
+        },
+        harm: {
+          minorHarm: {
+            maxNbrOfItems: 2,
+            items: ["DISTRESSED"]
+          },
+          moderateHarm: {
+            maxNbrOfItems: 2,
+            items: []
+          },
+          majorHarm: {
+            maxNbrOfItems: 1,
+            items: ["BROKEN LEG"]
+          },
+          minorFooter: "REDUCED EFFECT",
+          minorHeader: "MINOR",
+          moderateFooter: "-1D",
+          moderateHeader: "MODERATE",
+          majorFooter: "CANNOT ACT",
+          majorHeader: "MAJOR",
+          examples: "BATTERED, DRAINED, CONFUSED"
         }
       }
     };

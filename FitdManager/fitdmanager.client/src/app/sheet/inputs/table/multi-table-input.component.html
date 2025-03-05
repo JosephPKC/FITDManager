@@ -35,7 +35,7 @@
         }
       }
     </select>
-    <input type="text" [value]="customItem()" [disabled]="isCustomTextDisabled()" (change)="onChangeCustomItem($event)" />
+    <input type="text" [value]="customItem()" [placeholder]="placeholder()" [disabled]="isCustomTextDisabled()" (change)="onChangeCustomItem($event)" />
     <button type="button" [disabled]="isCustomTextDisabled()" (click)="onAddCustomItem()">Add</button>
     @if (!doesTableHaveSpaceForCustomItem()) {
       <p class="txt-warning">"Table is full. Remove items from the table to add more."</p>

@@ -43,6 +43,7 @@ interface CustomItem {
 })
 export class MultiTableInputComponent extends BaseTableInputDirective<string[][]> {
   // #region Inputs
+  public placeholder: InputSignal<string> = input<string>("");
   public tableParams: InputSignal<TableParams[]> = input.required<TableParams[]>();
   public showControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
