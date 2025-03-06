@@ -2,8 +2,8 @@
   <div [formGroup]="inputsGroup()">
     <track-input formControlName="stress" label="STRESS: " [boxes]="groupModel().stress.boxes" [minMarks]="groupModel().stress.minMarks"></track-input>
     <div class="div-sub-group" formGroupName="trauma">
-      <view-table-input formControlName="itemTableList" label="TRAUMA: "></view-table-input>
-      <multi-select-input formControlName="selectedIndices" [itemList]="groupModel().trauma.valueList" [maxSelects]="groupModel().trauma.maxNbrOfItems" isVertical="false"></multi-select-input>
+      <view-table-input formControlName="selectedTraumaList" label="TRAUMA: "></view-table-input>
+      <multi-select-input formControlName="selectedTraumaIndices" [itemList]="groupModel().trauma.traumaList" [maxSelects]="groupModel().trauma.maxNbrOfTrauma" isVertical="false"></multi-select-input>
     </div>
 
     <multi-table-input formControlName="harm" [placeholder]="groupModel().harm.examples" [tableParams]="harmTableParams()" [showControls]="shouldShowControls()"></multi-table-input>

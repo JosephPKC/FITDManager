@@ -89,6 +89,7 @@ import { BaseInputDirective } from "@sheet/inputs";
 
     const newMarks: number = Math.min(this.boxes(), index);
     this.marks.set(newMarks);
+    this.onChange(this.marks());
   }
 
   /**
@@ -103,6 +104,7 @@ import { BaseInputDirective } from "@sheet/inputs";
 
     const newMarks: number = Math.max(this.minMarks(), index);
     this.marks.set(newMarks);
+    this.onChange(this.marks());
   }
   // #endregion
 

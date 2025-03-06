@@ -1,9 +1,9 @@
 import { Component, computed, signal, Signal, WritableSignal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
-import { BitdCharHealth, CharHarm } from "@games/bitd/models";
-import { TrackInputComponent } from "@sheet/inputs";
-import { TableParams, MultiSelectInputComponent, MultiTableInputComponent, ViewTableInputComponent } from "@sheet/inputs";
+import { BitdCharHealthModel } from "@games/bitd/models";
+import { HarmModel } from "@sheet/models";
+import { TableParams, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent } from "@sheet/inputs";
 import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
 
 @Component({
@@ -13,40 +13,40 @@ import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
   imports: [ReactiveFormsModule, SectionShellComponent, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent],
   standalone: true
 })
-export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealth> {
+export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealthModel> {
   // #region State
   protected shouldShowControls: WritableSignal<boolean> = signal<boolean>(!this.locked());
   // #endregion
 
   // #region Computes
   protected harmTableParams: Signal<TableParams[]> = computed<TableParams[]>(() => {
-    const harm: CharHarm = this.groupModel().harm;
+    const harm: HarmModel = this.groupModel().harm;
     let params: TableParams[] = new Array<TableParams>(3);
 
     // MINOR
     params[0] = ({
-      header: harm.minorHeader,
-      footer: harm.minorFooter,
-      name: harm.minorHeader,
-      maxNbrOfItems: harm.minorHarm.maxNbrOfItems,
+      header: harm.minorHarm.header,
+      footer: harm.minorHarm.footer,
+      name: harm.minorHarm.header,
+      maxNbrOfItems: harm.minorHarm.maxNbrOfData,
       enforceUnique: true
     });
 
     // MODERATE
     params[1] = ({
-      header: harm.moderateHeader,
-      footer: harm.moderateFooter,
-      name: harm.moderateHeader,
-      maxNbrOfItems: harm.moderateHarm.maxNbrOfItems,
+      header: harm.moderateHarm.header,
+      footer: harm.moderateHarm.footer,
+      name: harm.moderateHarm.header,
+      maxNbrOfItems: harm.moderateHarm.maxNbrOfData,
       enforceUnique: true
     });
 
     // MAJOR
     params[2] = ({
-      header: harm.majorHeader,
-      footer: harm.majorFooter,
-      name: harm.majorHeader,
-      maxNbrOfItems: harm.majorHarm.maxNbrOfItems,
+      header: harm.majorHarm.header,
+      footer: harm.majorHarm.footer,
+      name: harm.majorHarm.header,
+      maxNbrOfItems: harm.majorHarm.maxNbrOfData,
       enforceUnique: true
     });
 
@@ -57,32 +57,32 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
-    const harm: CharHarm = this.groupModel().harm;
+    const harm: HarmModel = this.groupModel().harm;
 
     const sectionGroup: FormGroup = this.formBuilder.group({
       stress: new FormControl<number>(this.groupModel().stress.marks),
       trauma: new FormGroup({
-        selectedIndices: new FormControl<number[]>(this.groupModel().trauma.selectedIndices.slice()),
-        itemTableList: new FormControl<string[]>(this.groupModel().trauma.itemTableList.slice())
+        selectedTraumaIndices: new FormControl<number[]>(this.groupModel().trauma.selectedTraumaIndices.slice()),
+        selectedTraumaList: new FormControl<string[]>(this.groupModel().trauma.selectedTraumaList.slice())
       }),
-      harm: new FormControl<string[][]>([harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()])
+      harm: new FormControl<string[][]>([harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice()])
     });
 
-    sectionGroup.get("trauma.selectedIndices")!.valueChanges.subscribe((x: number[]) => { this.onSelectedIndicesChange(x) });
+    sectionGroup.get("trauma.selectedTraumaIndices")!.valueChanges.subscribe((x: number[]) => { this.onSelectedIndicesChange(x) });
 
     return sectionGroup;
   }
 
   protected override updateFormValues(): void {
-    const harm: CharHarm = this.groupModel().harm;
+    const harm: HarmModel = this.groupModel().harm;
 
     this.inputsGroup().patchValue({
       stress: this.groupModel().stress.marks,
       trauma: {
-        selectedIndices: this.groupModel().trauma.selectedIndices.slice(),
-        itemTableList: this.groupModel().trauma.itemTableList.slice()
+        selectedTraumaIndices: this.groupModel().trauma.selectedTraumaIndices.slice(),
+        selectedTraumaList: this.groupModel().trauma.traumaList.slice()
       },
-      harm: [harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()]
+      harm: [harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice()]
     });
   }
   // #endregion
@@ -100,7 +100,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
    * @param selectedIndices The selected indices from the select list.
    */
   protected onSelectedIndicesChange(selectedIndices: number[]): void {
-    const valueList: string[] = this.groupModel().trauma.valueList;
+    const valueList: string[] = this.groupModel().trauma.traumaList;
 
     // Use the selected indices to create the string list, in alphabetical order always.
     let newItems: string[] = selectedIndices.map((x: number, i: number, arr: number[]) => {

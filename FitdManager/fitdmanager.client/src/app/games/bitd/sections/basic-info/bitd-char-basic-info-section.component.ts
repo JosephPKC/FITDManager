@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
-import { BitdCharBasicInfo } from "@games/bitd/models";
+import { BitdCharBasicModel } from "@games/bitd/models";
 import { SingleSelectInputComponent, TextInputComponent } from "@sheet/inputs";
 import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
 
@@ -12,7 +12,7 @@ import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
   imports: [ReactiveFormsModule, SectionShellComponent, SingleSelectInputComponent, TextInputComponent],
   standalone: true
 })
-export class BitdCharBasicInfoSectionComponent extends BaseSectionDirective<BitdCharBasicInfo> {
+export class BitdCharBasicInfoSectionComponent extends BaseSectionDirective<BitdCharBasicModel> {
   protected override buildFormGroup(): FormGroup {
     const sectionGroup: FormGroup = this.formBuilder.group({
       name: new FormControl<string>(this.groupModel().name),

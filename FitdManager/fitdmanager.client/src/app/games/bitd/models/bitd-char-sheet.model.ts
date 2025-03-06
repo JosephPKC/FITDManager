@@ -1,7 +1,6 @@
-import { BitdCharBasicInfo } from "@games/bitd/models/bitd-char-basic-info.model";
-import { BitdCharHealth } from "@games/bitd/models/bitd-char-health.model";
+import { BitdCharBasicModel, BitdCharHealthModel } from "@games/bitd/models";
 
-export interface BitdCharSheet {
-  basicInfo: BitdCharBasicInfo;
-  health: BitdCharHealth;
+export interface BitdCharSheetModel {
+  basic: BitdCharBasicModel;
+  health: BitdCharHealthModel;
 }

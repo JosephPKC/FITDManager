@@ -5,7 +5,7 @@ import {
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
-import { BitdCharBasicInfo, BitdCharSheet } from "@games/bitd/models";
+import { BitdCharBasicModel, BitdCharHealthModel, BitdCharSheetModel } from "@games/bitd/models";
 import { BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
 
 @Component({
@@ -22,7 +22,7 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
 
   // #region State
   public testForm: WritableSignal<FormGroup>; // This is the form, structured like the model. It is the current model.
-  public apiModel: WritableSignal<BitdCharSheet>; // This is the default model from the api
+  public apiModel: WritableSignal<BitdCharSheetModel>; // This is the default model from the api
 
   public locked: WritableSignal<boolean> = signal<boolean>(true);
   // #endregion
@@ -31,11 +31,11 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     this.testForm = signal<FormGroup>(this.formBuilder.group({}));
     
     // Get default api model from api service
-    this.apiModel = signal<BitdCharSheet>(this.getDefaultApiModelService());
+    this.apiModel = signal<BitdCharSheetModel>(this.getDefaultApiModelService());
 
     effect(() => {
       console.log(`Updated Api Model`);
-      console.log(this.apiModel().basicInfo.name)
+      console.log(this.apiModel().basic.name)
       //console.log(this.apiModel().basicInfo.heritage.text)
     });
   }
@@ -68,7 +68,7 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     console.log(`This is the raw data: ${JSON.stringify(this.testForm().getRawValue())}`);
   }
 
-  public onChangeModel(basicInfo: BitdCharBasicInfo) {
+  public onChangeModel(basicInfo: BitdCharBasicModel) {
     console.log(`NEW MODEL IN TESTER: ${JSON.stringify(basicInfo)}`);
     //let model: BitdCharSheet = {
     //  basicInfo: this.copyModel(basicInfo)
@@ -76,9 +76,9 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     //this.apiModel.set(model);
   }
 
-  protected getDefaultApiModelService(): BitdCharSheet {
-    let model: BitdCharSheet = {
-      basicInfo: {
+  protected getDefaultApiModelService(): BitdCharSheetModel {
+    let model: BitdCharSheetModel = {
+      basic: {
         name: "STAZIA",
         alias: "THE DUCK",
         look: "DUCK-LIKE",
@@ -105,30 +105,30 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           minMarks: 0
         },
         trauma: {
-          valueList: ["COLD", "HAUNTED", "OBSESSED", "PARANOID", "RECKLESS", "SOFT", "UNSTABLE", "VICIOUS"],
-          selectedIndices: [0, 1],
-          itemTableList: ["COLD", "HAUNTED"],
-          maxNbrOfItems: 3
+          traumaList: ["COLD", "HAUNTED", "OBSESSED", "PARANOID", "RECKLESS", "SOFT", "UNSTABLE", "VICIOUS"],
+          selectedTraumaIndices: [0, 1],
+          selectedTraumaList: ["COLD", "HAUNTED"],
+          maxNbrOfTrauma: 3
         },
         harm: {
           minorHarm: {
-            maxNbrOfItems: 2,
-            items: ["DISTRESSED"]
+            header: "MINOR",
+            footer: "REDUCED EFFECT",
+            data: ["DISTRESSED"],
+            maxNbrOfData: 2
           },
           moderateHarm: {
-            maxNbrOfItems: 2,
-            items: []
+            header: "MODERATE",
+            footer: "-1D",
+            data: [],
+            maxNbrOfData: 2
           },
           majorHarm: {
-            maxNbrOfItems: 1,
-            items: ["BROKEN LEG"]
+            header: "MAJOR",
+            footer: "CANNOT ACT",
+            data: ["BROKEN LEG"],
+            maxNbrOfData: 1
           },
-          minorFooter: "REDUCED EFFECT",
-          minorHeader: "MINOR",
-          moderateFooter: "-1D",
-          moderateHeader: "MODERATE",
-          majorFooter: "CANNOT ACT",
-          majorHeader: "MAJOR",
           examples: "BATTERED, DRAINED, CONFUSED"
         }
       }

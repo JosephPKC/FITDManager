@@ -1,8 +1,7 @@
-import { SelectTableInfo, TrackInfo } from "@shared/models";
-import { CharHarm } from "./harm.model";
+import { HarmModel, TrackModel, TraumaModel } from "@sheet/models";
 
-export interface BitdCharHealth {
-  stress: TrackInfo;
-  trauma: SelectTableInfo;
-  harm: CharHarm;
+export interface BitdCharHealthModel {
+  stress: TrackModel;
+  trauma: TraumaModel;
+  harm: HarmModel;
 }
