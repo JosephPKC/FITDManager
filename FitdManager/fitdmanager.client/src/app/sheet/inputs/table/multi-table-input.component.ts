@@ -11,6 +11,7 @@ import { BaseTableInputDirective } from "./base-table-input.directive";
 export interface TableParams {
   header: string;
   footer: string;
+  name: string;
   maxNbrOfItems: number;
   enforceUnique: boolean;
 }
@@ -52,7 +53,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
   protected tables: WritableSignal<string[][]> = signal<string[][]>([]);
   // Maybe do self validation for these signals
   protected customItem: WritableSignal<string> = signal<string>("");
-  protected customItemTableIndex: WritableSignal<number> = signal<number>(0);
+  protected customItemTableIndex: WritableSignal<number | null> = signal<number | null>(0);
   // #endregion
 
   // #region Computes
@@ -81,20 +82,44 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     return footerArr;
   });
 
+  protected tableAvailArray: Signal<boolean[]> = computed<boolean[]>(() => {
+    let arr: boolean[] = new Array<boolean>(this.nbrOfTables());
+
+    for (let i = 0; i < this.nbrOfTables(); i++) {
+      arr[i] = this.tables()[i].length < this.tableParams()[i].maxNbrOfItems;
+    }
+
+    return arr;
+  });
+
+  protected firstAvailTable: Signal<number | null> = computed<number | null>(() => {
+    const firstAvail: number = this.tableAvailArray().findIndex((v: boolean, i: number, arr: boolean[]) => v === true);
+    return firstAvail >= 0 ? firstAvail : null;
+  });
+
   protected isCustomTextDisabled: Signal<boolean> = computed<boolean>(() => {
     return false;
   });
 
   protected doesTableHaveSpaceForCustomItem: Signal<boolean> = computed<boolean>(() => {
-    const params: TableParams = this.tableParams()[this.customItemTableIndex()];
-    const table: string[] = this.tables()[this.customItemTableIndex()];
+    if (this.customItemTableIndex() === null) {
+      return false;
+    }
+    console.log(`Custom Index: ${this.customItemTableIndex()}`);
+
+    const params: TableParams = this.tableParams()[this.customItemTableIndex()!];
+    const table: string[] = this.tables()[this.customItemTableIndex()!];
 
     console.log(`${table.length} vs ${params.maxNbrOfItems}`);
     return table.length < params.maxNbrOfItems;
   })
 
   protected isCustomItemUnique: Signal<boolean> = computed<boolean>(() => {
-    return this.isItemUnique(this.customItemTableIndex(), this.customItem());
+    if (this.customItemTableIndex() === null) {
+      return true;
+    }
+
+    return this.isItemUnique(this.customItemTableIndex()!, this.customItem());
   });
   // #endregion
 
@@ -102,21 +127,28 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
 
   // #endregion
 
+  //public constructor() {
+  //  super();
+
+  //  const arr: string[][] = new Array<string[]>(this.nbrOfTables());
+  //  for (let i = 0; i < arr.length; i++) {
+  //    arr[i] = new Array<string>(this.tableParams()[i].maxNbrOfItems);
+  //  }
+  //  this.tables.set(arr);
+  //}
+
   // #region Lifecycle
   protected override validateInputChanges(changes: SimpleChanges): void {
-    if (this.nbrOfTables() <= 0) {
-      throw "Input 'tableParams' has incorrect length.";
-    }
+    console.log(`TABLES: ${this.tables()}`);
+    //if (this.nbrOfTables() <= 0) {
+    //  throw "Input 'tableParams' has incorrect length.";
+    //}
 
-    if (this.tables().length !== this.nbrOfTables()) {
-      throw "'tables has incorrect length.";
-    }
-
-    for (let i = 0; i < this.nbrOfTables(); i++) {
-      if (this.tables()[i].length > this.tableParams()[i].maxNbrOfItems) {
-        throw `The length of items exceeds the maxNbrOfItems (${this.tableParams()[i].maxNbrOfItems})`;
-      }
-    }
+    //for (let i = 0; i < this.nbrOfTables(); i++) {
+    //  if (this.tables()[i].length > this.tableParams()[i].maxNbrOfItems) {
+    //    throw `The length of items exceeds the maxNbrOfItems (${this.tableParams()[i].maxNbrOfItems})`;
+    //  }
+    //}
   }
   // #endregion
 
@@ -127,8 +159,12 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
       return;
     }
 
-    const params: TableParams = this.tableParams()[this.customItemTableIndex()];
-    const table: string[] = this.tables()[this.customItemTableIndex()];
+    if (this.customItemTableIndex() === null) {
+      return;
+    }
+
+    const params: TableParams = this.tableParams()[this.customItemTableIndex()!];
+    const table: string[] = this.tables()[this.customItemTableIndex()!];
 
     // Check if table is full
     if (table.length >= params.maxNbrOfItems) {
@@ -136,18 +172,18 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     }
 
     // Check if item is unique
-    if (params.enforceUnique && !this.isItemUnique(this.customItemTableIndex(), this.customItem())) {
+    if (params.enforceUnique && !this.isItemUnique(this.customItemTableIndex()!, this.customItem())) {
       return;
     }
 
     // Copy the existing table, then add the custom item to it.
     let newTableList: string[][] = this.tables().map((arr: string[]) => arr.slice());
-    newTableList[this.customItemTableIndex()].push(this.customItem());
+    newTableList[this.customItemTableIndex()!].push(this.customItem());
     this.tables.set(newTableList);
     this.onChange(this.tables());
 
     this.customItem.set("");
-    this.customItemTableIndex.set(0);
+    this.customItemTableIndex.set(this.firstAvailTable());
   }
 
   protected onRemoveItem(tableIndex: number, itemIndex: number): void {

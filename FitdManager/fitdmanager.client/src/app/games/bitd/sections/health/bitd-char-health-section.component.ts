@@ -27,6 +27,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
     params[0] = ({
       header: harm.minorHeader,
       footer: harm.minorFooter,
+      name: harm.minorHeader,
       maxNbrOfItems: harm.minorHarm.maxNbrOfItems,
       enforceUnique: true
     });
@@ -35,6 +36,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
     params[1] = ({
       header: harm.moderateHeader,
       footer: harm.moderateFooter,
+      name: harm.moderateHeader,
       maxNbrOfItems: harm.moderateHarm.maxNbrOfItems,
       enforceUnique: true
     });
@@ -43,6 +45,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
     params[2] = ({
       header: harm.majorHeader,
       footer: harm.majorFooter,
+      name: harm.majorHeader,
       maxNbrOfItems: harm.majorHarm.maxNbrOfItems,
       enforceUnique: true
     });
@@ -79,5 +82,9 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
     // Set the signal, so that it can inform the appropriate inputs.
     this.shouldShowControls.set(!val);
   }
+  // #endregion
+
+  // #region Harm Table Processing
+
   // #endregion
 }
