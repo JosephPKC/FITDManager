@@ -3,14 +3,14 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { BitdCharHealth, CharHarm } from "@games/bitd/models";
 import { TrackInputComponent } from "@sheet/inputs";
-import { Table, TableParams, MultiTableInputComponent } from "@sheet/inputs";
-import { BaseSectionDirective, SectionShellComponent, SelectTableComponent } from "@sheet/sections";
+import { TableParams, MultiSelectInputComponent, MultiTableInputComponent, ViewTableInputComponent } from "@sheet/inputs";
+import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
 
 @Component({
   selector: "bitd-char-health-section",
   templateUrl: "bitd-char-health-section.component.html",
   styleUrl: "bitd-char-health-section.component.scss",
-  imports: [ReactiveFormsModule, SectionShellComponent, SelectTableComponent, TrackInputComponent, MultiTableInputComponent],
+  imports: [ReactiveFormsModule, SectionShellComponent, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent],
   standalone: true
 })
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealth> {
@@ -61,8 +61,14 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
     const sectionGroup: FormGroup = this.formBuilder.group({
       stress: new FormControl<number>(this.groupModel().stress.marks),
+      trauma: new FormGroup({
+        selectedIndices: new FormControl<number[]>(this.groupModel().trauma.selectedIndices.slice()),
+        itemTableList: new FormControl<string[]>(this.groupModel().trauma.itemTableList.slice())
+      }),
       harm: new FormControl<string[][]>([harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()])
     });
+
+    sectionGroup.get("trauma.selectedIndices")!.valueChanges.subscribe((x: number[]) => { this.onSelectedIndicesChange(x) });
 
     return sectionGroup;
   }
@@ -72,6 +78,10 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
     this.inputsGroup().patchValue({
       stress: this.groupModel().stress.marks,
+      trauma: {
+        selectedIndices: this.groupModel().trauma.selectedIndices.slice(),
+        itemTableList: this.groupModel().trauma.itemTableList.slice()
+      },
       harm: [harm.minorHarm.items.slice(), harm.moderateHarm.items.slice(), harm.majorHarm.items.slice()]
     });
   }
@@ -81,6 +91,27 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
   protected onSectionLockChange(val: boolean): void {
     // Set the signal, so that it can inform the appropriate inputs.
     this.shouldShowControls.set(!val);
+  }
+  // #endregion
+
+  // #region Trauma Syncing
+  /**
+   * When the select list changes, the component needs to sync the table items appropriately.
+   * @param selectedIndices The selected indices from the select list.
+   */
+  protected onSelectedIndicesChange(selectedIndices: number[]): void {
+    const valueList: string[] = this.groupModel().trauma.valueList;
+
+    // Use the selected indices to create the string list, in alphabetical order always.
+    let newItems: string[] = selectedIndices.map((x: number, i: number, arr: number[]) => {
+      return valueList[x];
+    });
+
+    this.inputsGroup().patchValue({
+      trauma: {
+        itemTableList: newItems
+      }
+    });
   }
   // #endregion
 

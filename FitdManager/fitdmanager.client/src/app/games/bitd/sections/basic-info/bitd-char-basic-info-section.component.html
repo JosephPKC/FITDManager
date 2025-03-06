@@ -3,9 +3,18 @@
     <text-input formControlName="name" label="NAME: " customClass="txt-indiv-input"></text-input>
     <text-input formControlName="alias" label="ALIAS: " customClass="txt-indiv-input"></text-input>
     <text-input formControlName="look" label="LOOK: " customClass="txt-indiv-input"></text-input>
-    <select-text name="heritage" label="HERITAGE: " [formGroup]="inputsGroup()" [groupModel]="groupModel().heritage"></select-text>
-    <select-text name="background" label="BACKGROUND: " [formGroup]="inputsGroup()" [groupModel]="groupModel().background"></select-text>
-    <select-text name="vice" label="VICE/PURVEYOR: " [formGroup]="inputsGroup()" [groupModel]="groupModel().vice"></select-text>
+    <div class="div-sub-group" formGroupName="heritage">
+      <text-input formControlName="text" label="HERITAGE: "></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().heritage.valueList"></single-select-input>
+    </div>
+    <div class="div-sub-group" formGroupName="background">
+      <text-input formControlName="text" label="BACKGROUND: "></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().background.valueList"></single-select-input>
+    </div>
+    <div class="div-sub-group" formGroupName="vice">
+      <text-input formControlName="text" label="VICE/PURVEYOR: "></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().vice.valueList"></single-select-input>
+    </div>
   </div>
 </section-shell>
 
