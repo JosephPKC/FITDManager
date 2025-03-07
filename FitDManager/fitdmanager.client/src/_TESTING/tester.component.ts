@@ -129,7 +129,18 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
             data: ["BROKEN LEG"],
             maxNbrOfData: 1
           },
+          fatalHarm: {
+            header: "FATAL",
+            footer: "PERMANENT",
+            data: [],
+            maxNbrOfData: 1
+          },
           examples: "BATTERED, DRAINED, CONFUSED"
+        },
+        healing: {
+          boxes: 4,
+          marks: 0,
+          minMarks: 1
         }
       }
     };

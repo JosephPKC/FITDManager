@@ -21,15 +21,15 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
   // #region Computes
   protected harmTableParams: Signal<TableParams[]> = computed<TableParams[]>(() => {
     const harm: HarmModel = this.groupModel().harm;
-    let params: TableParams[] = new Array<TableParams>(3);
+    let params: TableParams[] = new Array<TableParams>(4);
 
     // MINOR
     params[0] = ({
       header: harm.minorHarm.header,
       footer: harm.minorHarm.footer,
       name: harm.minorHarm.header,
-      maxNbrOfItems: harm.minorHarm.maxNbrOfData,
-      enforceUnique: true
+      maxSize: harm.minorHarm.maxNbrOfData,
+      hideIfEmpty: false
     });
 
     // MODERATE
@@ -37,8 +37,8 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
       header: harm.moderateHarm.header,
       footer: harm.moderateHarm.footer,
       name: harm.moderateHarm.header,
-      maxNbrOfItems: harm.moderateHarm.maxNbrOfData,
-      enforceUnique: true
+      maxSize: harm.moderateHarm.maxNbrOfData,
+      hideIfEmpty: false
     });
 
     // MAJOR
@@ -46,11 +46,19 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
       header: harm.majorHarm.header,
       footer: harm.majorHarm.footer,
       name: harm.majorHarm.header,
-      maxNbrOfItems: harm.majorHarm.maxNbrOfData,
-      enforceUnique: true
+      maxSize: harm.majorHarm.maxNbrOfData,
+      hideIfEmpty: false
     });
 
-    console.log(`PARAMS: ${params}.`);
+    // FATAL
+    params[3] = ({
+      header: harm.fatalHarm.header,
+      footer: harm.fatalHarm.footer,
+      name: harm.fatalHarm.header,
+      maxSize: harm.fatalHarm.maxNbrOfData,
+      hideIfEmpty: true
+    });
+
     return params;
   });
   // #endregion
@@ -65,7 +73,8 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
         selectedTraumaIndices: new FormControl<number[]>(this.groupModel().trauma.selectedTraumaIndices.slice()),
         selectedTraumaList: new FormControl<string[]>(this.groupModel().trauma.selectedTraumaList.slice())
       }),
-      harm: new FormControl<string[][]>([harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice()])
+      harm: new FormControl<string[][]>([harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice(), harm.fatalHarm.data.slice()]),
+      healing: new FormControl<number>(this.groupModel().healing.marks)
     });
 
     sectionGroup.get("trauma.selectedTraumaIndices")!.valueChanges.subscribe((x: number[]) => { this.onSelectedIndicesChange(x) });
@@ -82,7 +91,8 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
         selectedTraumaIndices: this.groupModel().trauma.selectedTraumaIndices.slice(),
         selectedTraumaList: this.groupModel().trauma.traumaList.slice()
       },
-      harm: [harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice()]
+      harm: [harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice(), harm.fatalHarm.data.slice()],
+      healing: this.groupModel().healing.marks
     });
   }
   // #endregion

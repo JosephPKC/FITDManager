@@ -4,4 +4,5 @@ export interface BitdCharHealthModel {
   stress: TrackModel;
   trauma: TraumaModel;
   harm: HarmModel;
+  healing: TrackModel;
 }

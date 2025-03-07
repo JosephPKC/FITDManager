@@ -3,51 +3,54 @@
     <label for="inp-text">{{ label() }}</label>
   }
   @for (table of tables(); track $index; let tableIndex = $index) {
-    <table>
+    @if (shouldShowTableArr()[$index]) {
+      <table>
       <tr>
-        @if (headerCreationArray()[$index]) {
+        @if (shouldCreateHeaderArr()[$index]) {
           <th>{{ tableParams()[$index].header }}</th>
         }
 
         @for (item of table; track $index) {
-          <td>{{ item }}</td>
           @if (showControls()) {
-            <td><button type="button" (click)="onRemoveItem(tableIndex, $index)">D</button></td>
+            <td>
+              <button type="button" (click)="onRemoveItem(tableIndex, $index)">
+                <img class="img-icon" src="/icons/MaterialIcons/delete.svg" height="15" width="15" />
+                {{ item }}
+              </button>
+            </td>
+          }
+          @else {
+            <td><button type="button" disabled>{{ item }}</button></td>
           }
         }
 
-        @if (footerCreationArray()[$index]) {
+        @if (shouldCreateFooterArr()[$index]) {
           <th>{{ tableParams()[$index].footer }}</th>
         }
       </tr>
     </table>
+    }
   }
   
   @if (showControls()) {
-  <div>
-    <select (change)="onChangeCustomItemTable($event)">
-      @for (avail of tableAvailArray(); track $index) {
-        @if (avail) {
-          @if ($index === customItemTableIndex()) {
-            <option value="{{ $index }}" selected>{{ tableParams()[$index].name }}</option>
+    <div>
+      <select (change)="onChangeCustomTable($event)">
+        @for (avail of isTableAvailArr(); track $index) {
+          @if (avail) {
+            @if ($index === customTable()) {
+              <option value="{{ $index }}" selected>{{ tableParams()[$index].name }}</option>
+            }
+            @else {
+              <option value="{{ $index }}">{{ tableParams()[$index].name }}</option>
+            }
           }
           @else {
-            <option value="{{ $index }}">{{ tableParams()[$index].name }}</option>
+            <option value="{{ $index }}" disabled>{{ tableParams()[$index].name }}</option>
           }
         }
-        @else {
-          <option value="{{ $index }}" disabled>{{ tableParams()[$index].name }}</option>
-        }
-      }
-    </select>
-    <input type="text" [value]="customItem()" [placeholder]="placeholder()" [disabled]="isCustomTextDisabled()" (change)="onChangeCustomItem($event)" />
-    <button type="button" [disabled]="isCustomTextDisabled()" (click)="onAddCustomItem()">Add</button>
-    @if (!doesTableHaveSpaceForCustomItem()) {
-      <p class="txt-warning">"Table is full. Remove items from the table to add more."</p>
-    }
-    @if (!isCustomItemUnique()) {
-      <p class="txt-warning">Item is not unique</p>
-    }
-  </div>
+      </select>
+      <input type="text" [value]="customItem()" [placeholder]="placeholder()" (change)="onChangeCustomItem($event)" />
+      <button type="button" (click)="onAddCustomItem()">Add</button>
+    </div>
   }
 </div>
