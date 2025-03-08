@@ -113,6 +113,26 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
 
     return arr;
   });
+
+  /**
+   * This will be the warning message that shows when the user hovers over the 'Add' button.
+   */
+  protected btnWarnTooltip: Signal<string> = computed<string>(() => {
+    let tooltip: string = "";
+    if (this.customTable() < 0) {
+      tooltip += "Table is not selected or invalid.\n";
+    }
+
+    if (!this.isTableAvailArr()[this.customTable()]) {
+      tooltip += `Selected table ${this.tableParams()[this.customTable()].name} is full.\n`;
+    }
+
+    if (this.customItem() === "") {
+      tooltip += "Custom item is blank.";
+    }
+
+    return tooltip;
+  });
   // #endregion
   // #endregion
 
@@ -129,6 +149,11 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
 
     if (!this.isTableAvailArr()[this.customTable()]) {
       // Table is full (shouldn't really happen, as the UI should disable selecting a full table).
+      return;
+    }
+
+    if (this.customItem() === "") {
+      // Do not allow blank items.
       return;
     }
 

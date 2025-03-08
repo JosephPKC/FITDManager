@@ -50,7 +50,12 @@
         }
       </select>
       <input type="text" [value]="customItem()" [placeholder]="placeholder()" (change)="onChangeCustomItem($event)" />
-      <button type="button" (click)="onAddCustomItem()">Add</button>
+      @if (btnWarnTooltip() === "") {
+        <button type="button" [title]="btnWarnTooltip()" (click)="onAddCustomItem()">Add</button>
+      }
+      @else {
+        <button type="button" [title]="btnWarnTooltip()" disabled>Add</button>
+      }
     </div>
   }
 </div>
