@@ -8,5 +8,6 @@
 
     <multi-table-input formControlName="harm" [placeholder]="groupModel().harm.examples" [tableParams]="harmTableParams()" [showControls]="shouldShowControls()"></multi-table-input>
     <track-input formControlName="healing" label="HEALING: " [boxes]="groupModel().healing.boxes" [minMarks]="groupModel().healing.minMarks"></track-input>
+    <check-box-input formControlName="armor" label="ARMOR: " [checkBoxTexts]="armorTexts()" [showControls]="shouldShowControls()"></check-box-input>
   </div>
 </section-shell>

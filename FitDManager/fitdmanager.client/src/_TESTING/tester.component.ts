@@ -5,7 +5,7 @@ import {
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
-import { BitdCharBasicModel, BitdCharHealthModel, BitdCharSheetModel } from "@games/bitd/models";
+import { BitdCharSheetModel } from "@games/bitd/models";
 import { BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
 
 @Component({
@@ -32,12 +32,6 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     
     // Get default api model from api service
     this.apiModel = signal<BitdCharSheetModel>(this.getDefaultApiModelService());
-
-    effect(() => {
-      console.log(`Updated Api Model`);
-      console.log(this.apiModel().basic.name)
-      //console.log(this.apiModel().basicInfo.heritage.text)
-    });
   }
 
   ngOnInit(): void {
@@ -66,14 +60,6 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
     console.log(`API MODEL: ${JSON.stringify(this.apiModel())}`);
     console.log(`This is the value: ${JSON.stringify(this.testForm().value)}`);
     console.log(`This is the raw data: ${JSON.stringify(this.testForm().getRawValue())}`);
-  }
-
-  public onChangeModel(basicInfo: BitdCharBasicModel) {
-    console.log(`NEW MODEL IN TESTER: ${JSON.stringify(basicInfo)}`);
-    //let model: BitdCharSheet = {
-    //  basicInfo: this.copyModel(basicInfo)
-    //}
-    //this.apiModel.set(model);
   }
 
   protected getDefaultApiModelService(): BitdCharSheetModel {
@@ -141,6 +127,20 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           boxes: 4,
           marks: 0,
           minMarks: 1
+        },
+        armor: {
+          armor: {
+            text: "ARMOR",
+            checked: true
+          },
+          heavy: {
+            text: "HEAVY",
+            checked: false
+          },
+          special: {
+            text: "SPECIAL",
+            checked: null
+          }
         }
       }
     };

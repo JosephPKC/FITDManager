@@ -1,5 +1,6 @@
 /* Inputs */
 export * from "./base-input.directive";
+export * from "./check-box/check-box-input.component";
 export * from "./select/base-select-input.component";
 export * from "./select/multi-select-input.component";
 export * from "./select/single-select-input.component";

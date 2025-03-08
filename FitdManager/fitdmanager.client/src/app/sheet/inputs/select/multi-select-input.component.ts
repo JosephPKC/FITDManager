@@ -63,7 +63,7 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
     }
 
     this.selectedIndices.set(newSet);
-
+    console.log(`change item selection`)
     this.onChange(Array.from(this.selectedIndices().values()));
   }
   // #endregion

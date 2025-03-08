@@ -1,0 +1,31 @@
+<div [class]="fullClass()">
+  @if (shouldCreateLabel()) {
+    <label for="inp-text">{{ label() }}</label>
+  }
+
+  @for (checkBox of checkBoxes(); track $index) {
+    <div class="div-check-box-area">
+      <div id="{{ 'div-check-box-' + $index }}" class="div-check-box-box-area">
+        @if (!isCheckBoxDisabledArr()[$index]) {
+          <input type="checkbox" [name]="checkBoxTexts()[$index]" [value]="checkBoxTexts()[$index]" [checked]="checkBox" (click)="onCheckBoxClick($index, $event)" />
+        }
+        @else {
+          <input type="checkbox" [name]="checkBoxTexts()[$index]" [value]="checkBoxTexts()[$index]" disabled />
+        }
+
+        <!-- The checkbox for enabling/disabling this checkbox. It should only show when the section is unlocked. -->
+        @if (showControls()) {
+         <button class="btn-check-box-ctrl" type="button" (click)="onCheckBoxCtrlClick($index)">
+           @if (isCheckBoxDisabledArr()[$index]) {
+             <img src="/icons/MaterialIcons/lock_open.svg" height="15" width="15" />
+           }
+           @else {
+             <img src="/icons/MaterialIcons/lock.svg" height="15" width="15" />
+           }
+         </button>
+        }
+      </div>
+      <label for="{{ 'div-check-box-' + $index }}">{{ checkBoxTexts()[$index] }}</label>
+    </div>
+  }
+</div>

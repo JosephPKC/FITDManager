@@ -1,16 +1,19 @@
-import { Component, computed, signal, Signal, WritableSignal } from "@angular/core";
+import {
+  Component, Signal, SimpleChanges, WritableSignal,
+  computed, signal
+} from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { BitdCharHealthModel } from "@games/bitd/models";
-import { HarmModel } from "@sheet/models";
-import { TableParams, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent } from "@sheet/inputs";
+import { ArmorModel, HarmModel } from "@sheet/models";
+import { TableParams, CheckBoxInputComponent, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent } from "@sheet/inputs";
 import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
 
 @Component({
   selector: "bitd-char-health-section",
   templateUrl: "bitd-char-health-section.component.html",
   styleUrl: "bitd-char-health-section.component.scss",
-  imports: [ReactiveFormsModule, SectionShellComponent, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent],
+  imports: [ReactiveFormsModule, SectionShellComponent, CheckBoxInputComponent, MultiSelectInputComponent, MultiTableInputComponent, TrackInputComponent, ViewTableInputComponent],
   standalone: true
 })
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealthModel> {
@@ -21,7 +24,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
   // #region Computes
   protected harmTableParams: Signal<TableParams[]> = computed<TableParams[]>(() => {
     const harm: HarmModel = this.groupModel().harm;
-    let params: TableParams[] = new Array<TableParams>(4);
+    const params: TableParams[] = new Array<TableParams>(4);
 
     // MINOR
     params[0] = ({
@@ -61,11 +64,32 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
     return params;
   });
+
+  protected armorTexts: Signal<string[]> = computed(() => {
+    const armor: ArmorModel = this.groupModel().armor;
+    const arr: string[] = new Array<string>(3);
+
+    arr[0] = armor.armor.text;
+    arr[1] = armor.heavy.text;
+    arr[2] = armor.special.text;
+
+    return arr;
+  });
+  // #endregion
+
+  // #region Lifecycle
+  public override ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
+    if (changes["locked"]) {
+      this.shouldShowControls.set(!this.locked());
+    }
+  }
   // #endregion
 
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
     const harm: HarmModel = this.groupModel().harm;
+    const armor: ArmorModel = this.groupModel().armor;
 
     const sectionGroup: FormGroup = this.formBuilder.group({
       stress: new FormControl<number>(this.groupModel().stress.marks),
@@ -74,7 +98,8 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
         selectedTraumaList: new FormControl<string[]>(this.groupModel().trauma.selectedTraumaList.slice())
       }),
       harm: new FormControl<string[][]>([harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice(), harm.fatalHarm.data.slice()]),
-      healing: new FormControl<number>(this.groupModel().healing.marks)
+      healing: new FormControl<number>(this.groupModel().healing.marks),
+      armor: new FormControl<(boolean | null)[]>([armor.armor.checked, armor.heavy.checked, armor.special.checked])
     });
 
     sectionGroup.get("trauma.selectedTraumaIndices")!.valueChanges.subscribe((x: number[]) => { this.onSelectedIndicesChange(x) });
@@ -84,15 +109,17 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
   protected override updateFormValues(): void {
     const harm: HarmModel = this.groupModel().harm;
+    const armor: ArmorModel = this.groupModel().armor;
 
     this.inputsGroup().patchValue({
       stress: this.groupModel().stress.marks,
       trauma: {
         selectedTraumaIndices: this.groupModel().trauma.selectedTraumaIndices.slice(),
-        selectedTraumaList: this.groupModel().trauma.traumaList.slice()
+        selectedTraumaList: this.groupModel().trauma.selectedTraumaList.slice()
       },
       harm: [harm.minorHarm.data.slice(), harm.moderateHarm.data.slice(), harm.majorHarm.data.slice(), harm.fatalHarm.data.slice()],
-      healing: this.groupModel().healing.marks
+      healing: this.groupModel().healing.marks,
+      armor: [armor.armor.checked, armor.heavy.checked, armor.special.checked]
     });
   }
   // #endregion
@@ -119,7 +146,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
 
     this.inputsGroup().patchValue({
       trauma: {
-        itemTableList: newItems
+        selectedTraumaList: newItems
       }
     });
   }
