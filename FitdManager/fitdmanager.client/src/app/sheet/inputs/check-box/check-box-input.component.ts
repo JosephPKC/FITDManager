@@ -20,7 +20,7 @@ import { BaseInputDirective } from "@sheet/inputs";
   standalone: true
 }) export class CheckBoxInputComponent extends BaseInputDirective<(boolean | null)[]> {
   // #region Inputs
-  public checkBoxTexts: InputSignal<string[]> = input.required();
+  public checkBoxTexts: InputSignal<string[]> = input.required<string[]>();
   public showControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 

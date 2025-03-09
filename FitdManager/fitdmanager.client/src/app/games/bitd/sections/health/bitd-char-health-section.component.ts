@@ -65,7 +65,7 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
     return params;
   });
 
-  protected armorTexts: Signal<string[]> = computed(() => {
+  protected armorTexts: Signal<string[]> = computed<string[]>(() => {
     const armor: ArmorModel = this.groupModel().armor;
     const arr: string[] = new Array<string>(3);
 
