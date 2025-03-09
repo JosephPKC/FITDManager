@@ -1,4 +1,4 @@
-import {Directive, InputSignal, input} from "@angular/core";
+import { Directive, InputSignal, WritableSignal, input, linkedSignal} from "@angular/core";
 
 import { BaseInputGroupDirective } from "@sheet/sections";
 
@@ -13,5 +13,18 @@ import { BaseInputGroupDirective } from "@sheet/sections";
 export abstract class BaseSectionDirective<TModel> extends BaseInputGroupDirective<TModel> {
   // #region Inputs
   public locked: InputSignal<boolean> = input<boolean>(true);
+  // #endregion
+
+  // #region State
+  protected isSectionLocked: WritableSignal<boolean> = linkedSignal<boolean>(() => {
+    return this.locked();
+  });
+  // #endregion
+
+  // #region Section Locking
+  protected onSectionLockChange(val: boolean): void {
+    // Set the signal, so that it can inform the appropriate inputs.
+    this.isSectionLocked.set(val);
+  }
   // #endregion
 }

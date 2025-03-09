@@ -37,7 +37,7 @@ export class MultiSelectInputComponent extends BaseSelectInputComponent<number[]
   }
 
   protected override changeItemSelection(index: number): void {
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
       return;
     }
 

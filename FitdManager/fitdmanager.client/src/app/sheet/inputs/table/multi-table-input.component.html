@@ -11,7 +11,7 @@
         }
 
         @for (item of table; track $index) {
-          @if (showControls()) {
+          @if (!isLocked()) {
             <td>
               <button type="button" (click)="onRemoveItem(tableIndex, $index)">
                 <img class="img-icon" src="/icons/MaterialIcons/delete.svg" height="15" width="15" />
@@ -32,7 +32,7 @@
     }
   }
   
-  @if (showControls()) {
+  @if (!isLocked()) {
     <div>
       <select (change)="onChangeCustomTable($event)">
         @for (avail of isTableAvailArr(); track $index) {

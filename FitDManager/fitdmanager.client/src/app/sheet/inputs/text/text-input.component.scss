@@ -8,3 +8,7 @@
 .inp-underline-text:focus {
   outline: 1px solid red;
 }
+
+.inp-disabled {
+    pointer-events: none;
+}

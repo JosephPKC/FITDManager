@@ -14,7 +14,7 @@
         }
 
         <!-- The checkbox for enabling/disabling this checkbox. It should only show when the section is unlocked. -->
-        @if (showControls()) {
+        @if (!isLocked()) {
          <button class="btn-check-box-ctrl" type="button" (click)="onCheckBoxCtrlClick($index)">
            @if (isCheckBoxDisabledArr()[$index]) {
              <img src="/icons/MaterialIcons/lock_open.svg" height="15" width="15" />

@@ -1,7 +1,4 @@
-import {
-  Component, Signal, SimpleChanges, WritableSignal,
-  computed, signal
-} from "@angular/core";
+import { Component, Signal, computed } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { BitdCharHealthModel } from "@games/bitd/models";
@@ -17,10 +14,6 @@ import { BaseSectionDirective, SectionShellComponent } from "@sheet/sections";
   standalone: true
 })
 export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCharHealthModel> {
-  // #region State
-  protected shouldShowControls: WritableSignal<boolean> = signal<boolean>(!this.locked());
-  // #endregion
-
   // #region Computes
   protected harmTableParams: Signal<TableParams[]> = computed<TableParams[]>(() => {
     const harm: HarmModel = this.groupModel().harm;
@@ -77,15 +70,6 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
   });
   // #endregion
 
-  // #region Lifecycle
-  public override ngOnChanges(changes: SimpleChanges): void {
-    super.ngOnChanges(changes);
-    if (changes["locked"]) {
-      this.shouldShowControls.set(!this.locked());
-    }
-  }
-  // #endregion
-
   // #region Form Group
   protected override buildFormGroup(): FormGroup {
     const harm: HarmModel = this.groupModel().harm;
@@ -121,13 +105,6 @@ export class BitdCharHealthSectionComponent extends BaseSectionDirective<BitdCha
       healing: this.groupModel().healing.marks,
       armor: [armor.armor.checked, armor.heavy.checked, armor.special.checked]
     });
-  }
-  // #endregion
-
-  // #region Section Lock Processing
-  protected onSectionLockChange(val: boolean): void {
-    // Set the signal, so that it can inform the appropriate inputs.
-    this.shouldShowControls.set(!val);
   }
   // #endregion
 

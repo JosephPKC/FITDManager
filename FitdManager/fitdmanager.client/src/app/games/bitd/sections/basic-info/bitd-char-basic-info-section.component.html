@@ -1,19 +1,19 @@
-<section-shell [label]="label()" [locked]="locked()">
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
   <div [formGroup]="inputsGroup()">
-    <text-input formControlName="name" label="NAME: " customClass="txt-indiv-input"></text-input>
-    <text-input formControlName="alias" label="ALIAS: " customClass="txt-indiv-input"></text-input>
-    <text-input formControlName="look" label="LOOK: " customClass="txt-indiv-input"></text-input>
+    <text-input formControlName="name" label="NAME: " customClass="txt-indiv-input" [locked]="isSectionLocked()"></text-input>
+    <text-input formControlName="alias" label="ALIAS: " customClass="txt-indiv-input" [locked]="isSectionLocked()"></text-input>
+    <text-input formControlName="look" label="LOOK: " customClass="txt-indiv-input" [locked]="isSectionLocked()"></text-input>
     <div class="div-sub-group" formGroupName="heritage">
-      <text-input formControlName="text" label="HERITAGE: "></text-input>
-      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().heritage.valueList"></single-select-input>
+      <text-input formControlName="text" label="HERITAGE: " [locked]="isSectionLocked()"></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().heritage.valueList" [locked]="isSectionLocked()"></single-select-input>
     </div>
     <div class="div-sub-group" formGroupName="background">
-      <text-input formControlName="text" label="BACKGROUND: "></text-input>
-      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().background.valueList"></single-select-input>
+      <text-input formControlName="text" label="BACKGROUND: " [locked]="isSectionLocked()"></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().background.valueList" [locked]="isSectionLocked()"></single-select-input>
     </div>
     <div class="div-sub-group" formGroupName="vice">
-      <text-input formControlName="text" label="VICE/PURVEYOR: "></text-input>
-      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().vice.valueList"></single-select-input>
+      <text-input formControlName="text" label="VICE/PURVEYOR: " [locked]="isSectionLocked()"></text-input>
+      <single-select-input formControlName="selectedIndex" [itemList]="groupModel().vice.valueList" [locked]="isSectionLocked()"></single-select-input>
     </div>
   </div>
 </section-shell>

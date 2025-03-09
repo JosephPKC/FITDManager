@@ -1,6 +1,6 @@
 import {
-  Directive, InputSignal, OnChanges, Signal, SimpleChanges, WritableSignal,
-  computed, input, signal
+  Directive, InputSignal, InputSignalWithTransform, OnChanges, Signal, SimpleChanges, WritableSignal,
+  booleanAttribute, computed, input, linkedSignal, signal
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 
@@ -16,9 +16,16 @@ export abstract class BaseInputDirective<TValue> implements ControlValueAccessor
   // #region Inputs
   public label: InputSignal<string> = input<string>("");
   public customClass: InputSignal<string> = input<string>("");
+  /**
+   * The parent can dictate whether 'controls' can be shown, whatever that may mean.
+   */
+  public locked: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(true, { transform: booleanAttribute });
   // #endregion
 
   // #region State
+  /**
+   * This is when the form control is disabled.
+   */
   protected isDisabled: WritableSignal<boolean> = signal<boolean>(false);
   protected onChange: (value: TValue) => void = noop;
   protected onTouch: () => void = noop;
@@ -27,6 +34,10 @@ export abstract class BaseInputDirective<TValue> implements ControlValueAccessor
   // #region Computes
   protected fullClass: Signal<string> = computed(() => {
     return "div-input " + this.customClass();
+  });
+
+  protected isLocked: WritableSignal<boolean> = linkedSignal<boolean>(() => {
+    return this.locked() || this.isDisabled();
   });
 
   protected shouldCreateLabel: Signal<boolean> = computed<boolean>(() => {

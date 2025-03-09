@@ -2,5 +2,5 @@
   @if (shouldCreateLabel()) {
     <label for="inp-text">{{ label() }}</label>
   }
-  <input id="inp-text" class="inp-text inp-underline-text" type="text" [value]="text()" [disabled]="isDisabled()" (change)="onChangeText($event)" />
+  <input id="inp-text" [class]="inputClass()" type="text" [value]="text()" (change)="onChangeText($event)" />
 </div>

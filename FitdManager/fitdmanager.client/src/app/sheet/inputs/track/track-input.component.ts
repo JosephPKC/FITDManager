@@ -58,7 +58,7 @@ import { BaseInputDirective } from "@sheet/inputs";
   protected containerClass: Signal<string> = computed<string>(() => {
     let className: string = "div-track";
 
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
       className += " div-disabled";
     }
 

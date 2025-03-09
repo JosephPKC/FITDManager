@@ -23,7 +23,9 @@ export class SectionShellComponent {
   // #endregion
 
   // #region Outputs
-  // If the section needs to do extra processing when the section locks/unlocks, it can bind to this.
+  /**
+   * Parents should bind to this to be notified on when the section locks/unlocks.
+   */
   public onSectionLockChange: OutputEmitterRef<boolean> = output<boolean>();
   // #endregion
 
@@ -53,13 +55,6 @@ export class SectionShellComponent {
 
     if (this.customInputsClass() !== "") {
       className += " " + this.customInputsClass();
-    }
-
-    if (this.isSectionLocked()) {
-      className += " div-disabled";
-    }
-    else {
-      className += " div-enabled";
     }
 
     return className;

@@ -38,7 +38,6 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
    */
   public tableParams: InputSignal<TableParams[]> = input.required<TableParams[]>();
   public placeholder: InputSignal<string> = input<string>("");
-  public showControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 
   // #region State
@@ -101,7 +100,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = true;
 
-      if (this.showControls()) {
+      if (!this.isLocked()) {
         // When controls are shown, show all tables.
         continue;
       }
@@ -138,7 +137,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
 
   // #region Table Controls
   protected onAddCustomItem(): void {
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
       return;
     }
 
@@ -170,7 +169,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
   }
 
   protected onRemoveItem(tableIndex: number, itemIndex: number): void {
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
       return;
     }
 

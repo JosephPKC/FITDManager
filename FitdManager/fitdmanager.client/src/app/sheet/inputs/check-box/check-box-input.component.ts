@@ -1,6 +1,6 @@
 import {
-  Component, InputSignal, InputSignalWithTransform, Signal, WritableSignal,
-  booleanAttribute, computed, forwardRef, input, signal
+  Component, InputSignal, Signal, WritableSignal,
+  computed, forwardRef, input, signal
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -21,7 +21,6 @@ import { BaseInputDirective } from "@sheet/inputs";
 }) export class CheckBoxInputComponent extends BaseInputDirective<(boolean | null)[]> {
   // #region Inputs
   public checkBoxTexts: InputSignal<string[]> = input.required<string[]>();
-  public showControls: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(false, { transform: booleanAttribute });
   // #endregion
 
   // #region State
@@ -49,6 +48,8 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   // #region Checkbox Controls
   protected onCheckBoxClick(index: number, event: Event): void {
+    // Checkboxes are clickable regardless of disable state.
+
     const element: HTMLInputElement = event.target as HTMLInputElement;
     const arr: (boolean | null)[] = this.checkBoxes().slice();
     arr[index] = element.checked;
@@ -58,6 +59,10 @@ import { BaseInputDirective } from "@sheet/inputs";
   }
 
   protected onCheckBoxCtrlClick(index: number): void {
+    if (this.isLocked()) {
+      return;
+    }
+
     const arr: (boolean | null)[] = this.checkBoxes().slice();
 
     // If the state was null, then clicking enables the checkbox. Default to false. Otherwise, set it to null to disable it.

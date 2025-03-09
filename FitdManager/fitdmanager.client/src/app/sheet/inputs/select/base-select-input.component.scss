@@ -5,6 +5,10 @@
   user-select: none;
 }
 
+.div-disabled {
+  pointer-events: none;
+}
+
 .div-select-horizontal {
   flex-direction: row;
 }

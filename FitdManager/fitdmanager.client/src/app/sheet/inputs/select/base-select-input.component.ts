@@ -47,7 +47,8 @@ export abstract class BaseSelectInputComponent<TValue> extends BaseInputDirectiv
       className += " div-select-horizontal";
     }
 
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
+      
       className += " div-disabled";
     }
 
@@ -66,7 +67,7 @@ export abstract class BaseSelectInputComponent<TValue> extends BaseInputDirectiv
 
   // #region Select Item Control
   protected onSelectItem(index: number): void {
-    if (this.isDisabled()) {
+    if (this.isLocked()) {
       return;
     }
 
