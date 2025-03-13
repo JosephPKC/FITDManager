@@ -1,0 +1,10 @@
+<div [formGroup]="inputsGroup()">
+  <p>{{ groupModel().name }}</p>
+  <input type="number" formControlName="rating" readonly/>
+  <track-input formControlName="xp" [boxes]="groupModel().xp.boxes" [minMarks]="groupModel().xp.minMarks" [locked]="locked()" editableOnLock="false"></track-input>
+  <div class="div-actions-area">
+    @for (action of groupModel().actions; track $index) {
+      <track-input formControlName="{{ action.name.toLowerCase() }}" [label]="action.name" [boxes]="action.rating.boxes" [minMarks]="action.rating.minMarks" [locked]="locked()" editableOnLock="false"></track-input>
+    }
+  </div>
+</div>

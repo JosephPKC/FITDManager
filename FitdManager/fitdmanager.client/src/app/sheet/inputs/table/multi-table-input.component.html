@@ -2,6 +2,7 @@
   @if (shouldCreateLabel()) {
     <label for="inp-text">{{ label() }}</label>
   }
+
   @for (table of tables(); track $index; let tableIndex = $index) {
     @if (shouldShowTableArr()[$index]) {
       <table>
@@ -11,17 +12,14 @@
         }
 
         @for (item of table; track $index) {
-          @if (!isLocked()) {
-            <td>
-              <button type="button" (click)="onRemoveItem(tableIndex, $index)">
+          <td>
+            <button type="button" [disabled]="isLocked()" (click)="onRemoveItem(tableIndex, $index)">
+              @if (!isLocked()) {
                 <img class="img-icon" src="/icons/MaterialIcons/delete.svg" height="15" width="15" />
-                {{ item }}
-              </button>
-            </td>
-          }
-          @else {
-            <td><button type="button" disabled>{{ item }}</button></td>
-          }
+              }
+              {{ item }}
+            </button>
+          </td>
         }
 
         @if (shouldCreateFooterArr()[$index]) {
@@ -36,26 +34,11 @@
     <div>
       <select (change)="onChangeCustomTable($event)">
         @for (avail of isTableAvailArr(); track $index) {
-          @if (avail) {
-            @if ($index === customTable()) {
-              <option value="{{ $index }}" selected>{{ tableParams()[$index].name }}</option>
-            }
-            @else {
-              <option value="{{ $index }}">{{ tableParams()[$index].name }}</option>
-            }
-          }
-          @else {
-            <option value="{{ $index }}" disabled>{{ tableParams()[$index].name }}</option>
-          }
+          <option value="{{ $index }}" [selected]="isOptSelectedArr()[$index]" [disabled]="!avail">{{ tableParams()[$index].name }}</option>
         }
       </select>
       <input type="text" [value]="customItem()" [placeholder]="placeholder()" (change)="onChangeCustomItem($event)" />
-      @if (btnWarnTooltip() === "") {
-        <button type="button" [title]="btnWarnTooltip()" (click)="onAddCustomItem()">Add</button>
-      }
-      @else {
-        <button type="button" [title]="btnWarnTooltip()" disabled>Add</button>
-      }
+      <button type="button" [title]="btnWarnTooltip()" (click)="onAddCustomItem()" [disabled]="shouldShowWarnTooltip()">Add</button>
     </div>
   }
 </div>

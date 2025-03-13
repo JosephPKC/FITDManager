@@ -10,5 +10,6 @@
   <ItemGroup>
     <Folder Include="public\fonts\Kirsty\" />
     <Folder Include="src\app\shared\models\" />
+    <Folder Include="src\app\sheet\groups\" />
   </ItemGroup>
 </Project>

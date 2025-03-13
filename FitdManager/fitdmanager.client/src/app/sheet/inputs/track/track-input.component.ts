@@ -1,6 +1,6 @@
 import {
   Component, InputSignalWithTransform, OutputEmitterRef, Signal, SimpleChanges, WritableSignal,
-  computed, forwardRef, input, numberAttribute, output, signal
+  booleanAttribute, computed, forwardRef, input, numberAttribute, output, signal
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -22,6 +22,10 @@ import { BaseInputDirective } from "@sheet/inputs";
   // #region Inputs
   public boxes: InputSignalWithTransform<number, unknown> = input.required<number, unknown>({ transform: numberAttribute });
   public minMarks: InputSignalWithTransform<number, unknown> = input<number, unknown>(0, { transform: numberAttribute });
+  /**
+   * If track is editable on lock, that means it is editable regardless of the lock state.
+   */
+  public editableOnLock: InputSignalWithTransform<boolean, unknown> = input<boolean, unknown>(true, { transform: booleanAttribute });
   // #endregion
 
   // #region Outputs
@@ -36,6 +40,16 @@ import { BaseInputDirective } from "@sheet/inputs";
   protected isComplete: Signal<boolean> = computed<boolean>(() => {
     return this.boxes() === this.marks();
   });
+
+  protected isEditable: Signal<boolean> = computed<boolean>(() => {
+    if (this.editableOnLock()) {
+      // Always editable.
+      return true;
+    }
+
+    // Otherwise, only editable when unlocked.
+    return !this.locked();
+  })
 
   protected boxClasses: Signal<string[]> = computed(() => {
     // Prefill with the default class.
@@ -68,6 +82,10 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   // #region Mark Controls
   protected onClickBox(index: number) {
+    if (!this.isEditable()) {
+      return;
+    }
+
     const nbrOfMarks: number = index + 1; // As index is 0-based
     if (nbrOfMarks <= this.marks()) {
       this.unmark(index); // Mark down (unmark) including this mark.
@@ -110,6 +128,10 @@ import { BaseInputDirective } from "@sheet/inputs";
 
   // #region Nbr Mark Controls
   protected onChangeMarks(event: Event) {
+    if (!this.isEditable()) {
+      return;
+    }
+
     const element: HTMLInputElement = event.target as HTMLInputElement;
     const marks: number = parseInt(element.value);
 

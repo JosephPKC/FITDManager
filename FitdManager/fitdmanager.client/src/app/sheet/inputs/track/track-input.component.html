@@ -6,6 +6,6 @@
     @for (boxClass of boxClasses(); track $index) {
       <button class="{{ boxClass }}" type="button" (click)="onClickBox($index)"></button>
     }
-    <input class="inp-track-ctrl" type="number" [min]="minMarks()" [max]="boxes()" [value]="marks()" [placeholder]="marks()" (change)="onChangeMarks($event)" />
+    <input class="inp-track-ctrl" type="number" [min]="minMarks()" [max]="boxes()" [value]="marks()" [placeholder]="marks()" [readonly]="!isEditable()" (change)="onChangeMarks($event)" />
   </div>
 </div>

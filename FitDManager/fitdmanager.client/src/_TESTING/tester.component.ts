@@ -6,13 +6,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angul
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
 import { BitdCharSheetModel } from "@games/bitd/models";
-import { BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
+import { BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
 
 @Component({
   selector: "tester",
   templateUrl: "tester.component.html",
   styleUrl: "tester.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent],
+  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent],
   standalone: true
 })
 export class TesterComponent implements  OnInit, AfterViewChecked {
@@ -141,6 +141,142 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
             text: "SPECIAL",
             checked: null
           }
+        }
+      },
+      action: {
+        playbookXp: {
+          boxes: 8,
+          marks: 0,
+          minMarks: 0
+        },
+        insight: {
+          name: "INSIGHT",
+          rating: 0,
+          xp: {
+            boxes: 6,
+            marks: 2,
+            minMarks: 0
+          },
+          actions: [
+            {
+              name: "HUNT",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            },
+            {
+              name: "STUDY",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            },
+            {
+              name: "SURVEY",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            },
+            {
+              name: "TINKER",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            }
+          ]
+        },
+        prowess: {
+          name: "PROWESS",
+          rating: 3,
+          xp: {
+            boxes: 6,
+            marks: 4,
+            minMarks: 0
+          },
+          actions: [
+            {
+              name: "FINESSE",
+              rating: {
+                boxes: 4,
+                marks: 2,
+                minMarks: 0
+              }
+            },
+            {
+              name: "PROWL",
+              rating: {
+                boxes: 4,
+                marks: 1,
+                minMarks: 0
+              }
+            },
+            {
+              name: "SKIRMISH",
+              rating: {
+                boxes: 4,
+                marks: 1,
+                minMarks: 0
+              }
+            },
+            {
+              name: "WRECK",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            }
+          ]
+        },
+        resolve: {
+          name: "RESOLVE",
+          rating: 1,
+          xp: {
+            boxes: 6,
+            marks: 0,
+            minMarks: 0
+          },
+          actions: [
+            {
+              name: "ATTUNE",
+              rating: {
+                boxes: 4,
+                marks: 3,
+                minMarks: 0
+              }
+            },
+            {
+              name: "COMMAND",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            },
+            {
+              name: "CONSORT",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            },
+            {
+              name: "SWAY",
+              rating: {
+                boxes: 4,
+                marks: 0,
+                minMarks: 0
+              }
+            }
+          ]
         }
       }
     };

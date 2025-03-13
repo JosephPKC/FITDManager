@@ -1,0 +1,10 @@
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
+  <div [formGroup]="inputsGroup()">
+    <track-input formControlName="playbookXp" label="PLAYBOOK: " [boxes]="groupModel().playbookXp.boxes" [minMarks]="groupModel().playbookXp.minMarks" [locked]="isSectionLocked()"></track-input>
+
+    @for (attr of attributesList(); track $index) {
+      <attribute-group name="{{ attr.name.toLowerCase() }}" [formGroup]="inputsGroup()" [groupModel]="attr" [locked]="isSectionLocked()"></attribute-group>
+    }
+  </div>
+</section-shell>
+

@@ -65,7 +65,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
 
   // #region Computes for Template Display
   protected shouldCreateHeaderArr: Signal<boolean[]> = computed<boolean[]>(() => {
-    let arr: boolean[] = new Array<boolean>(this.nbrOfTables());
+    const arr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = this.tableParams()[i].header !== "";
@@ -75,7 +75,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
   });
 
   protected shouldCreateFooterArr: Signal<boolean[]> = computed<boolean[]>(() => {
-    let arr: boolean[] = new Array<boolean>(this.nbrOfTables());
+    const arr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = this.tableParams()[i].footer !== "";
@@ -85,17 +85,19 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
   });
 
   protected isTableAvailArr: Signal<boolean[]> = computed<boolean[]>(() => {
-    let arr: boolean[] = new Array<boolean>(this.nbrOfTables());
+    const arr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = this.tables()[i].length < this.tableParams()[i].maxSize;
     }
 
+    console.log(arr);
+
     return arr;
   });
 
   protected shouldShowTableArr: Signal<boolean[]> = computed<boolean[]>(() => {
-    let arr: boolean[] = new Array<boolean>(this.nbrOfTables());
+    const arr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = true;
@@ -113,16 +115,25 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     return arr;
   });
 
+  protected isOptSelectedArr: Signal<boolean[]> = computed<boolean[]>(() => {
+    const arr: boolean[] = new Array<boolean>(this.nbrOfTables()).fill(false);
+
+    if (this.customTable() >= 0) {
+      arr[this.customTable()] = true;
+    }
+
+    return arr;
+  });
+
   /**
    * This will be the warning message that shows when the user hovers over the 'Add' button.
    */
   protected btnWarnTooltip: Signal<string> = computed<string>(() => {
     let tooltip: string = "";
     if (this.customTable() < 0) {
-      tooltip += "Table is not selected or invalid.\n";
+      tooltip += "No tables are available.\n";
     }
-
-    if (!this.isTableAvailArr()[this.customTable()]) {
+    else if (!this.isTableAvailArr()[this.customTable()]) {
       tooltip += `Selected table ${this.tableParams()[this.customTable()].name} is full.\n`;
     }
 
@@ -131,6 +142,10 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     }
 
     return tooltip;
+  });
+
+  protected shouldShowWarnTooltip: Signal<boolean> = computed<boolean>(() => {
+    return this.btnWarnTooltip() !== "";
   });
   // #endregion
   // #endregion
