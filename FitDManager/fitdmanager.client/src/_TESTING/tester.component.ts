@@ -285,13 +285,8 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           marks: 1,
           minMarks: 0
         },
-        stash: {
-          boxes: 40,
-          marks: 15,
-          minMarks: 0
-        }
+        stash: 15
       }
-      
     };
 
     return model;
