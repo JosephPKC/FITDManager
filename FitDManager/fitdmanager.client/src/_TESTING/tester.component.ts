@@ -6,13 +6,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angul
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
 import { BitdCharSheetModel } from "@games/bitd/models";
-import { BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
+import { BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharCoinSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
 
 @Component({
   selector: "tester",
   templateUrl: "tester.component.html",
   styleUrl: "tester.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharHealthSectionComponent],
+  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharCoinSectionComponent, BitdCharHealthSectionComponent],
   standalone: true
 })
 export class TesterComponent implements  OnInit, AfterViewChecked {
@@ -278,7 +278,20 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
             }
           ]
         }
+      },
+      coin: {
+        coin: {
+          boxes: 4,
+          marks: 1,
+          minMarks: 0
+        },
+        stash: {
+          boxes: 40,
+          marks: 15,
+          minMarks: 0
+        }
       }
+      
     };
 
     return model;

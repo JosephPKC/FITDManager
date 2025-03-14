@@ -1,0 +1,8 @@
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
+  <div [formGroup]="inputsGroup()">
+    <track-input formControlName="coin" label="COIN: " [boxes]="groupModel().coin.boxes" [minMarks]="groupModel().coin.minMarks" [locked]="isSectionLocked()"></track-input>
+    <label for="inp-stash">STASH: </label>
+    <input id="inp-stash" type="number" formControlName="stash" [readonly]="isSectionLocked()" />
+  </div>
+</section-shell>
+
