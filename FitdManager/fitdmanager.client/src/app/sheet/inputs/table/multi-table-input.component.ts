@@ -54,7 +54,7 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
   // #region Computes
   protected nbrOfTables: Signal<number> = computed<number>(() => {
     return this.tableParams().length;
-  })
+  });
 
   /**
    * Gets the first available table index number, or -1 if there is none.
@@ -84,14 +84,16 @@ export class MultiTableInputComponent extends BaseTableInputDirective<string[][]
     return arr;
   });
 
+  protected isDefaultOptSelected: Signal<boolean> = computed<boolean>(() => {
+    return this.customTable() < 0;
+  });
+
   protected isTableAvailArr: Signal<boolean[]> = computed<boolean[]>(() => {
     const arr: boolean[] = new Array<boolean>(this.nbrOfTables());
 
     for (let i = 0; i < this.nbrOfTables(); i++) {
       arr[i] = this.tables()[i].length < this.tableParams()[i].maxSize;
     }
-
-    console.log(arr);
 
     return arr;
   });

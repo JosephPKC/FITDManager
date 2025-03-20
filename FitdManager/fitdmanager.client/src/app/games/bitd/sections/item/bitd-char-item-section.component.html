@@ -1,0 +1,51 @@
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
+  <div [formGroup]="inputsGroup()">
+    <div>
+      <label for="inp-loadout">Loadout Left: </label>
+      <input id="inp-loadout" type="number" [value]="loadout()" disabled />
+
+      <div>
+        <label for="loadout">LOADOUT: </label>
+        <fieldset id="loadout" (change)="onLoadoutChange($event)" [disabled]="isLockedIn()">
+          <label for="radio1">{{ "NONE: " + loadoutVals()[0] }}</label>
+          <input id="radio1" type="radio" value="none" name="loadout" [checked]="isLoadoutStateSelected()[0]" />
+          <label for="radio2">{{ "LIGHT: " + loadoutVals()[1] }}</label>
+          <input id="radio2" type="radio" value="light" name="loadout" [checked]="isLoadoutStateSelected()[1]" />
+          <label for="radio3">{{ "NORMAL: " + loadoutVals()[2] }}</label>
+          <input id="radio3" type="radio" value="normal" name="loadout" [checked]="isLoadoutStateSelected()[2]" />
+          <label for="radio4">{{ "HEAVY: " + loadoutVals()[3] }}</label>
+          <input id="radio4" type="radio" value="heavy" name="loadout" [checked]="isLoadoutStateSelected()[3]" />
+        </fieldset>
+
+        @if (isLockedIn()) {
+        <button type="button" (click)="onReset()">RESET</button>
+        }
+        @else {
+        <button type="button" (click)="onLockInLoadout()">LOCK IN</button>
+        }
+      </div>
+
+      <div [hidden]="isSectionLocked()">
+        <label for="inp-none-val">NONE: </label>
+        <input id="inp-none-val" type="number" formControlName="none" [value]="loadoutVals()[0]" (change)="onLoadoutValChange(0, $event)" />
+        <label for="inp-light-val">NONE: </label>
+        <input id="inp-light-val" type="number" formControlName="light" [value]="loadoutVals()[1]" (change)="onLoadoutValChange(1, $event)" />
+        <label for="inp-normal-val">NONE: </label>
+        <input id="inp-normal-val" type="number" formControlName="normal" [value]="loadoutVals()[2]" (change)="onLoadoutValChange(2, $event)" />
+        <label for="inp-heavy-val">NONE: </label>
+        <input id="inp-heavy-val" type="number" formControlName="heavy" [value]="loadoutVals()[3]" (change)="onLoadoutValChange(3, $event)" />
+      </div>
+    </div>
+    <div>
+      <view-table-input formControlName="selectedGear" label="SELECTED GEAR: " [locked]="isSectionLocked()"></view-table-input>
+
+      <h2>AVAILABLE GEAR: </h2>
+      <div>
+        <add-table-input formControlName="playbookGear" label="PLAYBOOK GEAR: " [locked]="isSectionLocked()" [allowAdd]="isAbleToAdd()" (onItemClick)="onPlaybookGearClick($event)"></add-table-input>
+        <add-table-input></add-table-input>
+        <add-table-input></add-table-input>
+      </div>
+    </div>
+  </div>
+</section-shell>
+

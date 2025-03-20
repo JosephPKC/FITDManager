@@ -43,8 +43,6 @@ export class ViewTableInputComponent extends BaseInputDirective<string[]> {
   protected shouldCreateFooter: Signal<boolean> = computed<boolean>(() => {
     return this.footer() !== "";
   });
-
-
   // #endregion
 
   // #region BaseInputDirective

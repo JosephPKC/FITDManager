@@ -33,6 +33,7 @@
   @if (!isLocked()) {
     <div>
       <select (change)="onChangeCustomTable($event)">
+        <option value="-1" [selected]="isDefaultOptSelected()"></option>
         @for (avail of isTableAvailArr(); track $index) {
           <option value="{{ $index }}" [selected]="isOptSelectedArr()[$index]" [disabled]="!avail">{{ tableParams()[$index].name }}</option>
         }

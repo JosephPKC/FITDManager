@@ -1,0 +1,51 @@
+<div [class]="fullClass()">
+  @if (shouldCreateLabel()) {
+    <label for="inp-text">{{ label() }}</label>
+  }
+
+  <table>
+    @if (shouldCreateHeader()) {
+      <thead>
+        <tr>
+          <th>{{ header() }}</th>
+        </tr>
+      </thead>
+    }
+
+    <tbody>
+      @for (item of items(); track $index) {
+        <tr>
+          <td>
+            <button type="button" [disabled]="!allowAdd()" (click)="onTableItemClick($index)">{{ itemNameArr()[$index] }}</button>
+          </td>
+
+            @if (!isLocked()) {
+              <td>
+                <button type="button" [disabled]="isLocked()" (click)="onRemoveItem($index)">
+                  <img class="img-icon" src="/icons/MaterialIcons/delete.svg" height="15" width="15" />
+                </button>
+              </td>
+            }
+        </tr>
+      }
+    </tbody>
+
+    @if (shouldCreateFooter()) {
+      <tfoot>
+        <tr>
+          <th>{{ footer() }}</th>
+        </tr>
+      </tfoot>
+    }
+  </table>
+  
+  @if (!isLocked()) {
+    <div>
+      <label for="inp-custom-item">Item:</label>
+      <input id="inp-custom-item" type="text" [placeholder]="placeholder()" [value]="customItem()" (change)="onChangeCustomItem($event)" />
+      <label for="inp-custom-boxes">Boxes:</label>
+      <input id="inp-custom-boxes" type="number" [value]="customBoxes()" (change)="onChangeCustomBoxes($event)" />
+      <button type="button" [title]="btnWarnTooltip()" (click)="onAddItem()" [disabled]="shouldShowWarnTooltip()">Add</button>
+    </div>
+  }
+</div>

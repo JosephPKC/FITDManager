@@ -5,14 +5,18 @@ import {
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { LockButtonComponent, ResetButtonComponent } from "@shared/buttons";
-import { BitdCharSheetModel } from "@games/bitd/models";
+import { BitdCharSheetModel, ContactState } from "@games/bitd/models";
 import { BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharCoinSectionComponent, BitdCharHealthSectionComponent } from "@games/bitd/sections";
+import { BitdCharAbilitySectionComponent } from "../app/games/bitd/sections/ability/bitd-char-ability-section.component";
+import { BitdCharContactSectionComponent } from "../app/games/bitd/sections/contact/bitd-char-contact-section.component";
+import { LoadoutState } from "../app/games/bitd/models/bitd-char-item.model";
+import { BitdCharItemSectionComponent } from "../app/games/bitd/sections/item/bitd-char-item-section.component";
 
 @Component({
   selector: "tester",
   templateUrl: "tester.component.html",
   styleUrl: "tester.component.scss",
-  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharCoinSectionComponent, BitdCharHealthSectionComponent],
+  imports: [FormsModule, ReactiveFormsModule, LockButtonComponent, ResetButtonComponent, BitdCharActionSectionComponent, BitdCharBasicInfoSectionComponent, BitdCharCoinSectionComponent, BitdCharHealthSectionComponent, BitdCharAbilitySectionComponent, BitdCharContactSectionComponent, BitdCharItemSectionComponent],
   standalone: true
 })
 export class TesterComponent implements  OnInit, AfterViewChecked {
@@ -286,6 +290,74 @@ export class TesterComponent implements  OnInit, AfterViewChecked {
           minMarks: 0
         },
         stash: 15
+      },
+      ability: {
+        selectedAbilities: [
+          "BATTLEBORN",
+          "VICIOUS"
+        ],
+        playbookAbilities: [
+          "BATTLEBORN",
+          "GHOST HUNTER",
+          "TOUGH"
+        ]
+      },
+      contact: {
+        contacts: [
+          {
+            name: "JOE SHMOE",
+            state: ContactState.NEUTRAL
+          },
+          {
+            name: "BUDDY",
+            state: ContactState.ALLY
+          },
+          {
+            name: "BAD GUY",
+            state: ContactState.RIVAL
+          }
+        ]
+      },
+      item: {
+        loadout: {
+          state: LoadoutState.Light,
+          none: 0,
+          light: 3,
+          normal: 5,
+          heavy: 6
+        },
+        selectedGear: [
+          {
+            name: "SWORD",
+            boxes: 1
+          }
+        ],
+        playbookGear: [
+          {
+            name: "SCARY SWORD",
+            boxes: 1
+          },
+          {
+            name: "PARROT",
+            boxes: 0
+          }
+        ],
+        commonGear: [
+          {
+            name: "SWORD",
+            boxes: 1
+          },
+          {
+            name: "CLOTHING",
+            boxes: 2
+          }
+        ],
+        customGear: [
+          {
+            name: "CUSTOM GUN",
+            boxes: 3
+          }
+        ]
       }
     };
 

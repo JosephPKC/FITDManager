@@ -1,0 +1,6 @@
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
+  <div [formGroup]="inputsGroup()">
+    <single-table-input formControlName="contacts" placeholder="..." [locked]="isSectionLocked()"></single-table-input>
+  </div>
+</section-shell>
+

@@ -1,0 +1,10 @@
+<section-shell [label]="label()" [locked]="locked()" (onSectionLockChange)="onSectionLockChange($event)">
+  <div [formGroup]="inputsGroup()">
+    <select-table-input formControlName="selectedAbilities" label="ABILITIES:" [itemsToAdd]="groupModel().playbookAbilities" [locked]="isSectionLocked()"></select-table-input>
+    <hide-button height="20" width="20" [hidden]="isSectionHidden()" (onHiddenChange)="onChangeHide($event)"></hide-button>
+    <div [hidden]="isSectionHidden()">
+      <view-table-input formControlName="playbookAbilities" label="PLAYBOOK: " [locked]="isSectionLocked()"></view-table-input>
+    </div>
+  </div>
+</section-shell>
+
